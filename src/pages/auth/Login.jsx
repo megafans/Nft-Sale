@@ -1,27 +1,29 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { BsArrowRightShort } from 'react-icons/bs';
-import { Col, Container, Row } from 'react-bootstrap';
-import ImageCard from 'components/common/cards/ImageCard';
-import LayoutWithoutHeader from 'layouts/LayoutWithoutHeader';
-import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
-import { notifyErrors, validateEmail } from 'helpers/helper';
-import { toast } from 'react-toastify';
+import { Link, useNavigate } from "react-router-dom";
+import { BsArrowRightShort } from "react-icons/bs";
+import { Col, Container, Row } from "react-bootstrap";
+import ImageCard from "components/common/cards/ImageCard";
+import LayoutWithoutHeader from "layouts/LayoutWithoutHeader";
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { notifyErrors, validateEmail } from "helpers/helper";
+import { toast } from "react-toastify";
 import {
   loginUserFail,
   loginUserPending,
   loginUserSuccess,
-} from 'redux/auth/authSlice';
-import WalletModal from 'modals/WalletModal';
-import { instance } from 'index';
+} from "redux/auth/authSlice";
+import WalletModal from "modals/WalletModal";
+import { instance } from "index";
+
+import styles from "./auth.module.css";
 
 const Login = () => {
   const { auth } = useSelector((state) => state);
   const [show, setShow] = useState(false);
   const [loginUser, setLoginUser] = useState(null);
   const [formValues, setFormValues] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,20 +34,20 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formValues?.email || !formValues?.password)
-      return toast.error('All feilds are required!');
+      return toast.error("All feilds are required!");
     if (!validateEmail(formValues?.email))
-      return toast.error('Email must be valid email!');
+      return toast.error("Email must be valid email!");
     let encodedData = `Basic ${window?.btoa(
       `${formValues?.email}:${formValues?.password}`
     )}`;
     try {
       dispatch(loginUserPending());
       const result = await instance.post(
-        'Authorization/login?appGameUid=56E700B7-7390-4800-B368-9ED4CD0E7E13',
+        "Authorization/login?appGameUid=56E700B7-7390-4800-B368-9ED4CD0E7E13",
         {},
         { headers: { Authorization: encodedData } }
       );
-      if (result?.data?.message?.toLowerCase()?.includes('invalid')) {
+      if (result?.data?.message?.toLowerCase()?.includes("invalid")) {
         toast.error(result?.data?.message);
         throw new Error(result?.data?.message);
       } else if (!result?.data?.data) {
@@ -55,7 +57,7 @@ const Login = () => {
         await setLoginUser(result?.data?.data);
         if (auth?.walletInfo?.account && auth?.walletInfo?.isConnected)
           return handleWallet(result?.data?.data?.token, result?.data?.data);
-          dispatch(loginUserSuccess(result?.data?.data));
+        dispatch(loginUserSuccess(result?.data?.data));
         handleShow();
       }
     } catch (error) {
@@ -67,7 +69,7 @@ const Login = () => {
   const handleWallet = async (token, loginUser) => {
     try {
       await instance.post(
-        'api/NFT/wallet',
+        "api/NFT/wallet",
         { walletAddress: auth?.walletInfo?.account },
         {
           headers: {
@@ -76,7 +78,7 @@ const Login = () => {
         }
       );
       dispatch(loginUserSuccess(loginUser));
-      navigate('/profile');
+      navigate("/profile");
     } catch (error) {
       notifyErrors(error);
     }
@@ -84,20 +86,17 @@ const Login = () => {
 
   return (
     <>
-      <section className='loginPage DBlock'>
+      <section className="loginPage DBlock">
         <Container>
           <Row>
             <Col sm={12} md={{ span: 5, offset: 1 }}>
-              <ImageCard cardImg='cryptoPartner' />
+              <ImageCard cardImg="liteCoin" />
             </Col>
             <Col sm={12} md={6}>
-              <div className='loginDiv'>
-                <div className='titleSec'>
-                  <div className='lightCoin'>
-                    <img src='/assets/images/liteCoin.png' alt='lightCoin' />
-                  </div>
+              <div className="loginDiv">
+                <div className="titleSec">
                   <h1>
-                    when do we start ? <br />{' '}
+                    when do we start ? <br />
                     <span>Connect with us today.</span>
                   </h1>
                 </div>
@@ -106,17 +105,17 @@ const Login = () => {
                   mobile & custom software solutions, that fuel innovation &
                   deliver digital success!
                 </p>
-                <form className='loginForm' onSubmit={handleSubmit}>
+                <form className="loginForm" onSubmit={handleSubmit}>
                   <input
-                    type='email'
+                    type="email"
                     value={formValues?.email}
                     onChange={(e) =>
                       setFormValues({ ...formValues, email: e?.target?.value })
                     }
-                    placeholder='Email'
+                    placeholder="Email"
                   />
                   <input
-                    type='password'
+                    type="password"
                     value={formValues?.password}
                     onChange={(e) =>
                       setFormValues({
@@ -124,21 +123,27 @@ const Login = () => {
                         password: e?.target?.value,
                       })
                     }
-                    placeholder='Enter Password'
+                    placeholder="Enter Password"
                   />
-                  <div className='alreadyAccount'>
-                    You have no account?
-                    <Link to='/sign-up'>
-                      <span className='signUp'>Sign up</span>
+                  <div className="alreadyAccount">
+                    Don’t remember password?
+                    <Link to="/forgot-password">
+                      <span className="signUp">Forgot Password</span>
                     </Link>
                   </div>
-                  <div className='loginBtn'>
-                    <button type='submit'>
+                  <div className={styles.loginButtons}>
+                    <button type="submit" className={styles.loginButton}>
                       Login
                       <span>
                         <BsArrowRightShort size={25} />
                       </span>
                     </button>
+                    <Link to="/sign-up" className={styles.signInButton}>
+                      Create Account
+                      <span>
+                        <BsArrowRightShort size={25} />
+                      </span>
+                    </Link>
                   </div>
                 </form>
               </div>
@@ -148,7 +153,7 @@ const Login = () => {
       </section>
       {show && !auth?.walletInfo?.account && (
         <WalletModal
-          pageFrom='login'
+          pageFrom="login"
           loginUser={loginUser}
           show={show}
           handleClose={handleClose}
@@ -158,4 +163,4 @@ const Login = () => {
   );
 };
 
-export default LayoutWithoutHeader(Login, '/');
+export default LayoutWithoutHeader(Login, "/");

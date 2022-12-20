@@ -1,0 +1,21 @@
+.socialContainer {
+  display: flex;
+  align-items: center;
+}
+
+.socialHeader {
+  margin-right: 5rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-width: 640px;
+}
+
+.socialIcon {
+  height: 60px;
+  width: 100%;
+}
+
+.socialLink {
+  margin-right: 1.5rem;
+}

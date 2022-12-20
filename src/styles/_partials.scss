@@ -1,6 +1,7 @@
 //Page Layout
 .pageLayout {
   position: relative;
+  min-height: 100vh;
 
   .topRecImg {
     position: absolute;
@@ -40,6 +41,60 @@
     width: 100%;
     background: linear-gradient(182.8deg, #270631 0.09%, rgba(89, 8, 114, 1) 33.63%, #000000 97.67%);
   }
+
+    .homeBtnsDiv {
+      position: relative;
+      margin-left: auto;
+      @include Flex(flex-start, center);
+  
+      a {
+        @include Flex(flex-start, center);
+        width: fit-content;
+        padding: 14px 40px;
+        border: 1px solid nth($color, 3);
+        background: nth($color, 3);
+        @include FontMedium(1, 1);
+        @include BorRadius(25px);
+        @include Tran(0.4s, ease-in-out);
+        margin-right: 10px;
+  
+        @include Media(345) {
+          margin-top: 15px;
+        }
+  
+        &.outline {
+          @include Media(345) {
+            margin-top: 15px;
+          }
+  
+          border: 1px solid nth($color, 1);
+          background: transparent;
+  
+          &:hover {
+            color: nth($color, 3);
+          }
+  
+          span {
+            background: nth($color, 3);
+            @include Font(0.8, 1);
+          }
+        }
+  
+        &:hover {
+          background: transparent;
+        }
+  
+        span {
+          @include Flex(center, center);
+          @include BorRadius(50%);
+          margin-left: 30px;
+          width: 20px;
+          height: 20px;
+          background: nth($color, 1);
+          @include Font(0.8, 3);
+        }
+      }
+    }
 
   .navbar-toggler {
     background: white;
