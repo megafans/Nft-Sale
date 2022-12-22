@@ -1,14 +1,12 @@
 import { AiOutlineRight } from 'react-icons/ai';
 import { AiFillStar } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
-import { getProvider, walletAddress } from 'helpers/helper';
-import { ethers } from 'ethers';
 import { toast } from 'react-toastify';
-import marketPlaceABI from 'config/marketPlaceABI.json';
 import { useSelector } from 'react-redux';
+
 import WalletModal from 'modals/WalletModal';
 
-const PricingCard = ({mintAddress, updateData, nftContract, stakingContract, list, handleShow, level, onCheckNetwork }) => {
+const PricingCard = ({web3, mintAddress, updateData, nftContract, stakingContract, list, handleShow, level, onCheckNetwork }) => {
   const { auth } = useSelector((state) => state);
   const [show, setShow] = useState(false);
   const [pricingData, setPricingData] = useState({
@@ -34,13 +32,16 @@ const PricingCard = ({mintAddress, updateData, nftContract, stakingContract, lis
 
   const buyNFT = async () => {
     onCheckNetwork();
+    const gasPrice = await web3.eth.getGasPrice();
     nftContract.methods.levelMint(1, parseInt(level)).estimateGas({
       from: mintAddress,
       value: pricingData?.price
-    }).then(result => {
+    }).then(gas => {
       nftContract.methods.levelMint(1, parseInt(level)).send({
         from: mintAddress,
-        value: pricingData?.price
+        gas,
+        gasPrice: gasPrice || web3.utils.toWei('70', 'gwei'),
+        value: pricingData?.price,
       }).then(result => {toast.success('Success!');handleShow();updateData();})
     })
     .catch(err => {

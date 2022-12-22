@@ -8,16 +8,17 @@ import PaymentCard from './PaymentCard';
 import axios from 'axios';
 
 const BuyModal = ({
-  walletAddress,
-  nftContract,
-  stakingContract,
-  show,
   handleClose,
-  page = '',
-  notifySucess,
+  nftContract,
   notifyError,
+  notifySucess,
   onCheckNetwork,
-  updateData  
+  page = '',
+  show,
+  stakingContract,
+  updateData,  
+  walletAddress,
+  web3,
 }) => {
   const [isCC, setIsCC] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -60,13 +61,14 @@ const BuyModal = ({
                         key={`PricingModalListCardKey${ind}`}>
                         <div className='mx-3 my-4'>
                           <PricingCard
-                            updateData={updateData}
+                            level={list?.id}
+                            list={list}
                             mintAddress={walletAddress}
                             nftContract={nftContract}
-                            stakingContract={stakingContract}
-                            list={list}
-                            level={list?.id}
                             onCheckNetwork={onCheckNetwork}
+                            stakingContract={stakingContract}
+                            updateData={updateData}
+                            web3={web3}
                             handleShow={() => {
                               setIsPricing(false);
                               setIsSuccess(true);

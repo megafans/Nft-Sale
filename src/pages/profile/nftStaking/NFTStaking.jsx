@@ -322,19 +322,18 @@ const NFTStaking = () => {
         />
       )}
       {isBuying && (
-        <BuyModal          
-          walletAddress={walletAddress}
+        <BuyModal             
+          handleClose={() => setIsBuying(false)}
           nftContract={nftContract}
-          stakingContract={stakingContract}
-          show={isBuying}
-          notifySucess={notifySucess}
           notifyError={notifyError}
-          updateData={updateData}
+          notifySucess={notifySucess}
           onCheckNetwork = {onCheckNetwork}
-          handleClose={() => {
-            setIsBuying(false);            
-          }}
           page='pricing'
+          show={isBuying}
+          stakingContract={stakingContract}
+          updateData={updateData}
+          walletAddress={walletAddress}
+          web3={web3}
         />
       )}          
     </>
