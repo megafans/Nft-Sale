@@ -14,7 +14,7 @@ const Profile = () => {
 
   const getUserNFTInfo = async (walletAddress) => {
     const nftNotStaked = await nftContract.methods.listMyNFTs(walletAddress).call();
-    const nftStaked = await stakingContract.methods.listNFTStaked(walletAddress).call();
+    const nftStaked = await stakingContract.methods.listNFTStakedForAddress(walletAddress).call();
     setTotalNFTs(nftNotStaked.length);
     setTotalStakNFTs(nftStaked.length);
   };
