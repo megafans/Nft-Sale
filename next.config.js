@@ -1,4 +1,7 @@
 const nextConfig = {
+  httpAgentOptions: {
+    keepAlive: false,
+  },
   reactStrictMode: true,
   swcMinify: true,
   eslint: {
