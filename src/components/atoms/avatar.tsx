@@ -16,6 +16,7 @@ export const Avatar = () => {
           alt="User avatar"
           height={60}
           width={60}
+          blurDataURL={avatar}
         />
         <div className="ml-3">
           <p className="uppercase font-bold text-3xl text-white">{user?.username}</p>

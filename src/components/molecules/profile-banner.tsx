@@ -5,6 +5,7 @@ import clsx from 'clsx'
 
 import { Avatar, Balance } from '@/components'
 import { useUser } from '@/hooks'
+import { blurDataUrl } from '@/helpers/constants'
 
 export const ProfileBanner = () => {
   const { isLoading } = useUser()
@@ -20,6 +21,7 @@ export const ProfileBanner = () => {
               height={440}
               src="/profile.svg"
               alt="Profile banner"
+              blurDataURL={blurDataUrl}
             />
             <div className="absolute inset-0 mix-blend-multiply" />
           </div>

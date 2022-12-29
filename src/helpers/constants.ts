@@ -1,3 +1,6 @@
+export const blurDataUrl =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOMVtz2FAAEKgIZAnKvygAAAABJRU5ErkJggg=='
+
 export const navigation = {
   quick: [
     { name: 'Company', href: '#' },

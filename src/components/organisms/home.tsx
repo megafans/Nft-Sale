@@ -3,6 +3,7 @@ import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
 
 import { ButtonLink } from '@/components'
 import { useUser } from '@/hooks'
+import { blurDataUrl } from '@/helpers/constants'
 
 export const Home = () => {
   const { user } = useUser()
@@ -32,6 +33,8 @@ export const Home = () => {
           width={400}
           src="/hero-home.svg"
           alt="Buy NFT"
+          blurDataURL={blurDataUrl}
+          priority
         />
       </div>
     </main>
