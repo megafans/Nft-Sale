@@ -12,6 +12,7 @@ type InputProps = {
   error?: string
   touched?: boolean
   disabled?: boolean
+  autoFocus?: boolean
 }
 
 export const Input = ({
@@ -25,6 +26,7 @@ export const Input = ({
   error,
   touched,
   disabled,
+  autoFocus = false,
 }: InputProps) => {
   return (
     <div>
@@ -32,7 +34,7 @@ export const Input = ({
         {label}
       </label>
       <input
-        autoFocus={true}
+        autoFocus={autoFocus}
         autoComplete="off"
         type={type}
         name={name}

@@ -33,6 +33,7 @@ export const RecoveryForm = () => {
         error={errors[RecoveryFormInputs.EMAIL]}
         touched={touched[RecoveryFormInputs.EMAIL]}
         onChange={handleChange}
+        autoFocus
       />
       <div className="flex items-center sm:space-x-4 pt-12">
         <Button size="lg" variant="primary" type="submit" disabled={loading}>

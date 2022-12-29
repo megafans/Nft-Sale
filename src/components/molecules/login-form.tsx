@@ -35,6 +35,7 @@ export const LoginForm = () => {
         error={errors[LoginFormInputs.EMAIL]}
         touched={touched[LoginFormInputs.EMAIL]}
         onChange={handleChange}
+        autoFocus
       />
       <Input
         name={LoginFormInputs.PASSWORD}

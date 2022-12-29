@@ -61,6 +61,7 @@ export const RegisterForm = () => {
             error={errors[RegisterFormInputs.EMAIL]}
             touched={touched[RegisterFormInputs.EMAIL]}
             onChange={handleChange}
+            autoFocus
           />
           <Input
             name={RegisterFormInputs.PASSWORD}
