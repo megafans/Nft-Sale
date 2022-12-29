@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { useState } from 'react'
 import { useToasts } from 'react-toast-notifications'
 import { useRouter } from 'next/router'
@@ -13,78 +12,80 @@ export const useAuth = () => {
   const login = async (email: string, password: string) => {
     const encodedData = Buffer.from(`${email}:${password}`).toString('base64')
     setLoading(true)
-    const { data } = await axios.post(
-      `${api?.URL}Authorization/login?appGameUid=${api.TOKEN}`,
-      {
-        email,
-        password,
+    const response = await fetch(`${api?.URL}Authorization/login?appGameUid=${api.TOKEN}`, {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${encodedData}`,
       },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Basic ${encodedData}`,
-        },
-      }
-    )
+    })
+    const data = await response.json()
     try {
       typeof window !== 'undefined' ? localStorage.setItem('token', data?.data?.token) : null
-      setLoading(false)
-      data.success && push('/')
       !data.success && addToast(data.message, {})
+      data.success && push('/')
     } catch (error) {
-      setLoading(false)
       console.log(error)
+    } finally {
+      setLoading(false)
     }
     return data
   }
 
   const register = async (email: string, password: string, username: string) => {
     setLoading(true)
-    const { data } = await axios.post(
-      `${api?.URL}api/Users`,
-      {
+    const response = await fetch(`${api?.URL}api/Users`, {
+      method: 'POST',
+      body: JSON.stringify({
         email,
         password,
         username,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
       },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    )
-    try {
+    })
+    if (response.status === 400) {
       setLoading(false)
-      data.id && push('/')
+      addToast('User with this email or username already exists', {})
+    }
+    const data = await response.json()
+    try {
       data.id && addToast(`User ${data.username} has been created successfuly`, {})
-    } catch (error: any) {
-      return console.log(error.response.data)
+      data.id &&
+        setTimeout(() => {
+          push('/')
+        }, 3100)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
     }
     return data
   }
 
   const recovery = async (email: string) => {
     setLoading(true)
-    const { data } = await axios.post(
-      `${api?.URL}Authorization/forgot_password`,
-      {
+    const response = await fetch(`${api?.URL}Authorization/forgot_password`, {
+      method: 'POST',
+      body: JSON.stringify({
         email,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
       },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    )
-    console.log(data)
+    })
+    const data = await response.json()
     try {
-      setLoading(false)
       data.success && addToast(`Password recovery email has been sent to ${email}`, {})
       setTimeout(() => {
         push('/forgot-password/success')
       }, 3100)
     } catch (error) {
       console.log(error)
+    } finally {
+      setLoading(false)
     }
     return data
   }
