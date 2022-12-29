@@ -39,7 +39,7 @@ export const socialButtons = [
   { src: '/social/facebook.png', alt: 'Facebook', href: '#' },
   { src: '/social/twitter.png', alt: 'Twitter', href: '#' },
   { src: '/social/telegram.png', alt: 'Telegram', href: '#' },
-  { src: '/social/instagram.Png', alt: 'Instagram', href: '#' },
+  { src: '/social/instagram.png', alt: 'Instagram', href: '#' },
 ]
 
 export const recoveryFormTitleSuccess = {
