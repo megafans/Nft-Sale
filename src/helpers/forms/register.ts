@@ -13,7 +13,7 @@ export enum RegisterFormLabels {
 }
 
 export const registrationValidationSchema = object({
-  [RegisterFormInputs.EMAIL]: string().email().required(),
-  [RegisterFormInputs.PASSWORD]: string().required(),
-  [RegisterFormInputs.USERNAME]: string().required(),
+  [RegisterFormInputs.EMAIL]: string().email('Please provide a valid mail').required('Email is required'),
+  [RegisterFormInputs.PASSWORD]: string().required('Password is required'),
+  [RegisterFormInputs.USERNAME]: string().required('User name is required'),
 })

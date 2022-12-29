@@ -12,10 +12,10 @@ type Values = {
 }
 
 export const RegisterForm = () => {
-  const { register } = useAuth()
+  const { register, loading } = useAuth()
   const { username, isLoading } = useUsername()
   const mounted = useMounted()
-  const { values, handleSubmit, handleChange } = useFormik<Values>({
+  const { values, handleSubmit, handleChange, errors, touched } = useFormik<Values>({
     initialValues: {
       [RegisterFormInputs.EMAIL]: '',
       [RegisterFormInputs.PASSWORD]: '',
@@ -46,6 +46,8 @@ export const RegisterForm = () => {
             label={RegisterFormLabels.USERNAME}
             id={RegisterFormInputs.USERNAME}
             value={values[RegisterFormInputs.USERNAME]}
+            error={errors[RegisterFormInputs.USERNAME]}
+            touched={touched[RegisterFormInputs.USERNAME]}
             onChange={handleChange}
             disabled={isLoading}
           />
@@ -56,6 +58,8 @@ export const RegisterForm = () => {
             label={RegisterFormLabels.EMAIL}
             id={RegisterFormInputs.EMAIL}
             value={values[RegisterFormInputs.EMAIL]}
+            error={errors[RegisterFormInputs.EMAIL]}
+            touched={touched[RegisterFormInputs.EMAIL]}
             onChange={handleChange}
           />
           <Input
@@ -65,12 +69,20 @@ export const RegisterForm = () => {
             label={RegisterFormLabels.PASSWORD}
             id={RegisterFormInputs.PASSWORD}
             value={values[RegisterFormInputs.PASSWORD]}
+            error={errors[RegisterFormInputs.PASSWORD]}
+            touched={touched[RegisterFormInputs.PASSWORD]}
             onChange={handleChange}
           />
           <div className="flex items-center sm:space-x-4 pt-12">
-            <Button size="lg" variant="primary" type="submit">
-              <span>Sign Up Free</span>
-              <ArrowLongRightIcon className="w-6 h-6 ml-10" />
+            <Button size="lg" variant="primary" type="submit" disabled={loading}>
+              {loading ? (
+                <LoadingState width={24} />
+              ) : (
+                <>
+                  <span>Sign Up Free</span>
+                  <ArrowLongRightIcon className="w-6 h-6 ml-10" />
+                </>
+              )}
             </Button>
             <ButtonLink href="/sign-in" variant="transparent" size="lg">
               <span className="font-bold">Sign In</span>

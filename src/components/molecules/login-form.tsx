@@ -47,6 +47,12 @@ export const LoginForm = () => {
         touched={touched[LoginFormInputs.PASSWORD]}
         onChange={handleChange}
       />
+      <div className="flex justify-end">
+        <ButtonLink href="/forgot-password" variant="transparent" size="sm">
+          <p>Don&apos;t remember password?</p>
+          <span className="text-red-400 ml-1">Forgot Password</span>
+        </ButtonLink>
+      </div>
       <div className="flex items-center sm:space-x-4 pt-12">
         <Button size="lg" variant="primary" type="submit" disabled={loading}>
           {loading ? (

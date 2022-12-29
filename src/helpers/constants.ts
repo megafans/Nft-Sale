@@ -41,3 +41,44 @@ export const socialButtons = [
   { src: '/social/telegram.png', alt: 'Telegram', href: '#' },
   { src: '/social/instagram.Png', alt: 'Instagram', href: '#' },
 ]
+
+export const recoveryFormTitleSuccess = {
+  title: {
+    main: 'Email',
+    sub: 'Sent.',
+  },
+  subtitle: {
+    main: 'If you are a registered MegaFans user, an email has been sent to that address.',
+    sub: 'Please check Spam/Blocked folder if you have not received it.',
+  },
+}
+
+export const recoveryFormTitle = {
+  title: {
+    main: 'Forgot',
+    sub: 'password.',
+  },
+  subtitle: {
+    main: 'Enter your email address and we will send you an email with a link to change your password.',
+  },
+}
+
+export const registerFormTitle = {
+  title: {
+    main: 'Sign up',
+    sub: 'Start earning and playing with us today.',
+  },
+  subtitle: {
+    main: 'Join players from all around the world playing the most exciting Mobile, Web3 and Browser based games.',
+  },
+}
+
+export const loginFormTitle = {
+  title: {
+    main: 'WHERE do we start ?',
+    sub: 'GameFi Tournament System.',
+  },
+  subtitle: {
+    main: 'Play-and-Win NFTs, Crypto, RL Rewards NFTs Earn In-Game Tokens (Revenue) Global MMO Tournaments Active Esports Community.',
+  },
+}

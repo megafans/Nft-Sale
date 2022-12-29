@@ -57,6 +57,32 @@ export const useAuth = () => {
       setLoading(false)
       data.id && push('/')
       data.id && addToast(`User ${data.username} has been created successfuly`, {})
+    } catch (error: any) {
+      return console.log(error.response.data)
+    }
+    return data
+  }
+
+  const recovery = async (email: string) => {
+    setLoading(true)
+    const { data } = await axios.post(
+      `${api?.URL}Authorization/forgot_password`,
+      {
+        email,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+    console.log(data)
+    try {
+      setLoading(false)
+      data.success && addToast(`Password recovery email has been sent to ${email}`, {})
+      setTimeout(() => {
+        push('/forgot-password/success')
+      }, 3100)
     } catch (error) {
       console.log(error)
     }
@@ -72,6 +98,7 @@ export const useAuth = () => {
     login,
     register,
     logout,
+    recovery,
     loading,
   }
 }
