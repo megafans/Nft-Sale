@@ -22,7 +22,9 @@ export const AuthLayout = ({ children }: LayoutProps) => {
           </div>
         </Container>
         <Container>{children}</Container>
-        <Footer />
+        <div className="md:mt-24">
+          <Footer />
+        </div>
       </div>
     </ToastProvider>
   )
