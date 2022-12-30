@@ -39,6 +39,7 @@ export const defaultUser = {
 }
 
 export const socialButtons = [
+  { src: '/social/discord.png', alt: 'Discord', href: '#' },
   { src: '/social/facebook.png', alt: 'Facebook', href: '#' },
   { src: '/social/twitter.png', alt: 'Twitter', href: '#' },
   { src: '/social/telegram.png', alt: 'Telegram', href: '#' },
