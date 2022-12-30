@@ -1,4 +1,4 @@
-import { Container, Copyright, Logo } from '@/components'
+import { Container, Copyright, Logo, PaymentButtons } from '@/components'
 
 import { navigation } from '@/helpers/constants'
 
@@ -15,10 +15,10 @@ export const Footer = () => {
               <div>
                 <h3 className="text-xl font-medium text-white">Quick Link</h3>
                 <ul role="list" className="mt-4 space-y-4">
-                  {navigation?.quick.map(item => (
-                    <li key={item.name}>
-                      <a href={item.href} className="text-base text-white">
-                        {item.name}
+                  {navigation?.quick.map(({ id, name, href }) => (
+                    <li key={id}>
+                      <a href={href} className="text-base text-white">
+                        {name}
                       </a>
                     </li>
                   ))}
@@ -27,22 +27,25 @@ export const Footer = () => {
               <div className="mt-12 md:mt-0">
                 <h3 className="text-xl font-medium text-white">Support</h3>
                 <ul role="list" className="mt-4 space-y-4">
-                  {navigation?.resources.map(item => (
-                    <li key={item.name}>
-                      <a href={item.href} className="text-base text-white">
-                        {item.name}
+                  {navigation?.resources.map(({ id, name, href }) => (
+                    <li key={id}>
+                      <a href={href} className="text-base text-white">
+                        {name}
                       </a>
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
-            <div className="md:grid md:grid-cols-1 md:gap-8">
-              <h3 className="text-3xl font-medium text-white">We accept following payment systems</h3>
+            <div className="md:grid md:grid-cols-1 md:gap-4">
+              <h3 className="text-3xl font-medium text-white leading-none inline-flex items-center">
+                We accept following payment systems
+              </h3>
+              <PaymentButtons />
             </div>
           </div>
         </div>
-        <Copyright text="© 2021 Megafans. All rights reserved." />
+        <Copyright text="© 2023 Megafans. All rights reserved." />
       </Container>
     </footer>
   )

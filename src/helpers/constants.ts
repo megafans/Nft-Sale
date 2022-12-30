@@ -1,16 +1,18 @@
+import { v4 as uuid } from 'uuid'
+
 export const blurDataUrl =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOMVtz2FAAEKgIZAnKvygAAAABJRU5ErkJggg=='
 
 export const navigation = {
   quick: [
-    { name: 'Company', href: '#' },
-    { name: 'Services', href: '#' },
-    { name: 'Contact', href: '#' },
+    { id: uuid(), name: 'Company', href: '#' },
+    { id: uuid(), name: 'Services', href: '#' },
+    { id: uuid(), name: 'Contact', href: '#' },
   ],
   resources: [
-    { name: 'Pricing', href: '#' },
-    { name: 'Newsroom', href: '#' },
-    { name: 'FAQ', href: '#' },
+    { id: uuid(), name: 'Pricing', href: '#' },
+    { id: uuid(), name: 'Newsroom', href: '#' },
+    { id: uuid(), name: 'FAQ', href: '#' },
   ],
 }
 
@@ -39,11 +41,16 @@ export const defaultUser = {
 }
 
 export const socialButtons = [
-  { src: '/social/discord.png', alt: 'Discord', href: '#' },
-  { src: '/social/facebook.png', alt: 'Facebook', href: '#' },
-  { src: '/social/twitter.png', alt: 'Twitter', href: '#' },
-  { src: '/social/telegram.png', alt: 'Telegram', href: '#' },
-  { src: '/social/instagram.png', alt: 'Instagram', href: '#' },
+  { id: uuid(), src: '/social/discord.png', alt: 'Discord', href: '#' },
+  { id: uuid(), src: '/social/facebook.png', alt: 'Facebook', href: '#' },
+  { id: uuid(), src: '/social/twitter.png', alt: 'Twitter', href: '#' },
+  { id: uuid(), src: '/social/telegram.png', alt: 'Telegram', href: '#' },
+  { id: uuid(), src: '/social/instagram.png', alt: 'Instagram', href: '#' },
+]
+
+export const paymentButtons = [
+  { id: uuid(), src: '/payments/visa.svg', alt: 'Visa', href: '#' },
+  { id: uuid(), src: '/payments/mastercard.svg', alt: 'Mastercard', href: '#' },
 ]
 
 export const recoveryFormTitleSuccess = {
