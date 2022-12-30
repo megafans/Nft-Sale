@@ -1,6 +1,8 @@
-import { MegaphoneIcon, XMarkIcon } from '@heroicons/react/24/solid'
+import { MegaphoneIcon, XMarkIcon, ArrowLongLeftIcon } from '@heroicons/react/24/solid'
 import { ReactNode } from 'react'
 import { useToasts } from 'react-toast-notifications'
+
+import { ButtonLink } from '@/components'
 
 type CustomToastProps = {
   children: ReactNode
@@ -23,14 +25,19 @@ export const CustomToast = ({ children }: CustomToastProps) => {
               </p>
             </div>
             <div className="order-2 flex-shrink-0 sm:order-3 sm:ml-2">
-              <button
-                type="button"
-                className="-mr-1 flex rounded-md p-2 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-white"
-                onClick={() => removeToast(toastStack[0].id)}
-              >
-                <span className="sr-only">Dismiss</span>
-                <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
-              </button>
+              <div className="flex">
+                <ButtonLink href="/" variant="transparent" size="sm">
+                  <ArrowLongLeftIcon className="w-6 h-6" />
+                </ButtonLink>
+                <button
+                  type="button"
+                  className="-mr-1 flex rounded-md p-2 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-white"
+                  onClick={() => removeToast(toastStack[0].id)}
+                >
+                  <span className="sr-only">Dismiss</span>
+                  <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                </button>
+              </div>
             </div>
           </div>
         </div>

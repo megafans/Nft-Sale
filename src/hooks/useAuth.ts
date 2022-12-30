@@ -4,6 +4,8 @@ import { useRouter } from 'next/router'
 
 import { api } from '@/helpers/api'
 
+type TokenProps = string | string[] | undefined
+
 export const useAuth = () => {
   const { push } = useRouter()
   const [loading, setLoading] = useState(false)
@@ -90,6 +92,28 @@ export const useAuth = () => {
     return data
   }
 
+  const reset = async (password: string, confirm_password: string, token: TokenProps) => {
+    setLoading(true)
+    const response = await fetch(`${api?.URL}Authorization/new_password?token=${token}`, {
+      method: 'POST',
+      body: JSON.stringify({ password, confirm_password }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const data = await response.json()
+    try {
+      typeof window !== 'undefined' ? localStorage.setItem('token', data?.data?.token) : null
+      !data.success && addToast('Something went wrong', {})
+      data.success && push('/')
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+    return data
+  }
+
   const logout = () => {
     typeof window !== 'undefined' ? localStorage.removeItem('token') : null
     push('/')
@@ -100,6 +124,7 @@ export const useAuth = () => {
     register,
     logout,
     recovery,
+    reset,
     loading,
   }
 }

@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import Head from 'next/head'
 
-import { AuthLayout, Login } from '@/components'
+import { AuthLayout, Reset } from '@/components'
 import { NextPageWithLayout } from '../_app'
 
 const Page: NextPageWithLayout = () => {
@@ -13,7 +13,7 @@ const Page: NextPageWithLayout = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Login />
+      <Reset />
     </>
   )
 }

@@ -85,3 +85,13 @@ export const loginFormTitle = {
     main: 'Play-and-Win NFTs, Crypto, RL Rewards NFTs Earn In-Game Tokens (Revenue) Global MMO Tournaments Active Esports Community.',
   },
 }
+
+export const resetFormTitle = {
+  title: {
+    main: 'Enter new',
+    sub: 'password.',
+  },
+  subtitle: {
+    main: 'Enter your email address and we will send you an email with a link to change your password.',
+  },
+}
