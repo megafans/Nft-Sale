@@ -19,6 +19,7 @@ module.exports = {
       yellow: colors.yellow,
       red: colors.red,
       violet: colors.violet,
+      green: colors.green,
       purple: '#8447E9',
     },
     extend: {

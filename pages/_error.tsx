@@ -1,12 +1,18 @@
-import { GetServerSideProps, NextPage } from 'next'
+import { NextPage, NextPageContext } from 'next'
 
-const ErrorPage: NextPage = () => {
-  return null
+type ErrorProps = {
+  statusCode?: number
 }
 
-export const getServerSideProps: GetServerSideProps = ({ res }) => {
-  res.statusCode = 500
-  throw new Error('Internal Server Error')
+const Error: NextPage<ErrorProps> = ({ statusCode }) => {
+  return <p>An error occurred: {statusCode}</p>
 }
 
-export default ErrorPage
+Error.getInitialProps = (ctx: NextPageContext) => {
+  const { res, err } = ctx
+  const statusCode = res ? res.statusCode : err ? err.statusCode : 404
+
+  return { statusCode }
+}
+
+export default Error

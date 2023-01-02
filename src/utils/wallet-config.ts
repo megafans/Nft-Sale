@@ -1,8 +1,10 @@
-import { mainnet, polygon } from 'wagmi/chains'
-import { infuraProvider } from 'wagmi/providers/infura'
+import { mainnet, polygon, optimism } from 'wagmi/chains'
+import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
+import { publicProvider } from 'wagmi/providers/public'
 import { configureChains, createClient } from 'wagmi'
-import { getDefaultWallets } from '@rainbow-me/rainbowkit'
+import { connectorsForWallets } from '@rainbow-me/rainbowkit'
+import { injectedWallet, rainbowWallet, walletConnectWallet, metaMaskWallet } from '@rainbow-me/rainbowkit/wallets'
 
 export type AccountProps = {
   account: {
@@ -18,29 +20,40 @@ export type AccountProps = {
   }
 }
 
-const apiKey = '0xC115c36d2ed62aE7117f7A649B88c53a18D9BB25'
+const apiKey = '1ycYKWwImku2UgUNYpQ3QPoMS-Rvzjp5'
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [mainnet, polygon],
+  [mainnet, polygon, optimism],
   [
-    infuraProvider({ apiKey, priority: 0 }),
+    alchemyProvider({ apiKey, priority: 0, weight: 1 }),
+    publicProvider({ weight: 2 }),
     jsonRpcProvider({
       priority: 0,
-      rpc: chain => ({
-        http: `https://${chain.id}.infura.io/v3/0xC115c36d2ed62aE7117f7A649B88c53a18D9BB25`,
-        webSocket: `wss://${chain.id}.infura.io/v3/0xC115c36d2ed62aE7117f7A649B88c53a18D9BB25`,
+      rpc: () => ({
+        http: `https://eth-mainnet.g.alchemy.com/v2/1ycYKWwImku2UgUNYpQ3QPoMS-Rvzjp5`,
+        webSocket: `wss://eth-mainnet.g.alchemy.com/v2/1ycYKWwImku2UgUNYpQ3QPoMS-Rvzjp5`,
       }),
     }),
   ]
 )
 
-const { connectors } = getDefaultWallets({
-  appName: 'web3-react-demo',
-  chains,
-})
+const connectors = connectorsForWallets([
+  {
+    groupName: 'Recommended',
+    wallets: [
+      metaMaskWallet({ chains }),
+      injectedWallet({ chains }),
+      rainbowWallet({ chains }),
+      walletConnectWallet({ chains }),
+    ],
+  },
+])
 
 const wagmiClient = createClient({
-  autoConnect: true,
+  logger: {
+    warn: console.warn,
+  },
+  autoConnect: false,
   connectors,
   provider,
   webSocketProvider,
