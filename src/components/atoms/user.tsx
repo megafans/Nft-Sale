@@ -41,7 +41,7 @@ export const User = ({ user }: UserType) => {
               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                 <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-4 sm:p-4" onClick={() => close()}>
                   <Link href="/profile">
-                    <div className="cursor-pointer -m-3 flex items-start rounded-lg p-3 transition duration-150 ease-in-out hover:bg-gray-50">
+                    <div className="cursor-pointer -m-3 flex items-start rounded-lg p-3 transition duration-150 ease-in-out">
                       <UserIcon className="h-6 w-6 flex-shrink-0 text-purple" aria-hidden="true" />
                       <div className="ml-4">
                         <p className="text-base font-bold text-gray-800">Profile</p>
@@ -51,7 +51,7 @@ export const User = ({ user }: UserType) => {
                   <hr />
                   <div
                     onClick={logout}
-                    className="cursor-pointer -m-3 flex items-start rounded-lg p-3 transition duration-150 ease-in-out hover:bg-gray-50"
+                    className="cursor-pointer -m-3 flex items-start rounded-lg p-3 transition duration-150 ease-in-out"
                   >
                     <ArrowLeftOnRectangleIcon className="h-6 w-6 flex-shrink-0 text-purple" aria-hidden="true" />
                     <div className="ml-4">

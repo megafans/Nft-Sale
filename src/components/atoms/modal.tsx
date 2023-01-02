@@ -1,14 +1,17 @@
 import { ReactNode, useRef, Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
+import { XCircleIcon } from '@heroicons/react/24/outline'
+import clsx from 'clsx'
 
 type ModalProps = {
   title: string
   open: boolean
   onClose: () => void
   children: ReactNode
+  theme?: 'light' | 'dark'
 }
 
-export const Modal = ({ title, open, onClose, children }: ModalProps) => {
+export const Modal = ({ title, open, onClose, children, theme = 'dark' }: ModalProps) => {
   const completeButtonRef = useRef(null)
 
   return (
@@ -25,10 +28,20 @@ export const Modal = ({ title, open, onClose, children }: ModalProps) => {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Dialog.Panel className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-indigo-800 p-10 rounded-xl shadow-xl w-full max-w-6xl">
-                <Dialog.Title ref={completeButtonRef} className="text-white uppercase font-bold text-3xl">
+              <Dialog.Panel
+                className={clsx(
+                  'absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 p-10 rounded-xl shadow-xl w-full max-w-6xl',
+                  theme === 'light' && 'bg-gray-200',
+                  theme === 'dark' && 'bg-violet'
+                )}
+              >
+                <Dialog.Title ref={completeButtonRef} className="text-gray-200 uppercase font-bold text-3xl">
                   {title}
                 </Dialog.Title>
+                <XCircleIcon
+                  className=" absolute top-8 right-8 w-8 h-8 text-gray-200 cursor-pointer z-50"
+                  onClick={onClose}
+                />
                 {children}
               </Dialog.Panel>
             </Transition.Child>

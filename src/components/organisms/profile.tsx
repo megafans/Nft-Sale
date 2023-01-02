@@ -2,17 +2,26 @@ import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
 import { useState } from 'react'
 
 import { Button, Modal, ProfileBanner, ProfileEdit, BuyNFTModal } from '@/components'
-import { useMounted } from '@/hooks'
+import { useMounted, useUser } from '@/hooks'
 
 export const Profile = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isEditMode, setEditMode] = useState(false)
   const mounted = useMounted()
+  const { user } = useUser()
 
   const getProfileBannerView = () => {
     switch (isEditMode) {
       case true:
-        return <ProfileEdit setEditMode={setEditMode} isEditMode={isEditMode} />
+        return (
+          <Modal
+            open={isEditMode}
+            title={`You are going to edit ${user?.username} profile`}
+            onClose={() => setEditMode(!isEditMode)}
+          >
+            <ProfileEdit />
+          </Modal>
+        )
       default:
         return <ProfileBanner setEditMode={setEditMode} isEditMode={isEditMode} />
     }

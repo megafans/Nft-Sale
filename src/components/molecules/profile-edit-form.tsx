@@ -53,51 +53,53 @@ export const ProfileEditForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-wrap">
-      <div className="w-1/2 space-y-6 pr-2">
-        <Input
-          name={EditProfileFormInputs.EMAIL}
-          type="text"
-          placeholder="Enter email"
-          label={EditProfileFormLabels.EMAIL}
-          id={EditProfileFormInputs.EMAIL}
-          value={values[EditProfileFormInputs.EMAIL]}
-          error={errors[EditProfileFormInputs.EMAIL]}
-          touched={touched[EditProfileFormInputs.EMAIL]}
-          onChange={handleChange}
-          autoFocus
-        />
-        <Input
-          name={EditProfileFormInputs.USERNAME}
-          type="text"
-          placeholder="Enter username"
-          label={EditProfileFormLabels.USERNAME}
-          id={EditProfileFormInputs.USERNAME}
-          value={values[EditProfileFormInputs.USERNAME]}
-          error={errors[EditProfileFormInputs.USERNAME]}
-          touched={touched[EditProfileFormInputs.USERNAME]}
-          onChange={handleChange}
-        />
-        <Select
-          placeholder="Select country"
-          items={countries}
-          onChange={handleChange}
-          name={EditProfileFormInputs.COUNTRY}
-          id={EditProfileFormInputs.COUNTRY}
-          label={EditProfileFormLabels.COUNTRY}
-          value={values[EditProfileFormInputs.COUNTRY]}
-        />
+    <form onSubmit={handleSubmit}>
+      <div className="flex">
+        <div className="w-7/12 space-y-8 md:pr-2 text-left">
+          <Input
+            name={EditProfileFormInputs.EMAIL}
+            type="text"
+            placeholder="Enter email"
+            label={EditProfileFormLabels.EMAIL}
+            id={EditProfileFormInputs.EMAIL}
+            value={values[EditProfileFormInputs.EMAIL]}
+            error={errors[EditProfileFormInputs.EMAIL]}
+            touched={touched[EditProfileFormInputs.EMAIL]}
+            onChange={handleChange}
+            autoFocus
+          />
+          <Input
+            name={EditProfileFormInputs.USERNAME}
+            type="text"
+            placeholder="Enter username"
+            label={EditProfileFormLabels.USERNAME}
+            id={EditProfileFormInputs.USERNAME}
+            value={values[EditProfileFormInputs.USERNAME]}
+            error={errors[EditProfileFormInputs.USERNAME]}
+            touched={touched[EditProfileFormInputs.USERNAME]}
+            onChange={handleChange}
+          />
+          <Select
+            placeholder="Select country"
+            items={countries}
+            onChange={handleChange}
+            name={EditProfileFormInputs.COUNTRY}
+            id={EditProfileFormInputs.COUNTRY}
+            label={EditProfileFormLabels.COUNTRY}
+            value={values[EditProfileFormInputs.COUNTRY]}
+          />
+        </div>
+        <div className="w-1/2 md:pl-2 md:pt-7">
+          <InputFile
+            onChange={handleFileChange}
+            name={EditProfileFormInputs.AVATAR}
+            id={EditProfileFormInputs.AVATAR}
+            label={EditProfileFormLabels.AVATAR}
+            value={values[EditProfileFormInputs.AVATAR]}
+          />
+        </div>
       </div>
-      <div className="w-1/2 pl-2 md:pt-7">
-        <InputFile
-          onChange={handleFileChange}
-          name={EditProfileFormInputs.AVATAR}
-          id={EditProfileFormInputs.AVATAR}
-          label={EditProfileFormLabels.AVATAR}
-          value={values[EditProfileFormInputs.AVATAR]}
-        />
-      </div>
-      <div className="flex items-center sm:space-x-4 pt-8">
+      <div className="flex items-center justify-center pt-8">
         <Button size="lg" variant="primary" type="submit" disabled={loading}>
           {loading ? (
             <LoadingState width={24} />
