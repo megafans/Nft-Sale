@@ -42,7 +42,7 @@ export const BuyNFTModal = () => {
     args: ['0x1', '0x1'],
     //temporary: value based on getLevelPrice, gas limit based on estimatedgas
     overrides: {
-      value: 100000000000000,
+      value: 10,
       gasPrice,
       gasLimit: BN.from(185264),
     },
@@ -50,14 +50,15 @@ export const BuyNFTModal = () => {
   const { write, isError } = useContractWrite(config)
 
   const buyNFT = async () => {
-    write?.({
-      recklesslySetUnpreparedOverrides: {
-        value: 100000000000000,
-      },
-    })
     if (isError) {
       addToast('Transaction failed beause of insufficient funds', {})
     }
+
+    write?.({
+      recklesslySetUnpreparedOverrides: {
+        value: 10,
+      },
+    })
   }
 
   return (
@@ -74,6 +75,18 @@ export const BuyNFTModal = () => {
                 Most popular
               </p>
             ) : null}
+            <span className="inline-flex mt-2">
+              <svg
+                className="w-3 fill-indigo-500 mr-2 font-bold"
+                viewBox="0 0 12 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M0 10L6 0L12 10L6 14L0 10Z" />
+                <path d="M0 11.5L6 15.5L12 11.5L6 20L0 11.5Z" />
+              </svg>
+              {parseInt(data?.formatted.gasPrice!) / 100000000000000}
+            </span>
             <p className="mt-4 flex justify-center items-baseline text-gray-600">
               <span className="mr-1 text-xl font-semibold uppercase">avalible:</span>
               <span className="text-4xl font-bold tracking-tight">{tier.avalible}</span>
