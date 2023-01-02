@@ -1,6 +1,7 @@
 import { ArrowLongRightIcon, StarIcon } from '@heroicons/react/24/solid'
-import { useFeeData, useContract, usePrepareContractWrite, useContractWrite } from 'wagmi'
+import { BigNumber } from '@ethersproject/bignumber'
 import { useEffect, useState } from 'react'
+import { BigNumber as BN } from 'ethers'
 
 import { Button } from '@/components'
 import { pricing } from '@/helpers/constants'
@@ -19,37 +20,64 @@ export const BuyNFTModal = () => {
     wonRate: null,
   })
 
+  const [gas, setGas] = useState<BigNumber | undefined>(() => BN.from(1))
+
   const { data } = useFeeData()
+  const gasPrice: BigNumber = data?.gasPrice as BigNumber
+  const provider = useProvider()
   const contract = useContract({
     address: '0xa0f2056fd69a9be2c4671d5853545a16e030d68f',
     abi: ensRegistryABI,
+    signerOrProvider: provider,
   })
+
+  useEffect(() => {
+    async function estimateGasAmount() {
+      const amount = await contract?.estimateGas.levelMint(1, 1, {
+        gasLimit: BN.from(185264),
+      })
+      setGas(amount)
+    }
+
+    if (contract) {
+      estimateGasAmount()
+    }
+  }, [contract])
 
   const { config, error } = usePrepareContractWrite({
-    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    address: '0xa0f2056fd69a9be2c4671d5853545a16e030d68f',
     abi: ensRegistryABI,
-    functionName: 'mint',
+    functionName: 'levelMint',
+    args: ['0x1', '0x1'],
+    //temporary: value based on getLevelPrice, gas limit based on estimatedgas
+    overrides: {
+      value: 100000000000000,
+      gasPrice,
+      gasLimit: BN.from(185264),
+    },
   })
-
-  const { data: contractData, write } = useContractWrite(config)
-
-  console.log(data, contract)
+  const { write } = useContractWrite(config)
 
   const getLevelPrice = async () => {
-    const price = await contract.mintPricePerLevel(1)
-    const levelLimit = await contract.mintLimitPerLevel(1)
-    const levelMinted = await contract.mintedPerLevel(1)
-    const totalValue = await contract.getTotalValueStaked()
-    setPricingData({
-      price: price,
-      avaiable: (levelLimit - levelMinted)?.toString(),
-      wonRate: ((1 / totalValue) * 100).toFixed(2),
-    })
+    //TODO: add interaction with contract to calculate price based on selected level
+    // const price = await contract?.mintPricePerLevel(0x1)
+    // const levelLimit = await contract?.mintLimitPerLevel(0x1)
+    // const levelMinted = await contract?.mintedPerLevel(1)
+    // const totalValue = await contract?.getTotalValueStaked()
+    // setPricingData({
+    //   price: price,
+    //   avaiable: (levelLimit - levelMinted)?.toString(),
+    //   wonRate: ((1 / totalValue) * 100).toFixed(2),
+    // })
   }
 
   const buyNFT = async () => {
     contract
-      ?.levelMint(1, parseInt(data?.formatted.gasPrice!))
+      ?.levelMint(1, parseInt('1', 10))
+      .estimateGas({
+        from: '0x8a0e5c5e5f9f1b5b5b5b5b5b5b5b5b5b5b5b5b',
+        value: 1,
+      })
       .then((gas: any) => {
         contract?.levelMint(1, parseInt(data?.formatted.gasPrice!)).send({
           from: '0x8a0e5c5e5f9f1b5b5b5b5b5b5b5b5b5b5b5b5b',
