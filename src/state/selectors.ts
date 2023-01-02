@@ -1,10 +1,10 @@
 import { selector } from 'recoil'
-import { userState } from './atoms'
+import { userAtom } from './atoms'
 
 export const userSelector = selector({
   key: 'userSelector',
   get: ({ get }) => {
-    const user = get(userState)
+    const user = get(userAtom)
     return user
   },
 })

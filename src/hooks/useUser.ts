@@ -7,11 +7,11 @@ import { useToasts } from 'react-toast-notifications'
 
 import { api } from '@/helpers/api'
 import { fetcher } from '@/utils/fetcher'
-import { userState } from '@/state/atoms'
+import { userAtom } from '@/state/atoms'
 
 export const useUser = () => {
   const [loading, setLoading] = useState(false)
-  const [user, setUser] = useRecoilState(userState)
+  const [user, setUser] = useRecoilState(userAtom)
   const { address, isConnecting } = useAccount()
   const { addToast } = useToasts()
   const { push } = useRouter()

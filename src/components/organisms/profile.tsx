@@ -20,7 +20,7 @@ export const Profile = () => {
 
   return (
     <>
-      {mounted ? getProfileBannerView() : null}
+      {mounted && getProfileBannerView()}
       <div className="flex justify-center mt-14">
         <Button type="button" size="lg" variant="primary" onClick={() => setIsOpen(!isOpen)}>
           Buy NFT
