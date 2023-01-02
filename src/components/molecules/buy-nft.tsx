@@ -2,25 +2,16 @@ import { ArrowLongRightIcon, StarIcon } from '@heroicons/react/24/solid'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useEffect, useState } from 'react'
 import { BigNumber as BN } from 'ethers'
+import { useToasts } from 'react-toast-notifications'
+import { useContract, useContractWrite, useFeeData, usePrepareContractWrite, useProvider } from 'wagmi'
 
 import { Button } from '@/components'
 import { pricing } from '@/helpers/constants'
 import { ensRegistryABI } from '@/utils/abi'
 
-type PricingData = {
-  price?: string | null
-  avaiable?: string | null
-  wonRate?: string | null
-}
-
 export const BuyNFTModal = () => {
-  const [pricingData, setPricingData] = useState<PricingData>({
-    price: null,
-    avaiable: null,
-    wonRate: null,
-  })
-
-  const [gas, setGas] = useState<BigNumber | undefined>(() => BN.from(1))
+  const { addToast } = useToasts()
+  const [, setGas] = useState<BigNumber | undefined>(() => BN.from(1))
 
   const { data } = useFeeData()
   const gasPrice: BigNumber = data?.gasPrice as BigNumber
@@ -44,7 +35,7 @@ export const BuyNFTModal = () => {
     }
   }, [contract])
 
-  const { config, error } = usePrepareContractWrite({
+  const { config } = usePrepareContractWrite({
     address: '0xa0f2056fd69a9be2c4671d5853545a16e030d68f',
     abi: ensRegistryABI,
     functionName: 'levelMint',
@@ -56,44 +47,18 @@ export const BuyNFTModal = () => {
       gasLimit: BN.from(185264),
     },
   })
-  const { write } = useContractWrite(config)
-
-  const getLevelPrice = async () => {
-    //TODO: add interaction with contract to calculate price based on selected level
-    // const price = await contract?.mintPricePerLevel(0x1)
-    // const levelLimit = await contract?.mintLimitPerLevel(0x1)
-    // const levelMinted = await contract?.mintedPerLevel(1)
-    // const totalValue = await contract?.getTotalValueStaked()
-    // setPricingData({
-    //   price: price,
-    //   avaiable: (levelLimit - levelMinted)?.toString(),
-    //   wonRate: ((1 / totalValue) * 100).toFixed(2),
-    // })
-  }
+  const { write, isError } = useContractWrite(config)
 
   const buyNFT = async () => {
-    contract
-      ?.levelMint(1, parseInt('1', 10))
-      .estimateGas({
-        from: '0x8a0e5c5e5f9f1b5b5b5b5b5b5b5b5b5b5b5b5b',
-        value: 1,
-      })
-      .then((gas: any) => {
-        contract?.levelMint(1, parseInt(data?.formatted.gasPrice!)).send({
-          from: '0x8a0e5c5e5f9f1b5b5b5b5b5b5b5b5b5b5b5b5b',
-          value: 1,
-          gas,
-          gasPrice: data?.formatted.gasPrice,
-        })
-      })
-      .catch((err: any) => {
-        console.log(err)
-      })
+    write?.({
+      recklesslySetUnpreparedOverrides: {
+        value: 100000000000000,
+      },
+    })
+    if (isError) {
+      addToast('Transaction failed beause of insufficient funds', {})
+    }
   }
-
-  useEffect(() => {
-    getLevelPrice()
-  }, [])
 
   return (
     <div className="mt-24 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:space-y-0">
