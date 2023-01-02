@@ -19,7 +19,7 @@ export const Home = () => {
             Buy a MegaFans NFT and begin earning recurring revenue instantly
           </p>
           <div className="mt-10 sm:flex sm:justify-center lg:justify-start">
-            <ButtonLink size="lg" variant="primary" href={user?.username ? '/profil' : '/sign-in'}>
+            <ButtonLink size="lg" variant="primary" href={user?.username ? '/profile' : '/sign-in'}>
               Buy NFT
               <ArrowLongRightIcon className="w-6 h-6 ml-10" />
             </ButtonLink>

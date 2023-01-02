@@ -53,7 +53,7 @@ const wagmiClient = createClient({
   logger: {
     warn: console.warn,
   },
-  autoConnect: false,
+  autoConnect: true,
   connectors,
   provider,
   webSocketProvider,

@@ -1,12 +1,13 @@
 import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
 import { useState } from 'react'
 
-import { ButtonLink, ProfileBanner, ProfileEdit } from '@/components'
+import { Button, Modal, ProfileBanner, ProfileEdit, BuyNFTModal } from '@/components'
 import { useMounted } from '@/hooks'
 
 export const Profile = () => {
-  const mounted = useMounted()
+  const [isOpen, setIsOpen] = useState(false)
   const [isEditMode, setEditMode] = useState(false)
+  const mounted = useMounted()
 
   const getProfileBannerView = () => {
     switch (isEditMode) {
@@ -21,11 +22,14 @@ export const Profile = () => {
     <>
       {mounted ? getProfileBannerView() : null}
       <div className="flex justify-center mt-14">
-        <ButtonLink size="lg" variant="primary" href="/profile">
+        <Button type="button" size="lg" variant="primary" onClick={() => setIsOpen(!isOpen)}>
           Buy NFT
           <ArrowLongRightIcon className="w-6 h-6 ml-10" />
-        </ButtonLink>
+        </Button>
       </div>
+      <Modal title="Buy NFT" open={isOpen} onClose={() => setIsOpen(!isOpen)}>
+        <BuyNFTModal />
+      </Modal>
     </>
   )
 }

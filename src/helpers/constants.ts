@@ -103,3 +103,41 @@ export const resetFormTitle = {
     main: 'Enter your email address and we will send you an email with a link to change your password.',
   },
 }
+
+export const pricing = {
+  tiers: [
+    {
+      title: 'Fan',
+      avalible: 1990,
+      features: [
+        'Access to private members-only Discord channel.',
+        'Privileges and discounts in the MegaFans MegaMart.',
+        'Special perks (giveaways).',
+      ],
+      cta: 'Buy NFT',
+      mostPopular: false,
+    },
+    {
+      title: 'Mega Fan',
+      avalible: 1199,
+      features: [
+        'Access to private members-only Discord channel.',
+        'Privileges and discounts in the MegaFans MegaMart.',
+        'Special perks (giveaways).',
+      ],
+      cta: 'Buy NFT',
+      mostPopular: true,
+    },
+    {
+      title: 'Giga Fan',
+      avalible: 1998,
+      features: [
+        'Access to private members-only Discord channel.',
+        'Privileges and discounts in the MegaFans MegaMart.',
+        'Special perks (giveaways).',
+      ],
+      cta: 'Buy NFT',
+      mostPopular: false,
+    },
+  ],
+}
