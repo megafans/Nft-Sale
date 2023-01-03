@@ -3,7 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { useEffect, useState } from 'react'
 import { BigNumber as BN } from 'ethers'
 import { useToasts } from 'react-toast-notifications'
-import { useContract, useContractWrite, useFeeData, usePrepareContractWrite, useProvider } from 'wagmi'
+import { useAccount, useContract, useContractWrite, useFeeData, usePrepareContractWrite, useProvider } from 'wagmi'
 
 import { ensRegistryABI } from '@/utils/abi'
 
@@ -32,6 +32,7 @@ export const useBuyNFT = () => {
     },
   })
   const { write, isError } = useContractWrite(config)
+  const { connector: activeConnector, isConnected } = useAccount()
 
   const buyNFT = useCallback(() => {
     if (isError) {
@@ -60,5 +61,5 @@ export const useBuyNFT = () => {
 
   const ethPrice = parseInt(data?.formatted.gasPrice!) / 100000000000000
 
-  return { buyNFT, ethPrice }
+  return { buyNFT, ethPrice, connected: activeConnector?.ready && isConnected }
 }

@@ -19,8 +19,8 @@ export const ButtonLink = ({ href = '/', children, variant = 'primary', size = '
         variant === 'primary' && 'bg-current text-white border border-current shadow-md',
         variant === 'transparent' && 'bg-transparent text-white shadow-none',
         size === 'sm' && 'px-3 py-1 text-sm',
-        size === 'lg' && 'px-6 py-4',
-        size === 'md' && 'px-4 py-2'
+        size === 'md' && 'px-4 py-2',
+        size === 'lg' && 'px-6 py-4'
       )}
     >
       <Ink />

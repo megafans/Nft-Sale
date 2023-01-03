@@ -42,7 +42,7 @@ export const BuyNFTModal = () => {
             </ul>
           </div>
 
-          <Button type="button" size="lg" variant="secondary" onClick={() => buyNFT()}>
+          <Button type="button" size="md" variant="secondary" onClick={() => buyNFT()}>
             {tier.cta}
             <ArrowLongRightIcon className="w-6 h-6 ml-10" />
           </Button>

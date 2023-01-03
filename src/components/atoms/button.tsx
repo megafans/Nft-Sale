@@ -26,6 +26,7 @@ export const Button = ({
       type={type}
       className={cslx(
         'relative inline-flex items-center rounded-full text-md font-medium shadow-sm focus:outline-none border',
+        disabled && 'bg-current/60 cursor-not-allowed pointer-events-none',
         variant === 'primary' && 'bg-current border-current text-white',
         variant === 'secondary' && 'bg-purple text-gray-200 border-white/70 hover:bg-purple/90 transform',
         variant === 'clean' && 'bg-transparent text-gray-800',
