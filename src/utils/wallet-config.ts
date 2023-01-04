@@ -30,8 +30,8 @@ const { chains, provider, webSocketProvider } = configureChains(
     jsonRpcProvider({
       priority: 0,
       rpc: () => ({
-        http: `https://eth-mainnet.g.alchemy.com/v2/1ycYKWwImku2UgUNYpQ3QPoMS-Rvzjp5`,
-        webSocket: `wss://eth-mainnet.g.alchemy.com/v2/1ycYKWwImku2UgUNYpQ3QPoMS-Rvzjp5`,
+        http: 'https://eth-mainnet.g.alchemy.com/v2/1ycYKWwImku2UgUNYpQ3QPoMS-Rvzjp5',
+        webSocket: 'wss://eth-mainnet.g.alchemy.com/v2/1ycYKWwImku2UgUNYpQ3QPoMS-Rvzjp5',
       }),
     }),
   ]
