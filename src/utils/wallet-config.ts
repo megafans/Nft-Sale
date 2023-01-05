@@ -4,7 +4,13 @@ import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { publicProvider } from 'wagmi/providers/public'
 import { configureChains, createClient } from 'wagmi'
 import { connectorsForWallets } from '@rainbow-me/rainbowkit'
-import { injectedWallet, rainbowWallet, walletConnectWallet, metaMaskWallet } from '@rainbow-me/rainbowkit/wallets'
+import {
+  injectedWallet,
+  rainbowWallet,
+  walletConnectWallet,
+  metaMaskWallet,
+  coinbaseWallet,
+} from '@rainbow-me/rainbowkit/wallets'
 
 export type AccountProps = {
   account: {
@@ -42,6 +48,7 @@ const connectors = connectorsForWallets([
     groupName: 'Recommended',
     wallets: [
       metaMaskWallet({ chains }),
+      coinbaseWallet({ appName: 'MegaFans', chains }),
       injectedWallet({ chains }),
       rainbowWallet({ chains }),
       walletConnectWallet({ chains }),

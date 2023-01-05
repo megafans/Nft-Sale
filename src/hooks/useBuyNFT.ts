@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useEffect, useState } from 'react'
-import { BigNumber as BN, Overrides, ethers } from 'ethers'
+import { BigNumber as BN, ethers } from 'ethers'
 import { useToasts } from 'react-toast-notifications'
 import {
   useAccount,
@@ -14,6 +14,12 @@ import {
 } from 'wagmi'
 
 import { ensRegistryABI } from '@/utils/abi'
+
+type recklesslySetUnpreparedProps = {
+  recklesslySetUnpreparedOverrides?: {
+    value: BigNumber | string
+  }
+}
 
 export const useBuyNFT = () => {
   const { addToast } = useToasts()
@@ -41,17 +47,16 @@ export const useBuyNFT = () => {
   const { write, isError } = useContractWrite(config)
   const { connector: activeConnector, isConnected } = useAccount()
   const { chain } = useNetwork()
-
   const buyNFT = useCallback(() => {
-    if (isError) {
-      addToast('Transaction failed beause of insufficient funds', {})
-    }
-
-    write?.({
+    const recklesslySetUnprepared = {
       recklesslySetUnpreparedOverrides: {
         value: ethers.utils.parseEther('0.01'),
       },
-    } as Partial<Overrides> & undefined)
+    }
+
+    isError
+      ? addToast('Transaction failed beause of insufficient funds', {})
+      : write?.(recklesslySetUnprepared as recklesslySetUnpreparedProps & undefined)
   }, [addToast, isError, write])
 
   useEffect(() => {
