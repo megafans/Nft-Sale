@@ -5,7 +5,7 @@ import { pricing } from '@/helpers/constants'
 import { useBuyNFT } from '@/hooks'
 
 export const BuyNFTModal = () => {
-  const { buyNFT, ethPrice } = useBuyNFT()
+  const { buyNFT, ethPrice, buyWith } = useBuyNFT()
 
   return (
     <div className="mt-24 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:space-y-0">
@@ -43,7 +43,7 @@ export const BuyNFTModal = () => {
           </div>
 
           <Button type="button" size="md" variant="secondary" onClick={() => buyNFT()}>
-            {tier.cta}
+            {tier.cta} {buyWith}
             <ArrowLongRightIcon className="w-6 h-6 ml-10" />
           </Button>
         </div>

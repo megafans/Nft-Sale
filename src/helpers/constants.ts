@@ -114,7 +114,7 @@ export const pricing = {
         'Privileges and discounts in the MegaFans MegaMart.',
         'Special perks (giveaways).',
       ],
-      cta: 'Buy with Matic',
+      cta: 'Buy with',
       mostPopular: false,
     },
     {
@@ -125,7 +125,7 @@ export const pricing = {
         'Privileges and discounts in the MegaFans MegaMart.',
         'Special perks (giveaways).',
       ],
-      cta: 'Buy with Matic',
+      cta: 'Buy with',
       mostPopular: true,
     },
     {
@@ -136,7 +136,7 @@ export const pricing = {
         'Privileges and discounts in the MegaFans MegaMart.',
         'Special perks (giveaways).',
       ],
-      cta: 'Buy with Matic',
+      cta: 'Buy with',
       mostPopular: false,
     },
   ],

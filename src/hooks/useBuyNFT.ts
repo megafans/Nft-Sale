@@ -1,16 +1,23 @@
 import { useCallback } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useEffect, useState } from 'react'
-import { BigNumber as BN } from 'ethers'
+import { BigNumber as BN, Overrides, ethers } from 'ethers'
 import { useToasts } from 'react-toast-notifications'
-import { useAccount, useContract, useContractWrite, useFeeData, usePrepareContractWrite, useProvider } from 'wagmi'
+import {
+  useAccount,
+  useContract,
+  useContractWrite,
+  useFeeData,
+  useNetwork,
+  usePrepareContractWrite,
+  useProvider,
+} from 'wagmi'
 
 import { ensRegistryABI } from '@/utils/abi'
 
 export const useBuyNFT = () => {
   const { addToast } = useToasts()
   const [, setGas] = useState<BigNumber | undefined>(() => BN.from(1))
-
   const { data } = useFeeData()
   const gasPrice: BigNumber = data?.gasPrice as BigNumber
   const provider = useProvider()
@@ -26,13 +33,14 @@ export const useBuyNFT = () => {
     args: ['0x1', '0x1'],
     //temporary: value based on getLevelPrice, gas limit based on estimatedgas
     overrides: {
-      value: 10,
+      value: ethers.utils.parseEther('0.01'),
       gasPrice,
       gasLimit: BN.from(185264),
     },
   })
   const { write, isError } = useContractWrite(config)
   const { connector: activeConnector, isConnected } = useAccount()
+  const { chain } = useNetwork()
 
   const buyNFT = useCallback(() => {
     if (isError) {
@@ -41,9 +49,9 @@ export const useBuyNFT = () => {
 
     write?.({
       recklesslySetUnpreparedOverrides: {
-        value: 10,
+        value: ethers.utils.parseEther('0.01'),
       },
-    })
+    } as Partial<Overrides> & undefined)
   }, [addToast, isError, write])
 
   useEffect(() => {
@@ -61,5 +69,10 @@ export const useBuyNFT = () => {
 
   const ethPrice = parseInt(data?.formatted.gasPrice!) / 100000000000000
 
-  return { buyNFT, ethPrice, connected: activeConnector?.ready && isConnected }
+  return {
+    buyNFT,
+    ethPrice,
+    connected: activeConnector?.ready && isConnected,
+    buyWith: chain?.nativeCurrency?.name,
+  }
 }
