@@ -2,6 +2,7 @@ import { useUser } from '@/hooks'
 
 export const Balance = () => {
   const { user } = useUser()
+
   return (
     <div className="z-10">
       <div className="flex flex-col items-center justify-center bg-white/20 p-6 rounded-lg">
