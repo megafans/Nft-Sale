@@ -14,8 +14,6 @@ type Values = {
 export const ResetForm = () => {
   const { query } = useRouter()
 
-  console.log(query)
-
   const { reset, loading } = useAuth()
   const { values, errors, touched, handleSubmit, handleChange } = useFormik<Values>({
     initialValues: {
@@ -23,7 +21,7 @@ export const ResetForm = () => {
       [ResetFormInputs.CONFIRM_PASSWORD]: '',
     },
     validationSchema: resetValidationSchema,
-    onSubmit: values => {
+    onSubmit: () => {
       reset(values[ResetFormInputs.PASSWORD], values[ResetFormInputs.CONFIRM_PASSWORD], query.id)
     },
   })

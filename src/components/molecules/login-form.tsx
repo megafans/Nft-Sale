@@ -18,7 +18,7 @@ export const LoginForm = () => {
       [LoginFormInputs.PASSWORD]: '',
     },
     validationSchema: loginValidationSchema,
-    onSubmit: values => {
+    onSubmit: () => {
       login(values[LoginFormInputs.EMAIL], values[LoginFormInputs.PASSWORD])
     },
   })

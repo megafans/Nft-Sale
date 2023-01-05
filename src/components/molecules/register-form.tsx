@@ -15,6 +15,7 @@ export const RegisterForm = () => {
   const { register, loading } = useAuth()
   const { username, isLoading } = useUsername()
   const mounted = useMounted()
+
   const { values, handleSubmit, handleChange, errors, touched } = useFormik<Values>({
     initialValues: {
       [RegisterFormInputs.EMAIL]: '',
@@ -23,7 +24,7 @@ export const RegisterForm = () => {
     },
     enableReinitialize: true,
     validationSchema: registrationValidationSchema,
-    onSubmit: values => {
+    onSubmit: () => {
       register(
         values[RegisterFormInputs.EMAIL],
         values[RegisterFormInputs.PASSWORD],

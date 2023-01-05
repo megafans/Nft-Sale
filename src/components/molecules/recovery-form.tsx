@@ -16,7 +16,7 @@ export const RecoveryForm = () => {
       [RecoveryFormInputs.EMAIL]: '',
     },
     validationSchema: recoveryValidationSchema,
-    onSubmit: values => {
+    onSubmit: () => {
       recovery(values[RecoveryFormInputs.EMAIL])
     },
   })

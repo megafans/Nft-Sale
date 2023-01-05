@@ -24,7 +24,7 @@ export const ProfileEditForm = () => {
     },
     validationSchema: loginValidationSchema,
     enableReinitialize: true,
-    onSubmit: values => {
+    onSubmit: () => {
       edit(
         values[EditProfileFormInputs.EMAIL],
         values[EditProfileFormInputs.USERNAME],
