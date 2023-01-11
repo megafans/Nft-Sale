@@ -1,6 +1,17 @@
+import clsx from 'clsx'
 import { Container, Copyright, Logo, PaymentButtons } from '@/components'
 
 import { navigation } from '@/helpers/constants'
+
+const CopyText = () => (
+  <span>
+    © 2023
+    <a href="https://megafans.com/" target="_blank" rel="noreferrer" className={clsx(['relative ml-1', 'link'])}>
+      Megafans
+    </a>
+    . All rights reserved.
+  </span>
+)
 
 export const Footer = () => {
   return (
@@ -17,7 +28,7 @@ export const Footer = () => {
                 <ul role="list" className="mt-4 space-y-4">
                   {navigation?.quick.map(({ id, name, href }) => (
                     <li key={id}>
-                      <a href={href} className="text-base text-white">
+                      <a href={href} className={clsx(['text-base text-white relative', 'link'])}>
                         {name}
                       </a>
                     </li>
@@ -29,7 +40,7 @@ export const Footer = () => {
                 <ul role="list" className="mt-4 space-y-4">
                   {navigation?.resources.map(({ id, name, href }) => (
                     <li key={id}>
-                      <a href={href} className="text-base text-white">
+                      <a href={href} className={clsx(['text-base text-white relative', 'link'])}>
                         {name}
                       </a>
                     </li>
@@ -45,7 +56,7 @@ export const Footer = () => {
             </div>
           </div>
         </div>
-        <Copyright text="© 2023 Megafans. All rights reserved." />
+        <Copyright text={<CopyText />} />
       </Container>
     </footer>
   )

@@ -49,7 +49,7 @@ export const Profile = () => {
           size="lg"
           variant="primary"
           onClick={() => setCreditCardPaymentModalOpen(!isCreditCardPaymentModalOpen)}
-          disabled={!connected}
+          disabled={isCreditCardPaymentModalOpen}
         >
           Buy NFT with Credit Card
           <ArrowLongRightIcon className="w-6 h-6 ml-10" />
@@ -58,9 +58,19 @@ export const Profile = () => {
 
       {isETHPaymentModalOpen && (
         <Modal
-          title="Buy NFT"
+          title="Buy NFT with ETH"
           open={isETHPaymentModalOpen}
           onClose={() => setETHPaymentModalOpen(!isETHPaymentModalOpen)}
+        >
+          <BuyNFTModal />
+        </Modal>
+      )}
+
+      {isCreditCardPaymentModalOpen && (
+        <Modal
+          title="Buy NFT with Credit Card"
+          open={isCreditCardPaymentModalOpen}
+          onClose={() => setCreditCardPaymentModalOpen(!isCreditCardPaymentModalOpen)}
         >
           <BuyNFTModal />
         </Modal>

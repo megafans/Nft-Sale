@@ -1,5 +1,5 @@
 type CopyrightProps = {
-  text: string
+  text: JSX.Element
 }
 
 export const Copyright = ({ text }: CopyrightProps) => {
