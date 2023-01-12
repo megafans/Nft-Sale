@@ -60,13 +60,7 @@ steps:
   - script: yarn workspaces focus --all
     displayName: Install dependencies
 
-  - script: yarn build
-    displayName: Build application
-    env:
-      NODE_OPTIONS: --max_old_space_size=16384
 
-  - script: yarn workspaces focus --all --production
-    displayName: Prune dependencies
 
   - task: CopyFiles@2
     displayName: 'Copy files to $(Build.BinariesDirectory)'
