@@ -34,13 +34,13 @@ export const ProfileBanner = ({ isEditMode, setEditMode }: ProfileBannerProps) =
               {!isLoading && mounted && <ConnectWalletButton />}
             </div>
             <div className="flex items-start justify-center md:justify-end w-full md:h-40 z-10">
-              <span
+              <div
                 className="inline-flex cursor-pointer py-2 px-4 bg-white/20 rounded-lg"
                 onClick={() => setEditMode(!isEditMode)}
               >
                 <p className="text-base text-white font-medium">Edit profile:</p>
                 <PencilSquareIcon className="text-white h-6 w-6 ml-2" />
-              </span>
+              </div>
             </div>
             <div className="flex items-end justify-center md:justify-start w-full md:h-40">
               <Avatar />

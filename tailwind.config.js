@@ -24,9 +24,9 @@ module.exports = {
     },
     extend: {
       backgroundImage: () => ({
-        site: "url('/bg-site.webp')",
-        footer: "url('/bg-footer.svg')",
-        profile: "url('/bg-profile.svg')",
+        site: 'url("/bg-site.webp")',
+        footer: 'url("/bg-footer.svg")',
+        profile: 'url("/bg-profile.svg")',
       }),
     },
   },
