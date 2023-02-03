@@ -24,13 +24,12 @@ steps:
   displayName: 'yarn install and build'
 
 - task: ArchiveFiles@2
-  displayName: 'Package FunctionApp'
   inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
+    rootFolderOrFile: '$(uiBuild)'
     includeRootFolder: false
+    archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
-
 
 - task: PublishBuildArtifacts@1
   inputs:
