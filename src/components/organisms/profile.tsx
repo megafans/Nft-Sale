@@ -8,6 +8,7 @@ import { Button, Modal, ProfileBanner, ProfileEdit, BuyNFTModal } from '@/compon
 import { useBuyNFT, useUser, useMounted } from '@/hooks'
 
 export const Profile = () => {
+  const { buyNFT } = useBuyNFT()
   const { address } = useAccount()
   const [isETHPaymentModalOpen, setETHPaymentModalOpen] = useState(false)
   const [isCreditCardPaymentModalOpen, setCreditCardPaymentModalOpen] = useState(false)
@@ -39,13 +40,7 @@ export const Profile = () => {
     <>
       {getProfileBannerView()}
       <div className="flex flex-col md:flex-row items-center md:justify-evenly mt-14 space-y-8 md:space-y-0">
-        <Button
-          type="button"
-          size="lg"
-          variant="primary"
-          onClick={() => setETHPaymentModalOpen(!isETHPaymentModalOpen)}
-          disabled={!connected}
-        >
+        <Button type="button" size="lg" variant="primary" onClick={() => buyNFT()} disabled={!connected}>
           Buy NFT with ETH
           <ArrowLongRightIcon className="w-6 h-6 ml-10" />
         </Button>
