@@ -8,13 +8,12 @@ import { Button, Modal, ProfileBanner, ProfileEdit, BuyNFTModal } from '@/compon
 import { useBuyNFT, useUser, useMounted } from '@/hooks'
 
 export const Profile = () => {
-  const { buyNFT } = useBuyNFT()
+  const { buyNFT, connected, nftList } = useBuyNFT()
   const { address } = useAccount()
   const [isETHPaymentModalOpen, setETHPaymentModalOpen] = useState(false)
   const [isCreditCardPaymentModalOpen, setCreditCardPaymentModalOpen] = useState(false)
   const [isEditMode, setEditMode] = useState(false)
   const { user } = useUser()
-  const { connected } = useBuyNFT()
   const mounted = useMounted()
 
   const getProfileBannerView = () => {
@@ -35,6 +34,8 @@ export const Profile = () => {
         null
     }
   }
+
+  console.log('nftList', nftList)
 
   return (
     <>
