@@ -1,69 +1,90 @@
-import { useCallback } from 'react'
-import { BigNumber } from '@ethersproject/bignumber'
-import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useEffect, useState, useCallback } from 'react'
 import { BigNumber as BN } from 'ethers'
 import { useToasts } from 'react-toast-notifications'
 import {
   useAccount,
-  useContract,
+  useContractRead,
+  useContractReads,
   useContractWrite,
   useFeeData,
   useNetwork,
   usePrepareContractWrite,
-  useProvider,
 } from 'wagmi'
 
 import { ensRegistryABI } from '@/utils/abi'
+import { nftSmartContractAddress } from '@/helpers/constants'
 
 export const useBuyNFT = () => {
+  const [nftListData, setNftListData] = useState([])
+  const [nftListLoading, setNftListLoading] = useState(false)
   const { addToast } = useToasts()
-  const [, setGas] = useState<BigNumber | undefined>(() => BN.from(1))
   const { data } = useFeeData()
-  const gasPrice: BigNumber = data?.gasPrice as BigNumber
-  const provider = useProvider()
-  const contract = useContract({
-    address: '0xa0f2056fd69a9be2c4671d5853545a16e030d68f',
+  const baseContract: any = {
+    address: nftSmartContractAddress,
     abi: ensRegistryABI,
-    signerOrProvider: provider,
-  })
+  }
   const { config } = usePrepareContractWrite({
-    address: '0xa0f2056fd69a9be2c4671d5853545a16e030d68f',
-    abi: ensRegistryABI,
-    functionName: 'levelMint',
-    args: ['0x1', '0x1'],
-    //temporary: value based on getLevelPrice, gas limit based on estimatedgas
+    ...baseContract,
+    functionName: 'mint',
+    args: ['1'],
+    //temporary: value based on getLevelPrice, gas limit based on estimated gas
     overrides: {
-      value: 10,
-      gasPrice,
-      gasLimit: BN.from(185264),
+      value: 0.00005 * 10 ** 18,
+      maxFeePerGas: BN.from(167944641594),
     },
   })
-  const { write, isError } = useContractWrite(config)
-  const { connector: activeConnector, isConnected } = useAccount()
+  const { address, connector: activeConnector, isConnected } = useAccount()
+  const { write, isError } = useContractWrite(config as any)
+  const { data: nftIds, isError: isNftListError } = useContractRead({
+    ...baseContract,
+    functionName: 'listMyNFTs',
+    args: [address],
+  })
+
+  const { data: nftList } = useContractReads({
+    contracts: nftIds
+      ? (nftIds as string[]).map((nftId: string) => ({
+          ...baseContract,
+          functionName: 'tokenURI',
+          args: [nftId],
+        }))
+      : [],
+  })
   const { chain } = useNetwork()
   const buyNFT = useCallback(() => {
     isError ? addToast('Transaction failed beause of insufficient funds', {}) : write?.()
   }, [addToast, isError, write])
 
-  useEffect(() => {
-    async function estimateGasAmount() {
-      const amount = await contract?.estimateGas.levelMint(1, 1, {
-        gasLimit: BN.from(185264),
-      })
-      setGas(amount)
-    }
-
-    if (contract) {
-      estimateGasAmount()
-    }
-  }, [contract])
-
   const ethPrice = parseInt(data?.formatted.gasPrice!) / 100000000000000
 
+  const fetchNFTListData = useCallback(async () => {
+    const promises = nftList
+      ? nftList.map(url =>
+          axios
+            .get(url as string)
+            .then(response => response)
+            .then(data => data)
+        )
+      : null
+    const data = await Promise.all(promises ? promises : [])
+    setNftListData(data as any)
+  }, [nftList])
+
+  useEffect(() => {
+    fetchNFTListData()
+      .then(() => setNftListLoading(true))
+      .catch(error => console.log(error))
+      .finally(() => setNftListLoading(false))
+  }, [fetchNFTListData])
+
   return {
+    nftListLoading,
     buyNFT,
     ethPrice,
     connected: activeConnector?.ready && isConnected,
     buyWith: chain?.nativeCurrency?.name,
+    nftList: nftListData.map((nft: any) => nft.data),
+    isNftListError,
   }
 }

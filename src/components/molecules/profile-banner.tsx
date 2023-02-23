@@ -1,8 +1,9 @@
 import { PencilSquareIcon } from '@heroicons/react/24/solid'
 import Image from 'next/image'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 
-import { Avatar, Balance, ConnectWalletButton } from '@/components'
-import { useMounted, useUser } from '@/hooks'
+import { Avatar, Balance } from '@/components'
+import { useUser } from '@/hooks'
 import { blurDataUrl } from '@/helpers/constants'
 
 type ProfileBannerProps = {
@@ -12,7 +13,6 @@ type ProfileBannerProps = {
 
 export const ProfileBanner = ({ isEditMode, setEditMode }: ProfileBannerProps) => {
   const { isLoading } = useUser()
-  const mounted = useMounted()
 
   return (
     <div className="relative">
@@ -40,7 +40,7 @@ export const ProfileBanner = ({ isEditMode, setEditMode }: ProfileBannerProps) =
               </div>
             </div>
             <div className="flex items-start justify-center md:justify-end w-full md:h-40 z-10">
-              {!isLoading && mounted && <ConnectWalletButton />}
+              {!isLoading && <ConnectButton />}
             </div>
             <div className="flex items-end justify-center md:justify-start w-full md:h-40">
               <Avatar />
