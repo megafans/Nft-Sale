@@ -23,7 +23,7 @@ export const ProfileBanner = ({ isEditMode, setEditMode }: ProfileBannerProps) =
               className="h-full w-full object-cover"
               width={1400}
               height={440}
-              src="/profile.svg"
+              src="/profile.png"
               alt="Profile banner"
               blurDataURL={blurDataUrl}
             />
