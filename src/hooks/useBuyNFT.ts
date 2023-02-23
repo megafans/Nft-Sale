@@ -1,27 +1,25 @@
-import { useCallback } from 'react'
-import { BigNumber } from '@ethersproject/bignumber'
-import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useEffect, useState, useCallback } from 'react'
 import { BigNumber as BN } from 'ethers'
 import { useToasts } from 'react-toast-notifications'
 import {
   useAccount,
-  useContract,
   useContractRead,
   useContractReads,
   useContractWrite,
   useFeeData,
   useNetwork,
   usePrepareContractWrite,
-  useProvider,
 } from 'wagmi'
 
 import { ensRegistryABI } from '@/utils/abi'
 import { nftSmartContractAddress } from '@/helpers/constants'
 
 export const useBuyNFT = () => {
+  const [nftListData, setNftListData] = useState([])
+  const [nftListLoading, setNftListLoading] = useState(false)
   const { addToast } = useToasts()
   const { data } = useFeeData()
-  const gasPrice: BigNumber = data?.gasPrice as BigNumber
   const baseContract: any = {
     address: nftSmartContractAddress,
     abi: ensRegistryABI,
@@ -43,12 +41,15 @@ export const useBuyNFT = () => {
     functionName: 'listMyNFTs',
     args: [address],
   })
+
   const { data: nftList } = useContractReads({
-    contracts: (nftIds as string[]).map((nftId: string) => ({
-      ...baseContract,
-      functionName: 'tokenURI',
-      args: [nftId],
-    })),
+    contracts: nftIds
+      ? (nftIds as string[]).map((nftId: string) => ({
+          ...baseContract,
+          functionName: 'tokenURI',
+          args: [nftId],
+        }))
+      : [],
   })
   const { chain } = useNetwork()
   const buyNFT = useCallback(() => {
@@ -57,12 +58,33 @@ export const useBuyNFT = () => {
 
   const ethPrice = parseInt(data?.formatted.gasPrice!) / 100000000000000
 
+  const fetchNFTListData = useCallback(async () => {
+    const promises = nftList
+      ? nftList.map(url =>
+          axios
+            .get(url as string)
+            .then(response => response)
+            .then(data => data)
+        )
+      : null
+    const data = await Promise.all(promises ? promises : [])
+    setNftListData(data as any)
+  }, [nftList])
+
+  useEffect(() => {
+    fetchNFTListData()
+      .then(() => setNftListLoading(true))
+      .catch(error => console.log(error))
+      .finally(() => setNftListLoading(false))
+  }, [fetchNFTListData])
+
   return {
+    nftListLoading,
     buyNFT,
     ethPrice,
     connected: activeConnector?.ready && isConnected,
     buyWith: chain?.nativeCurrency?.name,
-    nftList,
+    nftList: nftListData.map((nft: any) => nft.data),
     isNftListError,
   }
 }

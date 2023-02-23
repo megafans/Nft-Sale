@@ -1,20 +1,15 @@
 import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
 import { useState } from 'react'
-import WertModule from '@wert-io/module-react-component'
 import { useAccount } from 'wagmi'
-import { v4 as uuid } from 'uuid'
 
-import { Button, Modal, ProfileBanner, ProfileEdit, BuyNFTModal } from '@/components'
-import { useBuyNFT, useUser, useMounted } from '@/hooks'
+import { Button, Modal, NftList, ProfileBanner, ProfileEdit } from '@/components'
+import { useBuyNFT, useUser } from '@/hooks'
 
 export const Profile = () => {
-  const { buyNFT, connected, nftList } = useBuyNFT()
-  const { address } = useAccount()
-  const [isETHPaymentModalOpen, setETHPaymentModalOpen] = useState(false)
-  const [isCreditCardPaymentModalOpen, setCreditCardPaymentModalOpen] = useState(false)
+  const { buyNFT, connected, nftList, nftListLoading } = useBuyNFT()
   const [isEditMode, setEditMode] = useState(false)
   const { user } = useUser()
-  const mounted = useMounted()
+  const { isConnected } = useAccount()
 
   const getProfileBannerView = () => {
     switch (isEditMode) {
@@ -45,58 +40,18 @@ export const Profile = () => {
           Buy NFT with ETH
           <ArrowLongRightIcon className="w-6 h-6 ml-10" />
         </Button>
-        <Button
-          type="button"
-          size="lg"
-          variant="primary"
-          onClick={() => setCreditCardPaymentModalOpen(!isCreditCardPaymentModalOpen)}
-          disabled={!connected}
-        >
-          Buy NFT with Credit Card
-          <ArrowLongRightIcon className="w-6 h-6 ml-10" />
-        </Button>
       </div>
-
-      <div className="flex justify-center items-center mt-12">
-        {mounted && isCreditCardPaymentModalOpen && (
-          <WertModule
-            options={{
-              partner_id: '01GKW611J71EF5B8H9MS00G6M4',
-              container_id: 'widget',
-              origin: 'https://sandbox.wert.io',
-              width: 400,
-              height: 580,
-              theme: 'dark',
-              lang: 'en',
-              color_background: '#350a44',
-              color_buttons: '#EE194B',
-              buttons_border_radius: '40',
-              color_buttons_text: '#f9fafb',
-              color_main_text: '#f9fafb',
-              color_secondary_text: '#f9fafb',
-              color_icons: '#f9fafb',
-              commodities: 'ETH:Ethereum-Goerli,MATIC:Polygon',
-              click_id: uuid(),
-              onReady: () => {
-                console.log('Wert Widget is ready')
-              },
-              extra: {
-                wallets: [{ address: address, name: 'MetaMask' }],
-              },
-            }}
-          />
+      <div>
+        {isConnected ? (
+          <>
+            {nftListLoading && <p className="text-white">Loading...</p>}
+            <h1 className="text-2xl font-bold mt-20 text-white">My NFTs:</h1>
+            <NftList nftList={nftList} />
+          </>
+        ) : (
+          <p className="text-2xl font-bold mt-20 text-white text-center">Please connect your wallet to see your NFTs</p>
         )}
       </div>
-
-      {isETHPaymentModalOpen && (
-        <Modal
-          title="Buy NFT with ETH"
-          open={isETHPaymentModalOpen}
-          onClose={() => setETHPaymentModalOpen(!isETHPaymentModalOpen)}
-        >
-          <BuyNFTModal />
-        </Modal>
-      )}
     </>
   )
 }

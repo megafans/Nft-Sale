@@ -42,6 +42,7 @@ export const App = ({ Component, pageProps }: AppPropsWithLayout) => {
         <ErrorBoundary>
           <WagmiConfig client={wagmiClient}>
             <RainbowKitProvider
+              showRecentTransactions={true}
               coolMode
               theme={darkTheme({
                 accentColor: 'black',
