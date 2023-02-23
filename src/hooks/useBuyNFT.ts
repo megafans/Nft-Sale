@@ -17,7 +17,7 @@ import { nftSmartContractAddress } from '@/helpers/constants'
 
 export const useBuyNFT = () => {
   const [nftListData, setNftListData] = useState([])
-  const [nftListLoading, setNftListLoading] = useState(false)
+  const [nftListLoading, setNftListLoading] = useState(true)
   const { addToast } = useToasts()
   const { data } = useFeeData()
   const baseContract: any = {
@@ -59,23 +59,21 @@ export const useBuyNFT = () => {
   const ethPrice = parseInt(data?.formatted.gasPrice!) / 100000000000000
 
   const fetchNFTListData = useCallback(async () => {
-    const promises = nftList
-      ? nftList.map(url =>
-          axios
-            .get(url as string)
-            .then(response => response)
-            .then(data => data)
-        )
-      : null
+    const promises =
+      nftList &&
+      nftList.map(url =>
+        axios
+          .get(url as string)
+          .then(response => response)
+          .then(data => data)
+      )
     const data = await Promise.all(promises ? promises : [])
     setNftListData(data as any)
+    setNftListLoading(false)
   }, [nftList])
 
   useEffect(() => {
     fetchNFTListData()
-      .then(() => setNftListLoading(true))
-      .catch(error => console.log(error))
-      .finally(() => setNftListLoading(false))
   }, [fetchNFTListData])
 
   return {

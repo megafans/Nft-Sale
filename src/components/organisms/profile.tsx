@@ -2,7 +2,7 @@ import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
 import { useState } from 'react'
 import { useAccount } from 'wagmi'
 
-import { Button, Modal, NftList, ProfileBanner, ProfileEdit } from '@/components'
+import { Button, Modal, NftList, ProfileBanner, ProfileEdit, Spinner } from '@/components'
 import { useBuyNFT, useMounted, useUser } from '@/hooks'
 
 export const Profile = () => {
@@ -32,6 +32,7 @@ export const Profile = () => {
   }
 
   console.log('nftList', nftList)
+  console.log('nftListLoading', nftListLoading)
 
   return (
     <>
@@ -45,9 +46,14 @@ export const Profile = () => {
       <div>
         {isConnected && mounted ? (
           <>
-            {nftListLoading && <p className="text-white">Loading...</p>}
-            <h1 className="text-2xl font-bold mt-20 text-white">My NFTs:</h1>
-            <NftList nftList={nftList} />
+            {nftListLoading ? (
+              <Spinner />
+            ) : (
+              <>
+                <h1 className="text-2xl font-bold mt-20 text-white">My NFTs:</h1>
+                <NftList nftList={nftList} />
+              </>
+            )}
           </>
         ) : (
           <p className="text-2xl font-bold mt-20 text-white text-center">Please connect your wallet to see your NFTs</p>
