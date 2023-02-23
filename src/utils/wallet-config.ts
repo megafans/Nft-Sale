@@ -1,4 +1,4 @@
-import { mainnet, polygon, optimism } from 'wagmi/chains'
+import { mainnet, goerli } from 'wagmi/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { publicProvider } from 'wagmi/providers/public'
@@ -29,7 +29,7 @@ export type AccountProps = {
 const apiKey = '1ycYKWwImku2UgUNYpQ3QPoMS-Rvzjp5'
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [mainnet, polygon, optimism],
+  [mainnet, goerli],
   [
     alchemyProvider({ apiKey, priority: 0, weight: 1 }),
     publicProvider({ weight: 2 }),

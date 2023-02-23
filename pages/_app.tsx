@@ -5,7 +5,7 @@ import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit'
 import type { AppProps } from 'next/app'
 import type { NextPage } from 'next'
 
-import { Layout, NoAccess, ErrorBoundary } from '@/components'
+import { Layout, NoAccess } from '@/components'
 import { wagmiClient, chains } from '@/utils/wallet-config'
 
 import '@rainbow-me/rainbowkit/styles.css'
@@ -30,7 +30,7 @@ export const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       </Layout>
     )
   }
-
+  console.log('chains', chains)
   return getLayout(
     <SWRConfig
       value={{
@@ -39,25 +39,24 @@ export const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       }}
     >
       <StrictMode>
-        <ErrorBoundary>
-          <WagmiConfig client={wagmiClient}>
-            <RainbowKitProvider
-              coolMode
-              theme={darkTheme({
-                accentColor: 'black',
-                borderRadius: 'medium',
-                overlayBlur: 'small',
-              })}
-              chains={chains}
-              modalSize="compact"
-              appInfo={{
-                appName: 'MegaFans',
-              }}
-            >
-              <Component {...pageProps} />
-            </RainbowKitProvider>
-          </WagmiConfig>
-        </ErrorBoundary>
+        <WagmiConfig client={wagmiClient}>
+          <RainbowKitProvider
+            showRecentTransactions={true}
+            coolMode
+            theme={darkTheme({
+              accentColor: 'black',
+              borderRadius: 'medium',
+              overlayBlur: 'small',
+            })}
+            chains={chains}
+            modalSize="compact"
+            appInfo={{
+              appName: 'MegaFans',
+            }}
+          >
+            <Component {...pageProps} />
+          </RainbowKitProvider>
+        </WagmiConfig>
       </StrictMode>
     </SWRConfig>
   )

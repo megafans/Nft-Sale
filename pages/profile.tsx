@@ -23,12 +23,4 @@ Page.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>
 }
 
-export const getStaticProps: GetStaticProps = () => {
-  return {
-    props: {
-      protected: true,
-    },
-  }
-}
-
 export default Page

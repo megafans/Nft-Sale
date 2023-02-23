@@ -141,3 +141,5 @@ export const pricing = {
     },
   ],
 }
+
+export const nftSmartContractAddress = '0x0F006A670651F0A5d1677b680ad8Aa0b72FE60B0'
