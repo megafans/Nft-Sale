@@ -3,13 +3,14 @@ import { useState } from 'react'
 import { useAccount } from 'wagmi'
 
 import { Button, Modal, NftList, ProfileBanner, ProfileEdit } from '@/components'
-import { useBuyNFT, useUser } from '@/hooks'
+import { useBuyNFT, useMounted, useUser } from '@/hooks'
 
 export const Profile = () => {
   const { buyNFT, connected, nftList, nftListLoading } = useBuyNFT()
   const [isEditMode, setEditMode] = useState(false)
   const { user } = useUser()
   const { isConnected } = useAccount()
+  const mounted = useMounted()
 
   const getProfileBannerView = () => {
     switch (isEditMode) {
@@ -42,7 +43,7 @@ export const Profile = () => {
         </Button>
       </div>
       <div>
-        {isConnected ? (
+        {isConnected && mounted ? (
           <>
             {nftListLoading && <p className="text-white">Loading...</p>}
             <h1 className="text-2xl font-bold mt-20 text-white">My NFTs:</h1>
