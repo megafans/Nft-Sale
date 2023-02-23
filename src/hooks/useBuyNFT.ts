@@ -24,6 +24,7 @@ export const useBuyNFT = () => {
     address: nftSmartContractAddress,
     abi: ensRegistryABI,
   }
+  const feeData = useFeeData()
   const { config } = usePrepareContractWrite({
     ...baseContract,
     functionName: 'mint',
@@ -31,7 +32,7 @@ export const useBuyNFT = () => {
     //temporary: value based on getLevelPrice, gas limit based on estimated gas
     overrides: {
       value: 0.00005 * 10 ** 18,
-      maxFeePerGas: BN.from(167944641594),
+      maxFeePerGas: feeData?.data?.maxFeePerGas || BN.from(507944641594),
     },
   })
   const { address, connector: activeConnector, isConnected } = useAccount()
