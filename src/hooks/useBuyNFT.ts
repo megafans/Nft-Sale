@@ -31,8 +31,8 @@ export const useBuyNFT = () => {
     args: ['1'],
     //temporary: value based on getLevelPrice, gas limit based on estimated gas
     overrides: {
-      value: 0.00005 * 10 ** 18,
-      gasPrice: feeData?.data?.gasPrice,
+      value: 0.0007 * 10 ** 18,
+      gasPrice: feeData?.data?.gasPrice || BN.from(0),
     },
   })
   const { address, connector: activeConnector, isConnected } = useAccount()
