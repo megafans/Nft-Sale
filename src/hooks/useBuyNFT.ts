@@ -31,7 +31,7 @@ export const useBuyNFT = () => {
     args: ['1'],
     //temporary: value based on getLevelPrice, gas limit based on estimated gas
     overrides: {
-      value: 0.0007 * 10 ** 18,
+      value: 0.0005 * 10 ** 18,
       gasPrice: feeData?.data?.gasPrice || BN.from(0),
     },
   })
@@ -55,7 +55,7 @@ export const useBuyNFT = () => {
   const { chain } = useNetwork()
   const buyNFT = useCallback(() => {
     isError ? addToast('Transaction failed beause of insufficient funds', {}) : write?.()
-  }, [addToast, isError, write])
+  }, [addToast, isError, write, feeData?.data?.gasPrice])
 
   const ethPrice = parseInt(data?.formatted.gasPrice!) / 100000000000000
 
