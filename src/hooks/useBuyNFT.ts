@@ -1,16 +1,8 @@
 import axios from 'axios'
 import { useEffect, useState, useCallback } from 'react'
-import { BigNumber as BN } from 'ethers'
+import { BigNumber as BN, ethers } from 'ethers'
 import { useToasts } from 'react-toast-notifications'
-import {
-  useAccount,
-  useContractRead,
-  useContractReads,
-  useContractWrite,
-  useFeeData,
-  useNetwork,
-  usePrepareContractWrite,
-} from 'wagmi'
+import { useAccount, useContractRead, useContractReads, useContractWrite, useFeeData, useNetwork } from 'wagmi'
 
 import { ensRegistryABI } from '@/utils/abi'
 import { nftSmartContractAddress } from '@/helpers/constants'
@@ -18,31 +10,31 @@ import { nftSmartContractAddress } from '@/helpers/constants'
 export const useBuyNFT = () => {
   const [nftListData, setNftListData] = useState([])
   const [nftListLoading, setNftListLoading] = useState(true)
+  const [mintedTokenId, setMintedTokenId] = useState<string>()
+  const [mintLoading, setMintLoading] = useState(false)
   const { addToast } = useToasts()
   const { data } = useFeeData()
   const baseContract: any = {
     address: nftSmartContractAddress,
     abi: ensRegistryABI,
   }
-  const feeData = useFeeData()
-  const { config } = usePrepareContractWrite({
+  const { writeAsync: mint, error: mintError } = useContractWrite({
     ...baseContract,
     functionName: 'mint',
     args: ['1'],
-    //temporary: value based on getLevelPrice, gas limit based on estimated gas
-    overrides: {
-      value: 0.0005 * 10 ** 18,
-      gasPrice: feeData?.data?.gasPrice || BN.from(0),
-    },
+    overrides: { value: ethers.utils.parseEther('0.005') },
   })
   const { address, connector: activeConnector, isConnected } = useAccount()
-  const { write, isError } = useContractWrite(config as any)
   const { data: nftIds, isError: isNftListError } = useContractRead({
     ...baseContract,
     functionName: 'listMyNFTs',
     args: [address],
   })
-
+  const { data: mintedNftDetails, isError: mintedNftDetailsError } = useContractRead({
+    ...baseContract,
+    functionName: 'tokenURI',
+    args: [mintedTokenId],
+  })
   const { data: nftList } = useContractReads({
     contracts: nftIds
       ? (nftIds as string[]).map((nftId: string) => ({
@@ -53,9 +45,23 @@ export const useBuyNFT = () => {
       : [],
   })
   const { chain } = useNetwork()
-  const buyNFT = useCallback(() => {
-    isError ? addToast('Transaction failed beause of insufficient funds', {}) : write?.()
-  }, [addToast, isError, write, feeData?.data?.gasPrice])
+
+  const buyNFT = async () => {
+    try {
+      if (mint) {
+        setMintLoading(true)
+        const tx = await mint({})
+        const receipt = await tx.wait()
+        const mintedTokenIdHex: string = await receipt?.logs[0].topics[3]
+        const mintedTokenId = parseInt(mintedTokenIdHex)
+        setMintedTokenId(mintedTokenIdHex)
+      }
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setMintLoading(false)
+    }
+  }
 
   const ethPrice = parseInt(data?.formatted.gasPrice!) / 100000000000000
 
