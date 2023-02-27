@@ -26,9 +26,9 @@ export const Home = () => {
           </div>
         </div>
       </div>
-      <div className="relative h-64 w-full sm:h-72 md:h-96 lg:absolute lg:inset-y-0 lg:right-0 lg:h-full lg:w-7/12 hidden md:block ">
+      <div className="h-64 w-full sm:h-72 md:h-96 lg:absolute lg:inset-y-0 lg:right-0 lg:h-full lg:w-7/12 hidden md:block ">
         <Image
-          className="absolute inset-0 h-full w-full object-contain"
+          className="h-full w-full rounded-2xl md:-rotate-6 shadow-2xl"
           height={400}
           width={400}
           src="/hero-home.png"

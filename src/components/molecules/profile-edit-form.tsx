@@ -1,15 +1,14 @@
 import { useFormik } from 'formik'
 import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
 
-import { Button, Input, InputFile, LoadingState, Select } from '@/components'
-import { EditProfileFormInputs, EditProfileFormLabels, loginValidationSchema } from '@/helpers/forms'
+import { Button, Input, LoadingState, Select } from '@/components'
+import { EditProfileFormInputs, EditProfileFormLabels, editProfileValidationSchema } from '@/helpers/forms'
 import { useCountries, useUser } from '@/hooks'
 
 type Values = {
   [EditProfileFormInputs.EMAIL]: string
   [EditProfileFormInputs.USERNAME]: string
   [EditProfileFormInputs.COUNTRY]: string
-  [EditProfileFormInputs.AVATAR]: string
 }
 
 export const ProfileEditForm = () => {
@@ -19,10 +18,9 @@ export const ProfileEditForm = () => {
     initialValues: {
       [EditProfileFormInputs.EMAIL]: user?.email || '',
       [EditProfileFormInputs.USERNAME]: user?.username || '',
-      [EditProfileFormInputs.COUNTRY]: user?.countryName || '',
-      [EditProfileFormInputs.AVATAR]: user?.image || '',
+      [EditProfileFormInputs.COUNTRY]: user?.countryCode || '',
     },
-    validationSchema: loginValidationSchema,
+    validationSchema: editProfileValidationSchema,
     enableReinitialize: true,
     onSubmit: () => {
       edit(
@@ -33,29 +31,10 @@ export const ProfileEditForm = () => {
     },
   })
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader()
-      reader.onload = () => {
-        if (reader.result) {
-          handleChange({
-            target: {
-              name: EditProfileFormInputs.AVATAR,
-              value: reader.result,
-            },
-          })
-        }
-      }
-      reader.readAsDataURL(e.target.files[0])
-
-      console.log(values[EditProfileFormInputs.AVATAR])
-    }
-  }
-
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex">
-        <div className="w-7/12 space-y-8 md:pr-2 text-left">
+      <div className="flex justify-center">
+        <div className="md:pr-2 text-left space-y-3 w-3/4">
           <Input
             name={EditProfileFormInputs.EMAIL}
             type="text"
@@ -87,15 +66,6 @@ export const ProfileEditForm = () => {
             id={EditProfileFormInputs.COUNTRY}
             label={EditProfileFormLabels.COUNTRY}
             value={values[EditProfileFormInputs.COUNTRY]}
-          />
-        </div>
-        <div className="w-1/2 md:pl-2 md:pt-7">
-          <InputFile
-            onChange={handleFileChange}
-            name={EditProfileFormInputs.AVATAR}
-            id={EditProfileFormInputs.AVATAR}
-            label={EditProfileFormLabels.AVATAR}
-            value={values[EditProfileFormInputs.AVATAR]}
           />
         </div>
       </div>

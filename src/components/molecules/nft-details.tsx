@@ -36,7 +36,7 @@ export const NFTDetails = () => {
       <div className="flex flex-col md:flex-row mt-14">
         <div className="w-1/2">
           <img
-            className="aspect-[1/1] w-full rounded-2xl object-cover"
+            className="aspect-[1/1] w-full rounded-2xl object-cover md:-rotate-6"
             src={`https://ipfs.io/ipfs${nft?.image.replace('ipfs:/', '')}`}
             alt=""
           />

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useMemo } from 'react'
 import { ethers } from 'ethers'
 import { useToasts } from 'react-toast-notifications'
 import { useAccount, useContractRead, useContractReads, useContractWrite, useNetwork } from 'wagmi'
@@ -95,7 +95,7 @@ export const useBuyNFT = () => {
     buyNFT,
     connected: activeConnector?.ready && isConnected,
     buyWith: chain?.nativeCurrency?.name,
-    nftList: nftListData.map((nft: any) => nft.data),
+    nftList: useMemo(() => nftListData.map((nft: any) => nft.data), [nftListData]),
     isNftListError,
   }
 }

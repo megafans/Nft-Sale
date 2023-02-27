@@ -10,10 +10,10 @@ import { fetcher } from '@/utils/fetcher'
 import { userAtom } from '@/state/atoms'
 
 export const useUser = () => {
+  const { addToast } = useToasts()
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useRecoilState(userAtom)
   const { address, isConnecting } = useAccount()
-  const { addToast } = useToasts()
   const { push } = useRouter()
   const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
@@ -22,22 +22,26 @@ export const useUser = () => {
     ([url, token]) => fetcher(url, token)
   )
 
+  useEffect(() => {
+    setUser(data?.data)
+  }, [data, setUser])
+
+  const userData = useMemo(() => user, [user])
+
   const edit = async (email: string, username: string, countries: string) => {
-    const encodedData = Buffer.from(`${email}:${username}`).toString('base64')
     setLoading(true)
-    const response = await fetch(`${api?.URL}Authorization/login?appGameUid=${api.TOKEN}`, {
+    const response = await fetch(`${api?.URL}api/Users/edit_profile`, {
       method: 'POST',
-      body: JSON.stringify({ email, username, countries }),
+      body: JSON.stringify({ email, username, countries, imageUri: userData.image }),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Basic ${encodedData}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     })
     const data = await response.json()
     try {
-      typeof window !== 'undefined' ? localStorage.setItem('token', data?.data?.token) : null
-      !data.success && addToast(data.message, {})
       data.success && push('/')
+      addToast('User has been updated!', {})
     } catch (error) {
       console.log(error)
     } finally {
@@ -45,12 +49,6 @@ export const useUser = () => {
     }
     return data
   }
-
-  useEffect(() => {
-    setUser(data?.data)
-  }, [data, setUser])
-
-  const userData = useMemo(() => user, [user])
 
   return {
     user: userData,

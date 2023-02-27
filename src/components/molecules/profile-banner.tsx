@@ -31,16 +31,16 @@ export const ProfileBanner = ({ isEditMode, setEditMode }: ProfileBannerProps) =
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 p-5 md:p-10">
             <div className="flex items-start justify-center md:justify-start w-full md:h-40">
+              {!isLoading && <ConnectButton />}
+            </div>
+            <div className="flex items-start justify-center md:justify-end w-full md:h-40 z-10">
               <div
-                className="inline-flex cursor-pointer py-2 px-4 bg-white/20 rounded-lg"
+                className="inline-flex cursor-pointer py-2 px-4 bg-purple/60 rounded-lg"
                 onClick={() => setEditMode(!isEditMode)}
               >
                 <p className="text-base text-white font-medium">Edit profile:</p>
                 <PencilSquareIcon className="text-white h-6 w-6 ml-2" />
               </div>
-            </div>
-            <div className="flex items-start justify-center md:justify-end w-full md:h-40 z-10">
-              {!isLoading && <ConnectButton />}
             </div>
             <div className="flex items-end justify-center md:justify-start w-full md:h-40">
               <Avatar />
