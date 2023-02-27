@@ -1,8 +1,8 @@
 import { ReactElement } from 'react'
 import Head from 'next/head'
 
-import { Layout, Profile } from '@/components'
-import { NextPageWithLayout } from './_app'
+import { Layout, Congratulations } from '@/components'
+import { NextPageWithLayout } from '../_app'
 
 const Page: NextPageWithLayout = () => {
   return (
@@ -13,7 +13,7 @@ const Page: NextPageWithLayout = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Profile />
+      <Congratulations />
     </>
   )
 }

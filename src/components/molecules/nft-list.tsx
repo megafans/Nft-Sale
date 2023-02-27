@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import React from 'react'
+import { ArrowLongRightIcon } from '@heroicons/react/24/outline'
+
+import { ButtonLink } from '@/components'
 
 type NftListProps = {
   nftList: {
@@ -30,8 +32,15 @@ export const NftList = ({ nftList }: NftListProps) => {
             src={`https://ipfs.io/ipfs${nft.image.replace('ipfs:/', '')}`}
             alt=""
           />
-          <h3 className="mt-6 text-lg font-semibold leading-8 tracking-tight text-white">{nft.name}</h3>
-          <p className="text-base leading-7 text-white">{nft.description}</p>
+          <div className="flex">
+            <div className="flex-1">
+              <h3 className="mt-6 text-lg font-semibold leading-8 tracking-tight text-white">{nft.name}</h3>
+              <p className="text-base leading-7 text-white">{nft.description}</p>
+            </div>
+            <ButtonLink href={`/nft/${nft.id}`} variant="transparent" size="sm">
+              <ArrowLongRightIcon className="w-6 h-6 ml-4" />
+            </ButtonLink>
+          </div>
         </li>
       ))}
     </ul>

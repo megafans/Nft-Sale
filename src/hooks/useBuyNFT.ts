@@ -1,23 +1,25 @@
 import axios from 'axios'
 import { useEffect, useState, useCallback } from 'react'
-import { BigNumber as BN, ethers } from 'ethers'
+import { ethers } from 'ethers'
 import { useToasts } from 'react-toast-notifications'
-import { useAccount, useContractRead, useContractReads, useContractWrite, useFeeData, useNetwork } from 'wagmi'
+import { useAccount, useContractRead, useContractReads, useContractWrite, useNetwork } from 'wagmi'
+import { useRouter } from 'next/router'
 
 import { ensRegistryABI } from '@/utils/abi'
 import { nftSmartContractAddress } from '@/helpers/constants'
 
 export const useBuyNFT = () => {
+  const router = useRouter()
   const [nftListData, setNftListData] = useState([])
   const [nftListLoading, setNftListLoading] = useState(true)
   const [mintedTokenId, setMintedTokenId] = useState<string>()
   const [mintLoading, setMintLoading] = useState(false)
   const { addToast } = useToasts()
-  const { data } = useFeeData()
   const baseContract: any = {
     address: nftSmartContractAddress,
     abi: ensRegistryABI,
   }
+
   const { writeAsync: mint, error: mintError } = useContractWrite({
     ...baseContract,
     functionName: 'mint',
@@ -35,6 +37,7 @@ export const useBuyNFT = () => {
     functionName: 'tokenURI',
     args: [mintedTokenId],
   })
+
   const { data: nftList } = useContractReads({
     contracts: nftIds
       ? (nftIds as string[]).map((nftId: string) => ({
@@ -43,6 +46,7 @@ export const useBuyNFT = () => {
           args: [nftId],
         }))
       : [],
+    suspense: true,
   })
   const { chain } = useNetwork()
 
@@ -52,22 +56,24 @@ export const useBuyNFT = () => {
         setMintLoading(true)
         const tx = await mint({})
         const receipt = await tx.wait()
-        const mintedTokenIdHex: string = await receipt?.logs[0].topics[3]
+        const mintedTokenIdHex: string = receipt?.logs[0].topics[3]
         const mintedTokenId = parseInt(mintedTokenIdHex)
         setMintedTokenId(mintedTokenIdHex)
+        mintedTokenId && router.push('/nft/confirmation')
       }
     } catch (error) {
-      console.error(error)
+      error && mintError?.message.includes('insufficient funds')
+        ? addToast('Transaction failed beause of insufficient funds', {})
+        : addToast('Transaction failed', {})
     } finally {
       setMintLoading(false)
     }
   }
 
-  const ethPrice = parseInt(data?.formatted.gasPrice!) / 100000000000000
-
   const fetchNFTListData = useCallback(async () => {
     const promises =
       nftList &&
+      nftList[0] !== null &&
       nftList.map(url =>
         axios
           .get(url as string)
@@ -85,8 +91,8 @@ export const useBuyNFT = () => {
 
   return {
     nftListLoading,
+    mintLoading,
     buyNFT,
-    ethPrice,
     connected: activeConnector?.ready && isConnected,
     buyWith: chain?.nativeCurrency?.name,
     nftList: nftListData.map((nft: any) => nft.data),

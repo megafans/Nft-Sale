@@ -1,16 +1,22 @@
 import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useAccount } from 'wagmi'
 
 import { Button, Modal, NftList, ProfileBanner, ProfileEdit, Spinner } from '@/components'
 import { useBuyNFT, useMounted, useUser } from '@/hooks'
+import { sendUserWallet } from '@/utils/repository'
 
 export const Profile = () => {
   const { buyNFT, connected, nftList, nftListLoading } = useBuyNFT()
   const [isEditMode, setEditMode] = useState(false)
   const { user } = useUser()
-  const { isConnected } = useAccount()
   const mounted = useMounted()
+
+  const { isConnected } = useAccount({
+    onConnect({ address, isReconnected }) {
+      !isReconnected && sendUserWallet(address)
+    },
+  })
 
   const getProfileBannerView = () => {
     switch (isEditMode) {
@@ -31,9 +37,6 @@ export const Profile = () => {
     }
   }
 
-  console.log('nftList', nftList)
-  console.log('nftListLoading', nftListLoading)
-
   return (
     <>
       {getProfileBannerView()}
@@ -49,10 +52,10 @@ export const Profile = () => {
             {nftListLoading ? (
               <Spinner />
             ) : (
-              <>
+              <Suspense fallback={<Spinner />}>
                 <h1 className="text-2xl font-bold mt-20 text-white">My NFTs:</h1>
                 <NftList nftList={nftList} />
-              </>
+              </Suspense>
             )}
           </>
         ) : (
