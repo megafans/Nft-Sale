@@ -1,4 +1,3 @@
-export * from './buy-nft'
 export * from './congratulations'
 export * from './error-boundary'
 export * from './footer'
