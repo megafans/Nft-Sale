@@ -5,7 +5,7 @@ import { pricing } from '@/helpers/constants'
 import { useBuyNFT } from '@/hooks'
 
 export const BuyNFTModal = () => {
-  const { buyNFT, ethPrice, buyWith } = useBuyNFT()
+  const { buyNFT, buyWith } = useBuyNFT()
 
   return (
     <div className="mt-24 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:space-y-0">
@@ -25,7 +25,6 @@ export const BuyNFTModal = () => {
             ) : null}
             <span className="inline-flex mt-3 text-gray-200">
               <EthIcon colorClass="fill-indigo-400" />
-              {ethPrice}
             </span>
             <p className="mt-4 flex justify-center items-baseline text-gray-200">
               <span className="mr-1 text-xl font-semibold uppercase">avalible:</span>
