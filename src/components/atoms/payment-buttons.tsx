@@ -10,7 +10,7 @@ export const PaymentButtons = () => {
         <div className="flex items-center relative cursor-pointer mr-6 bg-white/10 rounded-md px-6" key={id}>
           <Ink radius={50} opacity={0.5} />
           <Image
-            className="h-auto w-10"
+            className="h-auto w-10 "
             src={src}
             alt={alt}
             width={48}

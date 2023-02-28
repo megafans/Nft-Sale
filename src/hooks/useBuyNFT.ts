@@ -43,7 +43,7 @@ export const useBuyNFT = () => {
       ? (nftIds as string[]).map((nftId: string) => ({
           ...baseContract,
           functionName: 'tokenURI',
-          args: [nftId],
+          args: [nftId.toString()],
         }))
       : [],
     suspense: true,

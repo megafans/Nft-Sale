@@ -41,16 +41,17 @@ export const defaultUser = {
 }
 
 export const socialButtons = [
-  { id: uuid(), src: '/social/discord.png', alt: 'Discord', href: '#' },
-  { id: uuid(), src: '/social/facebook.png', alt: 'Facebook', href: '#' },
-  { id: uuid(), src: '/social/twitter.png', alt: 'Twitter', href: '#' },
-  { id: uuid(), src: '/social/telegram.png', alt: 'Telegram', href: '#' },
+  { id: uuid(), src: '/social/discord.png', alt: 'Discord', href: 'https://discord.com/invite/sEScd9sy6y' },
+  { id: uuid(), src: '/social/facebook.png', alt: 'Facebook', href: 'https://www.facebook.com/MegafansEsports/' },
+  { id: uuid(), src: '/social/twitter.png', alt: 'Twitter', href: 'https://twitter.com/MegafansEsports' },
+  { id: uuid(), src: '/social/telegram.png', alt: 'Telegram', href: 'https://t.me/Megafans_eSports' },
   { id: uuid(), src: '/social/instagram.png', alt: 'Instagram', href: '#' },
 ]
 
 export const paymentButtons = [
   { id: uuid(), src: '/payments/visa.svg', alt: 'Visa', href: '#' },
   { id: uuid(), src: '/payments/mastercard.svg', alt: 'Mastercard', href: '#' },
+  { id: uuid(), src: '/payments/ethereum.png', alt: 'Etherium', href: '#' },
 ]
 
 export const recoveryFormTitleSuccess = {
