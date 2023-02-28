@@ -7,7 +7,7 @@ import { useBuyNFT, useMounted, useUser } from '@/hooks'
 import { sendUserWallet } from '@/utils/repository'
 
 export const Profile = () => {
-  const { buyNFT, connected, nftList } = useBuyNFT()
+  const { buyNFT, connected, isLoading } = useBuyNFT()
   const [isEditMode, setEditMode] = useState(false)
   const { user } = useUser()
   const mounted = useMounted()
@@ -48,10 +48,16 @@ export const Profile = () => {
       </div>
       <div>
         {isConnected && mounted ? (
-          <Suspense fallback={<Spinner />}>
-            <h1 className="text-2xl font-bold mt-20 text-white">My NFTs:</h1>
-            <NftList nftList={nftList.length > 0 ? nftList : []} />
-          </Suspense>
+          <>
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <Suspense fallback={<Spinner />}>
+                <h1 className="text-2xl font-bold mt-20 text-white">My NFTs:</h1>
+                <NftList />
+              </Suspense>
+            )}
+          </>
         ) : (
           <p className="text-2xl font-bold mt-20 text-white text-center">Please connect your wallet to see your NFTs</p>
         )}

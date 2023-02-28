@@ -2,31 +2,55 @@
 import { ArrowLongLeftIcon } from '@heroicons/react/24/solid'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { BigNumber } from 'ethers'
+import axios from 'axios'
+import { useContractRead } from 'wagmi'
 
-import { ButtonLink } from '@/components'
+import { ButtonLink, Spinner } from '@/components'
 import { useBuyNFT, useMounted } from '@/hooks'
 import { fetcher } from '@/utils/fetcher'
 import { api } from '@/helpers/api'
+import { nftSmartContractAddress } from '@/helpers/constants'
+import { ensRegistryABI } from '@/utils/abi'
 
-export const NFTDetails = () => {
+const fetchNFTListData = async (url: string) => {
+  const response = await axios.get(url as string)
+  const { data } = response
+  return data
+}
+
+const baseContract: any = {
+  address: nftSmartContractAddress,
+  abi: ensRegistryABI,
+  chainId: 5,
+}
+
+export const NftDetailsEntity = ({ nftId }: { nftId: any }) => {
   const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
   const { query } = useRouter()
-  const { nftList } = useBuyNFT()
   const mounted = useMounted()
+  const [nft, setData] = useState<any>(null)
+  const { data: nftPayload } = useContractRead<any, any, any>({
+    ...baseContract,
+    functionName: 'tokenURI',
+    args: [+nftId.toString()],
+  })
 
-  const [nft] = useMemo(() => nftList?.filter(nft => nft?.id === query.id), [nftList, query.id])
+  useEffect(() => {
+    if (nftPayload) {
+      fetchNFTListData(nftPayload).then(setData)
+    }
+  }, [nftPayload])
 
   const { data, error, isLoading } = useSWR(
     token ? [`${api.URL}api/NFT/ListTotalNFTRewards?nftId=${query.id}`, token] : null,
     ([url, token]) => fetcher(url, token)
   )
-
   if (error) {
     return <p className="text-center text-white">Failed to load</p>
   }
-
-  return (
+  return data && nft ? (
     <>
       <ButtonLink href="/profile" variant="transparent" size="lg">
         <ArrowLongLeftIcon className="w-6 h-6 mr-10" />
@@ -50,5 +74,17 @@ export const NFTDetails = () => {
         )}
       </div>
     </>
+  ) : (
+    <Spinner />
   )
+}
+
+export const NFTDetails = () => {
+  const { query } = useRouter()
+  const { nftIds } = useBuyNFT()
+  const nftId: BigNumber | undefined = useMemo(
+    () => nftIds?.find(nft => nft.toString() === query.id),
+    [nftIds, query.id]
+  )
+  return nftId ? <NftDetailsEntity nftId={nftId} /> : <></>
 }
