@@ -9,7 +9,7 @@ import { nftSmartContractAddress } from '@/helpers/constants'
 
 export const useBuyNFT = () => {
   const router = useRouter()
-  const [mintedTokenId, setMintedTokenId] = useState<string>()
+  const [, setMintedTokenId] = useState<string>()
   const [mintLoading, setMintLoading] = useState(false)
   const { addToast } = useToasts()
 

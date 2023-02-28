@@ -41,7 +41,7 @@ export const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       <StrictMode>
         <WagmiConfig client={wagmiClient}>
           <RainbowKitProvider
-            showRecentTransactions={true}
+            showRecentTransactions
             coolMode
             theme={darkTheme({
               accentColor: 'black',

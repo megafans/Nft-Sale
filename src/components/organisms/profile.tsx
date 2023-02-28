@@ -1,6 +1,7 @@
 import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
 import { Suspense, useState } from 'react'
 import { useAccount } from 'wagmi'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { Button, Modal, NftList, ProfileBanner, ProfileEdit, Spinner } from '@/components'
 import { useBuyNFT, useMounted, useUser } from '@/hooks'
@@ -11,6 +12,7 @@ export const Profile = () => {
   const [isEditMode, setEditMode] = useState(false)
   const { user } = useUser()
   const mounted = useMounted()
+  const { openConnectModal } = useConnectModal()
 
   const { isConnected } = useAccount({
     onConnect({ address, isReconnected }) {
@@ -41,7 +43,7 @@ export const Profile = () => {
     <>
       {getProfileBannerView()}
       <div className="flex flex-col md:flex-row items-center md:justify-evenly mt-14 space-y-8 md:space-y-0">
-        <Button type="button" size="lg" variant="primary" onClick={() => buyNFT()} disabled={!connected}>
+        <Button type="button" size="lg" variant="primary" onClick={connected ? () => buyNFT() : openConnectModal}>
           Buy NFT with ETH
           <ArrowLongRightIcon className="w-6 h-6 ml-10" />
         </Button>

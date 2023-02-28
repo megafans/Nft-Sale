@@ -70,6 +70,7 @@ export const NftDetailsEntity = ({ nftId }: { nftId: any }) => {
             <h3 className="text-lg font-semibold tracking-tight text-white">{nft?.name}</h3>
             <p className="text-base leading-7 text-white">{nft?.description}</p>
             <p className="text-base leading-7 text-white">value: {data?.dollarValue}</p>
+            <p className="text-base leading-7 text-white">MFAN tokens won: {data?.totalRewards}</p>
           </div>
         )}
       </div>
