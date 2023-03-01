@@ -1,7 +1,7 @@
 import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
 import { Suspense, useState } from 'react'
 import { useAccount } from 'wagmi'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit'
 import WertWidget from '@wert-io/widget-initializer'
 import { signSmartContractData } from '@wert-io/widget-sc-signer'
 import { v4 as uuid } from 'uuid'
@@ -46,13 +46,13 @@ export const Profile = () => {
     {
       address: address!,
       commodity: 'ETH',
-      commodity_amount: 0.000000005,
+      commodity_amount: 0.00000001,
       pk_id: 'key1',
       sc_address: '0x0F006A670651F0A5d1677b680ad8Aa0b72FE60B0',
       sc_id: uuid(),
       sc_input_data: '0c1a3f6ff5436d7412a02b198e52fa0b677f8aec99fae81f38a78ba03631ecaf',
     },
-    '603e3dcaa6c6dc3361b5efa2dcce346407739bb2fcb624b371d13e8aafae81f1'
+    '0x57466afb5491ee372b3b30d82ef7e7a0583c9e36aef0f02435bd164fe172b1d3'
   )
 
   const wertWidget = new WertWidget({
@@ -94,7 +94,12 @@ export const Profile = () => {
             )}
           </>
         ) : (
-          <p className="text-2xl font-bold mt-20 text-white text-center">Please connect your wallet to see your NFTs</p>
+          <div className="flex flex-col items-center space-y-5">
+            <p className="text-2xl font-bold mt-20 text-white text-center">
+              Please connect your wallet to see your NFTs
+            </p>
+            <ConnectButton />
+          </div>
         )}
       </div>
       <div id="wert-widget" />
