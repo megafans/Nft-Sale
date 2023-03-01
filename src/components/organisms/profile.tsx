@@ -88,7 +88,9 @@ export const Profile = () => {
               <Spinner />
             ) : (
               <Suspense fallback={<Spinner />}>
-                <h1 className="text-2xl font-bold mt-20 text-white">My NFTs:</h1>
+                <h1 className="text-3xl font-black mt-20 text-white underline decoration-current underline-offset-8">
+                  My NFTs
+                </h1>
                 <NftList />
               </Suspense>
             )}

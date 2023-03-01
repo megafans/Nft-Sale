@@ -44,11 +44,13 @@ export const Nft = ({ nftId }: { nftId: any }) => {
     functionName: 'tokenURI',
     args: [+nftId],
   })
+
   useEffect(() => {
     if (nft) {
       fetchNFTListData(nft).then(setData)
     }
   }, [nft])
+
   return data ? (
     <li key={data.id}>
       <img
@@ -62,13 +64,11 @@ export const Nft = ({ nftId }: { nftId: any }) => {
           <p className="text-base leading-7 text-white">{data.description}</p>
         </div>
         <ButtonLink href={`/nft/${data.id}`} variant="transparent" size="sm">
-          <ArrowLongRightIcon className="w-6 h-6 ml-4" />
+          <ArrowLongRightIcon className="w-6 h-6 ml-4 hover:fill-current" />
         </ButtonLink>
       </div>
     </li>
-  ) : (
-    <></>
-  )
+  ) : null
 }
 
 export const NftList = () => {

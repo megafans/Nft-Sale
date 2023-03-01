@@ -144,3 +144,21 @@ export const pricing = {
 }
 
 export const nftSmartContractAddress = '0x0F006A670651F0A5d1677b680ad8Aa0b72FE60B0'
+
+export const animationVariants = {
+  in: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.75,
+      delay: 0.5,
+    },
+  },
+  out: {
+    opacity: 0,
+    y: 40,
+    transition: {
+      duration: 0.75,
+    },
+  },
+}

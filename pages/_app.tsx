@@ -4,6 +4,7 @@ import { WagmiConfig } from 'wagmi'
 import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit'
 import type { AppProps } from 'next/app'
 import type { NextPage } from 'next'
+import { AnimatePresence } from 'framer-motion'
 
 import { Layout, NoAccess } from '@/components'
 import { wagmiClient, chains } from '@/utils/wallet-config'
@@ -19,7 +20,7 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-export const App = ({ Component, pageProps }: AppPropsWithLayout) => {
+export const App = ({ Component, pageProps, router }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? (page => page)
   const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
@@ -54,7 +55,9 @@ export const App = ({ Component, pageProps }: AppPropsWithLayout) => {
               appName: 'MegaFans',
             }}
           >
-            <Component {...pageProps} />
+            <AnimatePresence mode="wait" initial={false}>
+              <Component {...pageProps} key={router.asPath} />
+            </AnimatePresence>
           </RainbowKitProvider>
         </WagmiConfig>
       </StrictMode>
