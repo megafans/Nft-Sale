@@ -29,7 +29,7 @@ export const AuthLayout = ({ children }: LayoutProps) => {
           <Container>
             <div className="flex justify-end md:justify-center relative">
               <div className="absolute -top-1 left-0">
-                <ButtonLink href="/" variant="transparent" size="lg">
+                <ButtonLink href="/" variant="transparent" size="lg" ribbon>
                   <ArrowLongLeftIcon className="w-6 h-6 mr-2" />
                   <span className="font-bold">Back to began</span>
                 </ButtonLink>

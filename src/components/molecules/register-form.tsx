@@ -86,7 +86,7 @@ export const RegisterForm = () => {
                 </>
               )}
             </Button>
-            <ButtonLink href="/sign-in" variant="transparent" size="lg">
+            <ButtonLink href="/sign-in" variant="transparent" size="lg" ribbon>
               <span className="font-bold">Sign In</span>
               <ArrowLongRightIcon className="w-6 h-6 ml-10" />
             </ButtonLink>

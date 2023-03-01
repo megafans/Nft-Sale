@@ -16,7 +16,7 @@ export const Header = () => {
             {user?.username ? (
               <User user={user} />
             ) : (
-              <ButtonLink href="/sign-in" variant="primary" size="lg">
+              <ButtonLink href="/sign-in" variant="primary" size="lg" ribbon>
                 <span>Login</span>
                 <ArrowLongRightIcon className="w-6 h-6 ml-10" />
               </ButtonLink>

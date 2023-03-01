@@ -44,7 +44,7 @@ export const NoAccess = () => {
           ))}
         </ul>
         <div className="mt-4">
-          <ButtonLink href="/" variant="transparent" size="lg">
+          <ButtonLink href="/" variant="transparent" size="lg" ribbon>
             <span className="font-bold">Go back home</span>
             <ArrowLongRightIcon className="w-6 h-6 ml-10" />
           </ButtonLink>

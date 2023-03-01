@@ -49,7 +49,7 @@ export const LoginForm = () => {
         onChange={handleChange}
       />
       <div className="flex justify-end">
-        <ButtonLink href="/forgot-password" variant="transparent" size="sm">
+        <ButtonLink href="/forgot-password" variant="transparent" size="sm" ribbon>
           <p>Don&apos;t remember password?</p>
           <span className="text-red-400 ml-1">Forgot Password</span>
         </ButtonLink>
@@ -65,7 +65,7 @@ export const LoginForm = () => {
             </>
           )}
         </Button>
-        <ButtonLink href="/sign-up" variant="transparent" size="lg">
+        <ButtonLink href="/sign-up" variant="transparent" size="lg" ribbon>
           <span className="font-bold">Create Account</span>
           <ArrowLongRightIcon className="w-6 h-6 ml-10" />
         </ButtonLink>

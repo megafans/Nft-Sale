@@ -47,7 +47,7 @@ export const Congratulations = () => {
   return nft ? (
     <>
       {width && mounted && <Confetti width={width} height={height} numberOfPieces={100} tweenDuration={10000} />}
-      <ButtonLink href="/profile" variant="transparent" size="lg">
+      <ButtonLink href="/profile" variant="transparent" size="lg" ribbon>
         <ArrowLongLeftIcon className="w-6 h-6 mr-10" />
         <span className="font-bold">Back to profile</span>
       </ButtonLink>

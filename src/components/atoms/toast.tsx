@@ -26,7 +26,7 @@ export const CustomToast = ({ children }: CustomToastProps) => {
             </div>
             <div className="order-2 flex-shrink-0 sm:order-3 sm:ml-2">
               <div className="flex">
-                <ButtonLink href="/" variant="transparent" size="sm">
+                <ButtonLink href="/" variant="transparent" size="sm" ribbon>
                   <ArrowLongLeftIcon className="w-6 h-6" />
                 </ButtonLink>
                 <button

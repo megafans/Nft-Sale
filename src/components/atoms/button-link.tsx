@@ -10,9 +10,16 @@ type ButtonLinkProps = {
   children: ReactNode
   variant: 'primary' | 'transparent'
   size: 'sm' | 'md' | 'lg'
+  ribbon: boolean
 }
 
-export const ButtonLink = ({ href = '/', children, variant = 'primary', size = 'md' }: ButtonLinkProps) => {
+export const ButtonLink = ({
+  href = '/',
+  children,
+  variant = 'primary',
+  size = 'md',
+  ribbon = true,
+}: ButtonLinkProps) => {
   const mounted = useMounted()
   return (
     <>
@@ -28,7 +35,7 @@ export const ButtonLink = ({ href = '/', children, variant = 'primary', size = '
             size === 'lg' && 'px-6 py-4'
           )}
         >
-          <Ink />
+          {ribbon && <Ink />}
           {children}
         </Link>
       )}
