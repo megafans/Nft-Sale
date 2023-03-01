@@ -47,10 +47,10 @@ export const App = ({ Component, pageProps, router }: AppPropsWithLayout) => {
             theme={darkTheme({
               accentColor: 'black',
               borderRadius: 'medium',
-              overlayBlur: 'small',
+              overlayBlur: 'large',
             })}
             chains={chains}
-            modalSize="compact"
+            modalSize="wide"
             appInfo={{
               appName: 'MegaFans',
             }}

@@ -31,7 +31,7 @@ export const ProfileBanner = ({ isEditMode, setEditMode }: ProfileBannerProps) =
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 p-5 md:p-10">
             <div className="flex items-start justify-center md:justify-start w-full md:h-40 col order-1">
-              {!isLoading && <ConnectButton />}
+              {!isLoading && <ConnectButton showBalance chainStatus="full" />}
             </div>
             <div className="flex items-start justify-center md:justify-end w-full md:h-40 z-10 order-2">
               <div

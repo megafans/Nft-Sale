@@ -47,7 +47,7 @@ const connectors = connectorsForWallets([
   {
     groupName: 'Recommended',
     wallets: [
-      metaMaskWallet({ chains }),
+      metaMaskWallet({ chains, shimDisconnect: true }),
       coinbaseWallet({ appName: 'MegaFans', chains }),
       injectedWallet({ chains }),
       rainbowWallet({ chains }),
