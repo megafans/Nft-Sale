@@ -7,7 +7,7 @@ export const Header = () => {
   const { user } = useUser()
 
   return (
-    <div className="z-10 sticky md:relative top-0 bg-violet-800/90 md:bg-transparent">
+    <div className="z-50 sticky md:relative top-0 bg-violet/90 md:bg-transparent">
       <Container>
         <div className="flex flex-col md:flex-row items-center justify-center md:justify-between">
           <Logo />
