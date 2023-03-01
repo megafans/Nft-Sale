@@ -64,7 +64,7 @@ export const Nft = ({ nftId }: { nftId: any }) => {
           <p className="text-base leading-7 text-white">{data.description}</p>
         </div>
         <ButtonLink href={`/nft/${data.id}`} variant="transparent" size="sm" ribbon={false}>
-          <ArrowLongRightIcon className="w-6 h-6 ml-4 hover:fill-current" />
+          <ArrowLongRightIcon className="w-6 h-6 ml-4" />
         </ButtonLink>
       </div>
     </li>
