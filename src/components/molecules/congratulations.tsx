@@ -11,6 +11,8 @@ import { useBuyNFT, useMounted } from '@/hooks'
 import { nftSmartContractAddress } from '@/helpers/constants'
 import { ensRegistryABI } from '@/utils/abi'
 
+import type { NFTPayload } from '@/types/nft'
+
 const fetchNFTListData = async (url: string) => {
   const response = await axios.get(url as string)
   const { data } = response
@@ -26,7 +28,7 @@ const baseContract: any = {
 export const Congratulations = () => {
   const { nftIds } = useBuyNFT()
   const nftId = nftIds?.slice(-1)
-  const [nft, setData] = useState<any>(null)
+  const [nft, setData] = useState<NFTPayload>()
   const { data: nftPayload } = useContractRead<any, any, any>({
     ...baseContract,
     functionName: 'tokenURI',
@@ -42,8 +44,6 @@ export const Congratulations = () => {
     }
   }, [nftPayload])
 
-  console.log(nftPayload)
-
   return nft ? (
     <>
       {width && mounted && <Confetti width={width} height={height} numberOfPieces={100} tweenDuration={10000} />}
@@ -58,7 +58,7 @@ export const Congratulations = () => {
         <img
           className="aspect-[1/1] w-80 rounded-2xl object-cover"
           src={`https://ipfs.io/ipfs${nft?.image?.replace('ipfs:/', '')}`}
-          alt=""
+          alt="NFT"
         />
       </div>
       <h3 className="mt-6 text-lg font-semibold leading-8 tracking-tight text-white text-center">{nft?.name}</h3>

@@ -1,4 +1,5 @@
 export * from './useAuth'
+export * from './useBrowser'
 export * from './useBuyNFT'
 export * from './useUser'
 export * from './useMounted'

@@ -1,4 +1,5 @@
 import { ReactElement } from 'react'
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
 
 import { Layout, Profile } from '@/components'
@@ -20,6 +21,14 @@ const Page: NextPageWithLayout = () => {
 
 Page.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {
+      protected: true,
+    },
+  }
 }
 
 export default Page

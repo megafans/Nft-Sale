@@ -8,14 +8,16 @@ import { useToasts } from 'react-toast-notifications'
 import { api } from '@/helpers/api'
 import { fetcher } from '@/utils/fetcher'
 import { userAtom } from '@/state/atoms'
+import { useBrowser } from './useBrowser'
 
 export const useUser = () => {
+  const isBrowser = useBrowser()
   const { addToast } = useToasts()
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useRecoilState(userAtom)
   const { address, isConnecting } = useAccount()
   const { push } = useRouter()
-  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+  const token = isBrowser ? localStorage.getItem('token') : null
 
   const { data, error, isLoading } = useSWR(
     token ? [`${api.URL}/api/Users/view_profile`, token] : null,

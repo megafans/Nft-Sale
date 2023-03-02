@@ -8,7 +8,7 @@ import axios from 'axios'
 import { useContractRead } from 'wagmi'
 
 import { ButtonLink, Spinner } from '@/components'
-import { useBuyNFT, useMounted } from '@/hooks'
+import { useBrowser, useBuyNFT, useMounted } from '@/hooks'
 import { fetcher } from '@/utils/fetcher'
 import { api } from '@/helpers/api'
 import { nftSmartContractAddress } from '@/helpers/constants'
@@ -27,7 +27,8 @@ const baseContract: any = {
 }
 
 export const NftDetailsEntity = ({ nftId }: { nftId: any }) => {
-  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+  const isBrowser = useBrowser()
+  const token = isBrowser ? localStorage.getItem('token') : null
   const { query } = useRouter()
   const mounted = useMounted()
   const [nft, setData] = useState<any>(null)
@@ -47,9 +48,11 @@ export const NftDetailsEntity = ({ nftId }: { nftId: any }) => {
     token ? [`${api.URL}api/NFT/ListTotalNFTRewards?nftId=${query.id}`, token] : null,
     ([url, token]) => fetcher(url, token)
   )
+
   if (error) {
     return <p className="text-center text-white">Failed to load</p>
   }
+
   return data && nft ? (
     <>
       <ButtonLink href="/profile" variant="transparent" size="lg" ribbon>

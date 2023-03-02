@@ -3,10 +3,12 @@ import { useToasts } from 'react-toast-notifications'
 import { useRouter } from 'next/router'
 
 import { api } from '@/helpers/api'
+import { useBrowser } from '@/hooks'
 
 type TokenProps = string | string[] | undefined
 
 export const useAuth = () => {
+  const isBrowser = useBrowser()
   const { push } = useRouter()
   const [loading, setLoading] = useState(false)
   const { addToast } = useToasts()
@@ -24,7 +26,7 @@ export const useAuth = () => {
     })
     const data = await response.json()
     try {
-      typeof window !== 'undefined' ? localStorage.setItem('token', data?.data?.token) : null
+      isBrowser ? localStorage.setItem('token', data?.data?.token) : null
       !data.success && addToast(data.message, {})
       data.success && push('/')
     } catch (error) {
@@ -103,7 +105,7 @@ export const useAuth = () => {
     })
     const data = await response.json()
     try {
-      typeof window !== 'undefined' ? localStorage.setItem('token', data?.data?.token) : null
+      isBrowser ? localStorage.setItem('token', data?.data?.token) : null
       !data.success && addToast('Something went wrong', {})
       data.success && push('/')
     } catch (error) {
@@ -115,7 +117,7 @@ export const useAuth = () => {
   }
 
   const logout = () => {
-    typeof window !== 'undefined' ? localStorage.removeItem('token') : null
+    isBrowser ? localStorage.removeItem('token') : null
     push('/')
   }
 

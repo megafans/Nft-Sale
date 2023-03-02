@@ -1,4 +1,20 @@
-export const ensRegistryABI = [
+export interface ABI {
+  inputs: Put[]
+  stateMutability?: 'nonpayable' | 'payable' | 'view'
+  type: 'constructor' | 'event' | 'function'
+  anonymous?: boolean
+  name?: string
+  outputs?: Put[]
+}
+
+export interface Put {
+  internalType: 'address' | 'bool' | 'bytes' | 'bytes4' | 'string' | 'uint256[]' | 'uint256'
+  name: string
+  type: 'address' | 'bool' | 'bytes' | 'bytes4' | 'string' | 'uint256[]' | 'uint256'
+  indexed?: boolean
+}
+
+export const ensRegistryABI: ABI[] = [
   {
     inputs: [
       { internalType: 'string', name: '_name', type: 'string' },

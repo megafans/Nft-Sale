@@ -7,6 +7,7 @@ import type { NextPage } from 'next'
 import { AnimatePresence } from 'framer-motion'
 
 import { Layout, NoAccess } from '@/components'
+import { useBrowser } from '@/hooks'
 import { wagmiClient, chains } from '@/utils/wallet-config'
 
 import '@rainbow-me/rainbowkit/styles.css'
@@ -21,10 +22,11 @@ type AppPropsWithLayout = AppProps & {
 }
 
 export const App = ({ Component, pageProps, router }: AppPropsWithLayout) => {
+  const isBrowser = useBrowser()
   const getLayout = Component.getLayout ?? (page => page)
-  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+  const token = isBrowser ? localStorage.getItem('token') : null
 
-  if (pageProps.protected && !token) {
+  if (isBrowser && pageProps?.protected && !token) {
     return (
       <Layout>
         <NoAccess />

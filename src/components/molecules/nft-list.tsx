@@ -9,6 +9,7 @@ import { ButtonLink } from '@/components'
 import { useBuyNFT } from '@/hooks'
 import { nftSmartContractAddress } from '@/helpers/constants'
 import { ensRegistryABI } from '@/utils/abi'
+import { NFTPayload } from '@/types/nft'
 
 type NftProps = {
   id: string
@@ -26,7 +27,7 @@ type NftProps = {
 
 const fetchNFTListData = async (url: string) => {
   const result: NftProps = await axios
-    .get(url as string)
+    .get(url)
     .then(response => response)
     .then(({ data }) => data)
   return result
@@ -37,8 +38,8 @@ const baseContract: any = {
   abi: ensRegistryABI,
   chainId: 5,
 }
-export const Nft = ({ nftId }: { nftId: any }) => {
-  const [data, setData] = useState<any>(null)
+export const Nft = ({ nftId }: { nftId: string }) => {
+  const [data, setData] = useState<NFTPayload>()
   const { data: nft } = useContractRead<any, any, any>({
     ...baseContract,
     functionName: 'tokenURI',
