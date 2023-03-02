@@ -1,9 +1,10 @@
 import { PencilSquareIcon } from '@heroicons/react/24/solid'
 import Image from 'next/image'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { useBalance, useNetwork } from 'wagmi'
 
 import { Avatar, Balance } from '@/components'
-import { useUser } from '@/hooks'
+import { useMounted, useUser } from '@/hooks'
 import { blurDataUrl } from '@/helpers/constants'
 
 type ProfileBannerProps = {
@@ -13,6 +14,14 @@ type ProfileBannerProps = {
 
 export const ProfileBanner = ({ isEditMode, setEditMode }: ProfileBannerProps) => {
   const { isLoading } = useUser()
+  const mounted = useMounted()
+  const { chain } = useNetwork()
+
+  const connected = mounted && !isLoading && chain
+
+  const { data } = useBalance({
+    address: '0xDE2F85d79825a5d0e823Ba0D733A37C3299Bc005',
+  })
 
   return (
     <div className="relative">
@@ -31,7 +40,8 @@ export const ProfileBanner = ({ isEditMode, setEditMode }: ProfileBannerProps) =
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 p-5 md:p-10">
             <div className="flex items-start justify-center md:justify-start w-full md:h-40 col order-1">
-              {!isLoading && <ConnectButton showBalance chainStatus="full" />}
+              {connected && <ConnectButton showBalance={false} chainStatus="full" />}
+              {connected && <span className="text-black">{data?.formatted}</span>}
             </div>
             <div className="flex items-start justify-center md:justify-end w-full md:h-40 z-10 order-2">
               <div

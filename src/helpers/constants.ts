@@ -144,6 +144,9 @@ export const pricing = {
 }
 
 export const nftSmartContractAddress = '0x0F006A670651F0A5d1677b680ad8Aa0b72FE60B0'
+export const smartContractInputData = '0xa0712d680000000000000000000000000000000000000000000000000000000000000001'
+export const wertPrivateKey = '0x57466afb5491ee372b3b30d82ef7e7a0583c9e36aef0f02435bd164fe172b1d3'
+export const wertPartnerID = '01GKW611J71EF5B8H9MS00G6M4'
 
 export const animationVariants = {
   in: {

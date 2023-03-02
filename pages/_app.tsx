@@ -31,7 +31,7 @@ export const App = ({ Component, pageProps, router }: AppPropsWithLayout) => {
       </Layout>
     )
   }
-  console.log('chains', chains)
+
   return getLayout(
     <SWRConfig
       value={{
