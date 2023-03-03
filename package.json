@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "api": "npx swagger-typescript-api -p ./src/contracts/swagger.json -o ./src/utils -n api.ts"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.7",
