@@ -39,12 +39,14 @@ export const NftRewardsList = ({ nftId }: NftRewardsListProps) => {
 
   return (
     <div className="text-white mt-20">
-      <h2 className="font-bold text-xl uppercase leading-10">NFT rewards history:</h2>
+      {nftRewards && nftRewards.length > 0 && (
+        <h2 className="font-bold text-xl uppercase leading-10">NFT rewards history:</h2>
+      )}
       {isLoading ? (
         <Spinner />
       ) : (
         <>
-          {nftRewards && nftRewards.length > 0 && (
+          {nftRewards && nftRewards.length > 0 ? (
             <>
               <div className="flow-root">
                 <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -92,6 +94,8 @@ export const NftRewardsList = ({ nftId }: NftRewardsListProps) => {
                 totalPages={data?.totalPages}
               />
             </>
+          ) : (
+            <p className="text-center text-white font-body text-2xl">No rewards found for given NFT</p>
           )}
         </>
       )}
