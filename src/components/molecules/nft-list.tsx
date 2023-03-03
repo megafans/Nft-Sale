@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, memo } from 'react'
 import { BigNumber } from 'ethers'
 import { ArrowLongRightIcon } from '@heroicons/react/24/outline'
 import { useContractRead } from 'wagmi'
@@ -38,7 +38,8 @@ const baseContract: any = {
   abi: ensRegistryABI,
   chainId: 5,
 }
-export const Nft = ({ nftId }: { nftId: string }) => {
+
+const Nft = ({ nftId }: { nftId: string }) => {
   const [data, setData] = useState<NFTPayload>()
   const { data: nft } = useContractRead<any, any, any>({
     ...baseContract,
@@ -72,6 +73,8 @@ export const Nft = ({ nftId }: { nftId: string }) => {
   ) : null
 }
 
+const MemoizedNft = memo(Nft)
+
 export const NftList = () => {
   const { nftIds } = useBuyNFT()
   return (
@@ -81,7 +84,7 @@ export const NftList = () => {
     >
       {(nftIds ? (nftIds as BigNumber[]) : []).map(nft => {
         const nftId = nft.toString()
-        return nftId ? <Nft nftId={nftId} key={nftId} /> : <></>
+        return nftId ? <MemoizedNft nftId={nftId} key={nftId} /> : <></>
       })}
     </ul>
   )

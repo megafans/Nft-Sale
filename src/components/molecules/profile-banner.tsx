@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { PencilSquareIcon } from '@heroicons/react/24/solid'
 import Image from 'next/image'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
@@ -12,13 +13,11 @@ type ProfileBannerProps = {
   setEditMode: (value: boolean) => void
 }
 
-export const ProfileBanner = ({ isEditMode, setEditMode }: ProfileBannerProps) => {
+const ProfileBanner = ({ isEditMode, setEditMode }: ProfileBannerProps) => {
   const { isLoading } = useUser()
   const mounted = useMounted()
   const { chain } = useNetwork()
-
   const connected = mounted && !isLoading && chain
-
   const { data } = useBalance({
     address: '0xDE2F85d79825a5d0e823Ba0D733A37C3299Bc005',
   })
@@ -64,3 +63,5 @@ export const ProfileBanner = ({ isEditMode, setEditMode }: ProfileBannerProps) =
     </div>
   )
 }
+
+export const MemoizedProfileBanner = memo(ProfileBanner)

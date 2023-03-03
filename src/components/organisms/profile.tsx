@@ -6,7 +6,7 @@ import WertWidget from '@wert-io/widget-initializer'
 import { signSmartContractData } from '@wert-io/widget-sc-signer'
 import { v4 as uuid } from 'uuid'
 
-import { Button, Modal, NftList, ProfileBanner, ProfileEdit, Spinner } from '@/components'
+import { Button, Modal, NftList, MemoizedProfileBanner, ProfileEdit, Spinner } from '@/components'
 import { useBuyNFT, useMounted, useUser } from '@/hooks'
 import { sendUserWallet } from '@/utils/repository'
 import { nftSmartContractAddress, smartContractInputData, wertPrivateKey, wertPartnerID } from '@/helpers/constants'
@@ -37,7 +37,7 @@ export const Profile = () => {
           </Modal>
         )
       case false:
-        return <ProfileBanner setEditMode={setEditMode} isEditMode={isEditMode} />
+        return <MemoizedProfileBanner setEditMode={setEditMode} isEditMode={isEditMode} />
       default:
         null
     }

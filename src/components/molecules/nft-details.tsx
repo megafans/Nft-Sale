@@ -7,7 +7,7 @@ import { BigNumber } from 'ethers'
 import axios from 'axios'
 import { useContractRead } from 'wagmi'
 
-import { ButtonLink, Spinner } from '@/components'
+import { ButtonLink, NftRewardsList, Spinner } from '@/components'
 import { useBrowser, useBuyNFT, useMounted } from '@/hooks'
 import { fetcher } from '@/utils/fetcher'
 import { api } from '@/helpers/api'
@@ -90,5 +90,10 @@ export const NFTDetails = () => {
     () => nftIds?.find(nft => nft.toString() === query.id),
     [nftIds, query.id]
   )
-  return nftId ? <NftDetailsEntity nftId={nftId} /> : <></>
+  return nftId ? (
+    <>
+      <NftDetailsEntity nftId={nftId} />
+      <NftRewardsList nftId={query.id} />
+    </>
+  ) : null
 }
