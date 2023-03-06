@@ -8,9 +8,9 @@ export interface ABI {
 }
 
 export interface Put {
-  internalType: 'address' | 'bool' | 'bytes' | 'bytes4' | 'string' | 'uint256[]' | 'uint256'
+  internalType: 'address' | 'address[]' | 'bool' | 'bytes' | 'bytes4' | 'string' | 'uint256[]' | 'uint256'
   name: string
-  type: 'address' | 'bool' | 'bytes' | 'bytes4' | 'string' | 'uint256[]' | 'uint256'
+  type: 'address' | 'address[]' | 'bool' | 'bytes' | 'bytes4' | 'string' | 'uint256[]' | 'uint256'
   indexed?: boolean
 }
 
@@ -19,6 +19,7 @@ export const ensRegistryABI: ABI[] = [
     inputs: [
       { internalType: 'string', name: '_name', type: 'string' },
       { internalType: 'string', name: '_symbol', type: 'string' },
+      { internalType: 'address', name: 'controller_', type: 'address' },
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',
@@ -89,6 +90,13 @@ export const ensRegistryABI: ABI[] = [
     type: 'function',
   },
   {
+    inputs: [{ internalType: 'uint256', name: '_price', type: 'uint256' }],
+    name: 'changePrice',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'contractPaused',
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
@@ -123,10 +131,30 @@ export const ensRegistryABI: ABI[] = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'listAllNFTAndOwner',
+    outputs: [
+      { internalType: 'address[]', name: '', type: 'address[]' },
+      { internalType: 'uint256[]', name: '', type: 'uint256[]' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [{ internalType: 'address', name: '_owner', type: 'address' }],
     name: 'listMyNFTs',
     outputs: [{ internalType: 'uint256[]', name: '', type: 'uint256[]' }],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: '_to', type: 'address' },
+      { internalType: 'uint256', name: 'num', type: 'uint256' },
+    ],
+    name: 'mint',
+    outputs: [],
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -158,6 +186,13 @@ export const ensRegistryABI: ABI[] = [
     type: 'function',
   },
   { inputs: [], name: 'pauseContract', outputs: [], stateMutability: 'nonpayable', type: 'function' },
+  {
+    inputs: [],
+    name: 'price',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
   { inputs: [], name: 'renounceOwnership', outputs: [], stateMutability: 'nonpayable', type: 'function' },
   {
     inputs: [
