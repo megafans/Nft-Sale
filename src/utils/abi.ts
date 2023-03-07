@@ -148,11 +148,18 @@ export const ensRegistryABI: ABI[] = [
     type: 'function',
   },
   {
+    inputs: [{ internalType: 'uint256', name: 'num', type: 'uint256' }],
+    name: 'mint',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
     inputs: [
       { internalType: 'address', name: '_to', type: 'address' },
       { internalType: 'uint256', name: 'num', type: 'uint256' },
     ],
-    name: 'mint',
+    name: 'mint_to',
     outputs: [],
     stateMutability: 'payable',
     type: 'function',
