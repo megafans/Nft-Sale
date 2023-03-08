@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { ensRegistryABI } from '@/utils/abi'
 import { nftSmartContractAddress } from '@/helpers/constants'
 
-export const useBuyNFT = () => {
+export const useBuyNFT = (nftQuantity?: number | string) => {
   const router = useRouter()
   const [, setMintedTokenId] = useState<string>()
   const [mintLoading, setMintLoading] = useState(false)
@@ -25,7 +25,7 @@ export const useBuyNFT = () => {
   const { writeAsync: mint, error: mintError } = useContractWrite({
     ...baseContract,
     functionName: 'mint',
-    args: ['1'],
+    args: [nftQuantity],
     overrides: { value: ethers.utils.parseEther('0.005') },
     onSuccess: () => {
       addToast('Transaction successful', {})
