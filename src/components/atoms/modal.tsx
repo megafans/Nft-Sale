@@ -30,7 +30,7 @@ export const Modal = ({ title, open, onClose, children, theme = 'dark' }: ModalP
             >
               <Dialog.Panel
                 className={clsx(
-                  'absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 p-10 rounded-xl shadow-xl w-full max-w-6xl',
+                  'absolute left-1/2 top-1/4 transform -translate-x-1/2 -translate-y-1/2 p-10 rounded-xl shadow-xl w-full max-w-6xl',
                   theme === 'light' && 'bg-gray-200',
                   theme === 'dark' && 'bg-violet'
                 )}
