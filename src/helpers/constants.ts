@@ -182,7 +182,7 @@ export const animationVariants = {
 }
 
 export const nftSmartContractAddress = '0x3dE2B62381F3Ed847Ae212859EF08e3Dd370153d'
-export const smartContractInputData = '0xa0712d680000000000000000000000000000000000000000000000000000000000000001'
+export const smartContractInputData = '0xe148a26f0000000000000000000000000000000000000000000000000000000000000001'
 export const wertPrivateKey = '0x57466afb5491ee372b3b30d82ef7e7a0583c9e36aef0f02435bd164fe172b1d3'
 export const wertPartnerID = '01GKW611J71EF5B8H9MS00G6M4'
 export const blurDataUrl =
