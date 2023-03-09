@@ -77,6 +77,7 @@ const MemoizedNft = memo(Nft)
 
 export const NftList = () => {
   const { nftIds } = useBuyNFT()
+
   return (
     <ul
       role="list"
@@ -84,7 +85,7 @@ export const NftList = () => {
     >
       {(nftIds ? (nftIds as BigNumber[]) : []).map(nft => {
         const nftId = nft.toString()
-        return nftId ? <MemoizedNft nftId={nftId} key={nftId} /> : <></>
+        return nftId ? <MemoizedNft nftId={nftId} key={nftId} /> : null
       })}
     </ul>
   )
