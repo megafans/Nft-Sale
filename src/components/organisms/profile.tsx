@@ -1,21 +1,21 @@
-import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
-import { Suspense, Fragment, useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit'
 
-import { Button, Modal, NftList, MemoizedProfileBanner, ProfileEdit, Spinner } from '@/components'
+import { Modal, NftList, MemoizedProfileBanner, ProfileEdit, Spinner, NftBuyButtons, PaymentModals } from '@/components'
 import { useBuyNFT, useMounted, useUser, useWertPayment } from '@/hooks'
 import { sendUserWallet } from '@/utils/repository'
 
 export const Profile = () => {
+  const [isEditMode, setEditMode] = useState(false)
   const [wertOpen, setWertOpen] = useState(false)
   const [paymentModal, setPaymentModal] = useState(false)
   const [nftQuantity, setNftQuantity] = useState('1')
-  const { buyNFT, connected, isLoading } = useBuyNFT(nftQuantity)
-  const [isEditMode, setEditMode] = useState(false)
-  const { user } = useUser()
-  const mounted = useMounted()
   const { openConnectModal } = useConnectModal()
+
+  const mounted = useMounted()
+  const { user } = useUser()
+  const { connected, isLoading } = useBuyNFT()
 
   const { isConnected, address } = useAccount({
     onConnect({ address, isReconnected }) {
@@ -54,26 +54,10 @@ export const Profile = () => {
   return (
     <>
       {getProfileBannerView()}
-      <div className="flex flex-col md:flex-row items-start md:justify-evenly mt-20 space-y-8 md:space-y-0">
-        <div>
-          <Button
-            type="button"
-            size="lg"
-            variant="primary"
-            onClick={connected ? () => setPaymentModal(!paymentModal) : openConnectModal}
-          >
-            Buy NFT with ETH
-            <ArrowLongRightIcon className="w-6 h-6 ml-10" />
-          </Button>
-        </div>
-
-        <div className="-mt-10">
-          <Button type="button" size="lg" variant="primary" onClick={handleWertWidget}>
-            Buy NFT with CC
-            <ArrowLongRightIcon className="w-6 h-6 ml-10" />
-          </Button>
-        </div>
-      </div>
+      <NftBuyButtons
+        onETHPaymentClick={connected ? () => setPaymentModal(!paymentModal) : openConnectModal}
+        onCCPaymentClick={handleWertWidget}
+      />
       <div>
         {isConnected && mounted ? (
           <>
@@ -97,26 +81,14 @@ export const Profile = () => {
           </div>
         )}
       </div>
-
-      <Modal open={wertOpen} onClose={() => setWertOpen(!wertOpen)} title="Buy nft using credit card payment">
-        <div id="wert-widget" className="w-full h-[800px] mt-4" />
-      </Modal>
-      <Modal open={paymentModal} onClose={() => setPaymentModal(false)} title="Buy NFT">
-        <div className="flex flex-col items-center justify-center space-y-6 mt-4">
-          <span className="text-white">Choose NFT quantity:</span>
-          <input
-            className="h-20 w-32 bg-white/10 text-center mt-2 text-3xl font-bold text-white"
-            onChange={e => setNftQuantity(e.target.value)}
-            value={nftQuantity}
-            type="number"
-            min="1"
-          />
-          <Button onClick={() => buyNFT()} variant="primary" type="button" size="lg">
-            Buy NFT
-            <ArrowLongRightIcon className="w-6 h-6 ml-6" />
-          </Button>
-        </div>
-      </Modal>
+      <PaymentModals
+        nftQuantity={nftQuantity}
+        setNftQuantity={setNftQuantity}
+        wertModalVisibility={wertOpen}
+        paymentModalVisibility={paymentModal}
+        wertModalClose={() => setWertOpen(!wertOpen)}
+        paymentModalClose={() => setPaymentModal(!paymentModal)}
+      />
     </>
   )
 }
