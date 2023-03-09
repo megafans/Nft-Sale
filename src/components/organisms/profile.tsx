@@ -5,11 +5,14 @@ import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit'
 import WertWidget from '@wert-io/widget-initializer'
 import { signSmartContractData } from '@wert-io/widget-sc-signer'
 import { v4 as uuid } from 'uuid'
+import web3EthAbi from 'web3-eth-abi'
+import { useToasts } from 'react-toast-notifications'
+import { useRouter } from 'next/router'
 
-import { Button, Modal, NftList, MemoizedProfileBanner, ProfileEdit, Spinner, NFTQuantity } from '@/components'
+import { Button, Modal, NftList, MemoizedProfileBanner, ProfileEdit, Spinner } from '@/components'
 import { useBuyNFT, useMounted, useUser } from '@/hooks'
 import { sendUserWallet } from '@/utils/repository'
-import { nftSmartContractAddress, smartContractInputData, wertPrivateKey, wertPartnerID } from '@/helpers/constants'
+import { nftSmartContractAddress, wertPrivateKey, wertPartnerID } from '@/helpers/constants'
 
 export const Profile = () => {
   const [wertOpen, setWertOpen] = useState(false)
@@ -20,6 +23,8 @@ export const Profile = () => {
   const { user } = useUser()
   const mounted = useMounted()
   const { openConnectModal } = useConnectModal()
+  const { addToast } = useToasts()
+  const router = useRouter()
 
   const { isConnected, address } = useAccount({
     onConnect({ address, isReconnected }) {
@@ -46,6 +51,22 @@ export const Profile = () => {
     }
   }
 
+  const input_data = address
+    ? web3EthAbi.encodeFunctionCall(
+        {
+          inputs: [
+            { internalType: 'address', name: '_to', type: 'address' },
+            { internalType: 'uint256', name: 'num', type: 'uint256' },
+          ],
+          name: 'mint_to',
+          outputs: [],
+          stateMutability: 'payable',
+          type: 'function',
+        },
+        [address!, '1']
+      )
+    : ''
+
   const signedData = useMemo(
     () =>
       signSmartContractData(
@@ -56,11 +77,11 @@ export const Profile = () => {
           pk_id: 'key1',
           sc_address: nftSmartContractAddress,
           sc_id: uuid(),
-          sc_input_data: smartContractInputData,
+          sc_input_data: input_data,
         },
         wertPrivateKey
       ),
-    [address]
+    [address, input_data]
   )
 
   const wertWidget = new WertWidget({
@@ -76,13 +97,25 @@ export const Profile = () => {
     origin: 'https://sandbox.wert.io',
     theme: 'dark',
     autosize: true,
+    listeners: {
+      'payment-status': (data: any) => {
+        if (data.status === 'pending') {
+          addToast(`Your payment has started and payment id is ${data?.payment_id}`, {})
+        }
+        if (data.status === 'success') {
+          addToast('Congratulation your payment has been completed', {})
+          setWertOpen(false)
+          router.push('/nft/confirmation')
+        }
+      },
+    },
   })
 
   const handleWertWidget = () => {
     setWertOpen(!wertOpen)
     setTimeout(() => {
       wertWidget.mount()
-    }, 1000)
+    }, 500)
   }
 
   return (
