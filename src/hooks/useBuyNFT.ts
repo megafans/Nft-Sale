@@ -3,15 +3,18 @@ import { BigNumber, ethers } from 'ethers'
 import { useToasts } from 'react-toast-notifications'
 import { useAccount, useContractRead, useContractWrite, useNetwork } from 'wagmi'
 import { useRouter } from 'next/router'
+import { useRecoilState, useRecoilValue } from 'recoil'
 
 import { ensRegistryABI } from '@/utils/abi'
 import { nftSmartContractAddress } from '@/helpers/constants'
+import { nftPaymentAtom, nftPaymentETHAtom } from '@/state/atoms'
 
-export const useBuyNFT = (nftQuantity?: number | string) => {
+export const useBuyNFT = () => {
   const router = useRouter()
   const [, setMintedTokenId] = useState<string>()
-  const [mintLoading, setMintLoading] = useState(false)
+  const [mintLoading, setMintLoading] = useRecoilState(nftPaymentETHAtom)
   const { addToast } = useToasts()
+  const nftQuantity = useRecoilValue(nftPaymentAtom)
 
   const { chain } = useNetwork()
   const { address, connector: activeConnector, isConnected } = useAccount()

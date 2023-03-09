@@ -1,16 +1,18 @@
 import { Suspense, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit'
+import { useRecoilState } from 'recoil'
 
 import { Modal, NftList, MemoizedProfileBanner, ProfileEdit, Spinner, NftBuyButtons, PaymentModals } from '@/components'
 import { useBuyNFT, useMounted, useUser, useWertPayment } from '@/hooks'
 import { sendUserWallet } from '@/utils/repository'
+import { nftPaymentAtom } from '@/state/atoms'
 
 export const Profile = () => {
   const [isEditMode, setEditMode] = useState(false)
   const [wertOpen, setWertOpen] = useState(false)
   const [paymentModal, setPaymentModal] = useState(false)
-  const [nftQuantity, setNftQuantity] = useState('1')
+  const [nftQuantity, setNftQuantity] = useRecoilState(nftPaymentAtom)
   const { openConnectModal } = useConnectModal()
 
   const mounted = useMounted()

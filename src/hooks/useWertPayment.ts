@@ -1,14 +1,17 @@
 import { useMemo } from 'react'
 import WertWidget from '@wert-io/widget-initializer'
 import web3EthAbi from 'web3-eth-abi'
+import { useRecoilValue } from 'recoil'
 import { signSmartContractData } from '@wert-io/widget-sc-signer'
 import { v4 as uuid } from 'uuid'
 import { useToasts } from 'react-toast-notifications'
 import { useRouter } from 'next/router'
 
 import { nftSmartContractAddress, wertPrivateKey, wertPartnerID } from '@/helpers/constants'
+import { nftPaymentAtom } from '@/state/atoms'
 
 export const useWertPayment = ({ address }: any) => {
+  const nftQuantity = useRecoilValue(nftPaymentAtom)
   const router = useRouter()
   const { addToast } = useToasts()
 
@@ -24,7 +27,7 @@ export const useWertPayment = ({ address }: any) => {
           stateMutability: 'payable',
           type: 'function',
         },
-        [address!, '1']
+        [address!, nftQuantity]
       )
     : ''
 

@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import axios from 'axios'
-import { ArrowLongLeftIcon } from '@heroicons/react/24/solid'
+import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid'
 import Confetti from 'react-confetti'
 import { useWindowSize } from 'react-use'
 import { useContractRead } from 'wagmi'
@@ -54,6 +54,14 @@ export const Congratulations = () => {
       <h1 className="text-white text-center font-bold text-4xl uppercase mt-20">
         Congratulations you have just bought NFT, please check details below
       </h1>
+      <div className="flex justify-center items-center">
+        <p className="text-white text-center font-bold text-xl">
+          Details of all NFT&apos;s you can check on profile page
+        </p>
+        <ButtonLink href="/profile" variant="transparent" size="lg" ribbon>
+          <ArrowLongRightIcon className="w-6 h-6" />
+        </ButtonLink>
+      </div>
       <div className="flex justify-center pt-20">
         <img
           className="aspect-[1/1] w-80 rounded-2xl object-cover"
