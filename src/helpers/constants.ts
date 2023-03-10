@@ -38,7 +38,7 @@ export const defaultUser = {
 }
 
 export const socialButtons = [
-  { id: uuid(), src: '/social/discord.png', alt: 'Discord', href: 'https://discord.com/invite/sEScd9sy6y' },
+  { id: uuid(), src: '/social/discord.png', alt: 'Discord', href: 'https://discord.gg/y8f4Man8a7' },
   { id: uuid(), src: '/social/facebook.png', alt: 'Facebook', href: 'https://www.facebook.com/MegafansEsports/' },
   { id: uuid(), src: '/social/twitter.png', alt: 'Twitter', href: 'https://twitter.com/MegafansEsports' },
   { id: uuid(), src: '/social/telegram.png', alt: 'Telegram', href: 'https://t.me/Megafans_eSports' },
