@@ -24,12 +24,21 @@ export const PaymentModals = ({
   const { buyNFT } = useBuyNFT()
   const { usd } = useCurrency()
 
+  const onModalClose = (modalClose: () => void) => {
+    modalClose()
+    setNftQuantity('1')
+  }
+
   return (
     <>
-      <Modal open={wertModalVisibility} onClose={wertModalClose} title="Buy nft using credit card payment">
+      <Modal
+        open={wertModalVisibility}
+        onClose={() => onModalClose(wertModalClose)}
+        title="Buy nft using credit card payment"
+      >
         <div id="wert-widget" className="w-full h-[800px] mt-4" />
       </Modal>
-      <Modal open={paymentModalVisibility} onClose={paymentModalClose} title="Buy NFT">
+      <Modal open={paymentModalVisibility} onClose={() => onModalClose(paymentModalClose)} title="Buy NFT">
         <div className="flex flex-col items-center justify-center space-y-6 mt-4">
           <p className="text-xl font-bold text-white">
             You are going to pay
