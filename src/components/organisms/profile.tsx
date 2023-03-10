@@ -17,7 +17,7 @@ export const Profile = () => {
 
   const mounted = useMounted()
   const { user } = useUser()
-  const { connected, isLoading } = useBuyNFT()
+  const { nftIds, connected, isLoading } = useBuyNFT()
 
   const { isConnected, address } = useAccount({
     onConnect({ address, isReconnected }) {
@@ -68,7 +68,7 @@ export const Profile = () => {
             ) : (
               <Suspense fallback={<Spinner />}>
                 <h1 className="text-3xl font-black mt-20 text-white underline decoration-current underline-offset-8">
-                  My NFTs
+                  My NFTs - You own {nftIds?.length} NFTs
                 </h1>
                 <NftList />
               </Suspense>

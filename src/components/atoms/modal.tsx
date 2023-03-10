@@ -16,8 +16,8 @@ export const Modal = ({ title, open, onClose, children, theme = 'dark' }: ModalP
 
   return (
     <Transition appear show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={onClose} initialFocus={completeButtonRef}>
-        <div className="fixed inset-0 overflow-y-auto bg-black/60">
+      <Dialog as="div" className="relative z-50" onClose={onClose} initialFocus={completeButtonRef}>
+        <div className="fixed inset-0 overflow-y-auto bg-black/90">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}

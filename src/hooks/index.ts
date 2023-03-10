@@ -1,6 +1,7 @@
 export * from './useAuth'
 export * from './useBrowser'
 export * from './useBuyNFT'
+export * from './useCurrency'
 export * from './useUser'
 export * from './useMounted'
 export * from './useUsername'
