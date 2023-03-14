@@ -4,44 +4,44 @@ import Image from 'next/image'
 import { Container, Copyright, Logo, PaymentButtons } from '@/components'
 
 import { navigation } from '@/helpers/constants'
-import headerBackground from '../public/landing/celebration.png'
-import heroBackground from '../public/landing/prombg.png'
-import heroCharacters from '../public/landing/characters.png'
-import logo from '../public/landing/megafans-header.png'
-import headerButton from '../public/landing/button.png'
-import bannerButton from '../public/landing/banner-button.png'
-import lightButton from '../public/landing/light-button.png'
-import lightLightingButton from '../public/landing/light-lightning-button.png'
-import roadmapBackground from '../public/landing/roadmap-background.png'
-import nftLady from '../public/landing/lady.png'
-import megafansLabel from '../public/landing/megafans-label.png'
+import headerBackground from '../public/landing/celebration.webp'
+import heroBackground from '../public/landing/prombg.webp'
+import heroCharacters from '../public/landing/characters.webp'
+import logo from '../public/landing/megafans-header.webp'
+import headerButton from '../public/landing/button.webp'
+import bannerButton from '../public/landing/banner-button.webp'
+import lightButton from '../public/landing/light-button.webp'
+import lightLightingButton from '../public/landing/light-lightning-button.webp'
+import roadmapBackground from '../public/landing/roadmap-background.webp'
+import nftLady from '../public/landing/lady.webp'
+import megafansLabel from '../public/landing/megafans-label.webp'
 
-import roadmapStep1 from '../public/landing/roadmap-step-1.png'
-import roadmapStep2 from '../public/landing/roadmap-step-2.png'
-import roadmapStep3 from '../public/landing/roadmap-step-3.png'
-import roadmapStep4 from '../public/landing/roadmap-step-4.png'
-import roadmapStep5 from '../public/landing/roadmap-step-5.png'
-import tournament from '../public/landing/tournament.png'
-import statBackground from '../public/landing/stat-background.png'
-import discordBackground from '../public/landing/discord-background.png'
-import teamBackground from '../public/landing/team-section-background2.png'
-import boomImage from '../public/landing/boom.png'
+import roadmapStep1 from '../public/landing/roadmap-step-1.webp'
+import roadmapStep2 from '../public/landing/roadmap-step-2.webp'
+import roadmapStep3 from '../public/landing/roadmap-step-3.webp'
+import roadmapStep4 from '../public/landing/roadmap-step-4.webp'
+import roadmapStep5 from '../public/landing/roadmap-step-5.webp'
+import tournament from '../public/landing/tournament.webp'
+import statBackground from '../public/landing/stat-background.webp'
+import discordBackground from '../public/landing/discord-background.webp'
+import teamBackground from '../public/landing/team-section-background2.webp'
+import boomImage from '../public/landing/boom.webp'
 
-import teamJeff from '../public/landing/team-jeff.png'
-import teamColin from '../public/landing/team-colin.png'
-import teamAlphabit from '../public/landing/team-alphabit.png'
-import teamTechstars from '../public/landing/team-techstars.png'
-import teamLaunchp from '../public/landing/team-launchp.png'
-import teamFerrum from '../public/landing/team-ferrum.png'
-import teamFund from '../public/landing/team-fund.png'
+import teamJeff from '../public/landing/team-jeff.webp'
+import teamColin from '../public/landing/team-colin.webp'
+import teamAlphabit from '../public/landing/team-alphabit.webp'
+import teamTechstars from '../public/landing/team-techstars.webp'
+import teamLaunchp from '../public/landing/team-launchp.webp'
+import teamFerrum from '../public/landing/team-ferrum.webp'
+import teamFund from '../public/landing/team-fund.webp'
 
-import nftGirlBackgroundLeft from '../public/landing/nft-girl-left-background.png'
-import nftGirlBackgroundRight from '../public/landing/nft-girl-right-background.png'
-import nftGirlBackgroundMiddle from '../public/landing/nft-girl-middle-background.png'
+import nftGirlBackgroundLeft from '../public/landing/nft-girl-left-background.webp'
+import nftGirlBackgroundRight from '../public/landing/nft-girl-right-background.webp'
+import nftGirlBackgroundMiddle from '../public/landing/nft-girl-middle-background.webp'
 
-import nftLeft from '../public/landing/nft-1.png'
-import nftMiddle from '../public/landing/nft-2.png'
-import nftRight from '../public/landing/nft-3.png'
+import nftLeft from '../public/landing/nft-1.webp'
+import nftMiddle from '../public/landing/nft-2.webp'
+import nftRight from '../public/landing/nft-3.webp'
 
 import { NextPageWithLayout } from './_app'
 
@@ -76,15 +76,15 @@ const Header = () => (
       {/* </div> */}
       <div className="flex h-full items-center gap-8">
         <a href="https://discord.gg/y8f4Man8a7" target="_blank">
-          <Image src={'/landing/discord-logo.png'} width={50} height={50} alt="header logo" />
+          <Image src={'/landing/discord-logo.webp'} width={50} height={50} alt="header logo" />
         </a>
 
         <a href="https://t.me/Megafans_eSports" target="_blank">
-          <Image src={'/landing/telegram-logo.png'} width={50} height={50} alt="header logo" />
+          <Image src={'/landing/telegram-logo.webp'} width={50} height={50} alt="header logo" />
         </a>
 
         <a href="https://twitter.com/MegafansEsports" target="_blank">
-          <Image src={'/landing/twitter-logo.png'} width={50} height={50} alt="header logo" />
+          <Image src={'/landing/twitter-logo.webp'} width={50} height={50} alt="header logo" />
         </a>
       </div>
     </div>
@@ -257,7 +257,7 @@ const AboutSection = () => (
             <div
               className="max-md:m-auto"
               style={{
-                backgroundImage: 'url(/landing/light-lightning-button.png)',
+                backgroundImage: 'url(/landing/light-lightning-button.webp)',
                 backgroundRepeat: 'no-repeat',
                 backgroundPositionY: '50%',
                 backgroundSize: 'contain',
@@ -352,7 +352,7 @@ const NftMintSection = () => (
     <div className="flex mix-blend-lighten align-middle justify-center relative px-44">
       <div className="relative z-0 mb-8">
         <Image
-          src={'/landing/leftgun.png'}
+          src={'/landing/leftgun.webp'}
           height={186}
           width={208}
           alt="gun-left"
@@ -360,7 +360,7 @@ const NftMintSection = () => (
         />
 
         <Image
-          src={'/landing/ethereum.png'}
+          src={'/landing/ethereum.webp'}
           height={481}
           width={650}
           style={{
@@ -369,7 +369,7 @@ const NftMintSection = () => (
           alt="eth-logo"
         />
         <Image
-          src={'/landing/rightgun.png'}
+          src={'/landing/rightgun.webp'}
           height={186}
           width={208}
           alt="gun-left"
