@@ -34,7 +34,7 @@ export const PaymentModals = ({
       <Modal
         open={wertModalVisibility}
         onClose={() => onModalClose(wertModalClose)}
-        title="Buy nft using credit card payment"
+        title={`You are going to buy ${nftQuantity} NFT${nftQuantity === '1' ? '' : 's'}`}
       >
         <div id="wert-widget" className="w-full h-[800px] mt-4" />
       </Modal>

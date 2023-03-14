@@ -6,7 +6,7 @@ import { nftPaymentAtom } from '@/state/atoms'
 
 type NftBuyButtonsProps = {
   onETHPaymentClick?: () => void
-  onCCPaymentClick: () => void
+  onCCPaymentClick?: () => void
 }
 
 export const NftBuyButtons = ({ onETHPaymentClick, onCCPaymentClick }: NftBuyButtonsProps) => {

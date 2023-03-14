@@ -58,7 +58,7 @@ export const Profile = () => {
       {getProfileBannerView()}
       <NftBuyButtons
         onETHPaymentClick={connected ? () => setPaymentModal(!paymentModal) : openConnectModal}
-        onCCPaymentClick={handleWertWidget}
+        onCCPaymentClick={connected && address ? () => handleWertWidget() : openConnectModal}
       />
       <div>
         {isConnected && mounted ? (

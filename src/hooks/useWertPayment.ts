@@ -37,7 +37,7 @@ export const useWertPayment = ({ address }: any) => {
         {
           address: address!,
           commodity: 'ETH',
-          commodity_amount: 0.005,
+          commodity_amount: Number(nftQuantity) * 0.005,
           pk_id: 'key1',
           sc_address: nftSmartContractAddress,
           sc_id: uuid(),
@@ -45,7 +45,7 @@ export const useWertPayment = ({ address }: any) => {
         },
         wertPrivateKey
       ),
-    [address, input_data]
+    [address, input_data, nftQuantity]
   )
 
   const wertWidget = new WertWidget({
@@ -61,6 +61,11 @@ export const useWertPayment = ({ address }: any) => {
     origin: 'https://sandbox.wert.io',
     theme: 'dark',
     autosize: true,
+    extra: {
+      item_info: {
+        image_url: `https://megafans.blob.core.windows.net/ognftblanks/${nftQuantity}.png`,
+      },
+    },
     listeners: {
       'payment-status': (data: any) => {
         if (data.status === 'pending') {
