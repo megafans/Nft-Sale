@@ -887,8 +887,6 @@ const Page: NextPageWithLayout = () => {
         <Header />
         <Hero />
 
-        {/* <AboutSection /> */}
-
         <NftMintSection />
 
         <TeamSection />
