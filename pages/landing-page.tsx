@@ -131,7 +131,7 @@ const Header = () => (
     </div>
     <div className="flex relative z-0">
       <a
-        href="https://megafans.io/wp-content/uploads/2022/06/MS-MegaFans-White-Paper-May-24-2022.pdf"
+        href="MS-MegaFans-White-Paper-May-24-2022.pdf"
         target={'_blank'}
         className="px-12 py-7"
         style={{
