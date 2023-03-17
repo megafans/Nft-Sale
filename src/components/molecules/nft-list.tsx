@@ -13,7 +13,7 @@ export const NftList = () => {
     >
       {(nftIds ? (nftIds as BigNumber[]) : []).map(nft => {
         const nftId = nft.toString()
-        return nftId ? <Nft nftId={nftId} key={nftId} /> : null
+        return nftId ? <Nft nftId={nftId} key={nftId} /> : <></>
       })}
     </ul>
   )

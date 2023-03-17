@@ -47,7 +47,13 @@ const SingleNft = ({ nftId }: { nftId: string }) => {
 
   useEffect(() => {
     if (nft) {
-      fetchNFTListData(nft).then(setData)
+      fetchNFTListData(nft)
+        .then(result => {
+          setData(result)
+        })
+        .catch(error => {
+          console.error(error)
+        })
     }
   }, [nft])
 
