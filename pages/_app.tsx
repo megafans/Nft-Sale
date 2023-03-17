@@ -3,6 +3,7 @@ import { SWRConfig } from 'swr'
 import { WagmiConfig } from 'wagmi'
 import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit'
 import type { AppProps } from 'next/app'
+import { Analytics } from '@vercel/analytics/react'
 import type { NextPage } from 'next'
 import { AnimatePresence } from 'framer-motion'
 
@@ -63,6 +64,7 @@ export const App = ({ Component, pageProps, router }: AppPropsWithLayout) => {
           </RainbowKitProvider>
         </WagmiConfig>
       </StrictMode>
+      <Analytics />
     </SWRConfig>
   )
 }
