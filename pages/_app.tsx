@@ -4,6 +4,7 @@ import { WagmiConfig } from 'wagmi'
 import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit'
 import type { AppProps } from 'next/app'
 import { Analytics } from '@vercel/analytics/react'
+import { GoogleAnalytics } from 'nextjs-google-analytics'
 import type { NextPage } from 'next'
 import { AnimatePresence } from 'framer-motion'
 
@@ -65,6 +66,7 @@ export const App = ({ Component, pageProps, router }: AppPropsWithLayout) => {
         </WagmiConfig>
       </StrictMode>
       <Analytics />
+      <GoogleAnalytics trackPageViews />
     </SWRConfig>
   )
 }
