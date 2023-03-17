@@ -21,6 +21,7 @@ module.exports = {
       violet: '#350a44',
       green: colors.green,
       purple: '#8447E9',
+      neon: '#B7FFFD',
     },
     extend: {
       backgroundImage: () => ({

@@ -15,7 +15,7 @@
     "jsx": "preserve",
     "incremental": true,
     "baseUrl": ".",
-    "paths": { "@/*": ["./src/*"], "@/styles/*": ["./styles/*"] }
+    "paths": { "@/*": ["./src/*"], "@/styles/*": ["./styles/*"], "@/landing/*": ["./public/landing/*"] }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
