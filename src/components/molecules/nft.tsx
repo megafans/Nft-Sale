@@ -4,7 +4,7 @@ import { useEffect, useState, memo } from 'react'
 import { ArrowLongRightIcon } from '@heroicons/react/24/outline'
 import { useContractRead } from 'wagmi'
 
-import { ButtonLink } from '@/components'
+import { ButtonLink, Skeleton } from '@/components'
 import { nftSmartContractAddress } from '@/helpers/constants'
 import { ensRegistryABI } from '@/utils/abi'
 import { NFTPayload } from '@/types/nft'
@@ -74,7 +74,9 @@ const SingleNft = ({ nftId }: { nftId: string }) => {
         </ButtonLink>
       </div>
     </li>
-  ) : null
+  ) : (
+    <Skeleton />
+  )
 }
 
 export const Nft = memo(SingleNft)
