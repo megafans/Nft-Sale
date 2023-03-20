@@ -25,7 +25,7 @@ const Page: NextPageWithLayout = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="relative decoration-solid decoration-auto decoration-neon no-underline font-['Space Grotesk']">
+      <main className="relative decoration-solid decoration-auto decoration-neon no-underline font-['Space Grotesk'] overflow-x-hidden">
         <LandingHeader />
         <LandingHeroSection />
         <LandingNftMintSection />
