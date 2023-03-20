@@ -1,11 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
 import axios from 'axios'
+import Image from 'next/image'
 import { useEffect, useState, memo } from 'react'
 import { ArrowLongRightIcon } from '@heroicons/react/24/outline'
 import { useContractRead } from 'wagmi'
 
 import { ButtonLink, Skeleton } from '@/components'
-import { nftSmartContractAddress } from '@/helpers/constants'
+import { blurDataUrl, nftSmartContractAddress } from '@/helpers/constants'
 import { ensRegistryABI } from '@/utils/abi'
 import { NFTPayload } from '@/types/nft'
 
@@ -59,10 +59,14 @@ const SingleNft = ({ nftId }: { nftId: string }) => {
 
   return data ? (
     <li key={data.id}>
-      <img
+      <Image
         className="aspect-[1/1] w-full rounded-2xl object-cover shadow-2xl"
-        src={`https://ipfs.io/ipfs${data.image.replace('ipfs:/', '')}`}
-        alt=""
+        src={`https://megafans.mypinata.cloud/ipfs${data.image.replace('ipfs:/', '')}`}
+        alt={data.name}
+        width={640}
+        height={640}
+        blurDataURL={blurDataUrl}
+        priority
       />
       <div className="flex">
         <div className="flex-1">
