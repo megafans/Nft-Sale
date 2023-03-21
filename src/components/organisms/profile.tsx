@@ -4,13 +4,13 @@ import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit'
 import { useRecoilState } from 'recoil'
 
 import { Modal, NftList, MemoizedProfileBanner, ProfileEdit, Spinner, NftBuyButtons, PaymentModals } from '@/components'
-import { useBuyNFT, useMounted, useUser, useWertPayment } from '@/hooks'
+import { useBuyNFT, useMounted, useUser } from '@/hooks'
 import { sendUserWallet } from '@/utils/repository'
 import { nftPaymentAtom } from '@/state/atoms'
 
 export const Profile = () => {
   const [isEditMode, setEditMode] = useState(false)
-  const [wertOpen, setWertOpen] = useState(false)
+  const [wertOpen, setWertModalOpen] = useState(false)
   const [paymentModal, setPaymentModal] = useState(false)
   const [nftQuantity, setNftQuantity] = useRecoilState(nftPaymentAtom)
   const { openConnectModal } = useConnectModal()
@@ -24,8 +24,6 @@ export const Profile = () => {
       !isReconnected && sendUserWallet(address)
     },
   })
-
-  const wertWidget = useWertPayment({ address })
 
   const getProfileBannerView = () => {
     switch (isEditMode) {
@@ -47,10 +45,7 @@ export const Profile = () => {
   }
 
   const handleWertWidget = () => {
-    setWertOpen(!wertOpen)
-    setTimeout(() => {
-      wertWidget.mount()
-    }, 500)
+    setWertModalOpen(!wertOpen)
   }
 
   return (
@@ -67,7 +62,7 @@ export const Profile = () => {
               <Spinner />
             ) : (
               <Suspense fallback={<Spinner />}>
-                <h1 className="text-3xl font-black mt-20 text-white underline decoration-current underline-offset-8">
+                <h1 className="text-3xl font-black mt-20 text-white underline decoration-current underline-offset-8 inline-flex">
                   My NFTs - You own {nftIds?.length} NFTs
                 </h1>
                 <NftList />
@@ -88,7 +83,7 @@ export const Profile = () => {
         setNftQuantity={setNftQuantity}
         wertModalVisibility={wertOpen}
         paymentModalVisibility={paymentModal}
-        wertModalClose={() => setWertOpen(!wertOpen)}
+        wertModalClose={() => setWertModalOpen(!wertOpen)}
         paymentModalClose={() => setPaymentModal(!paymentModal)}
       />
     </>

@@ -1,6 +1,5 @@
-import axios from 'axios'
 import Image from 'next/image'
-import { useEffect, useState, memo } from 'react'
+import { useState, memo, useLayoutEffect } from 'react'
 import { ArrowLongRightIcon } from '@heroicons/react/24/outline'
 import { useContractRead } from 'wagmi'
 
@@ -23,29 +22,49 @@ type NftProps = {
   }[]
 }
 
-const fetchNFTListData = async (url: string) => {
-  const result: NftProps = await axios
-    .get(url)
-    .then(response => response)
-    .then(({ data }) => data)
-  return result
-}
-
 const baseContract: any = {
   address: nftSmartContractAddress,
   abi: ensRegistryABI,
   chainId: 5,
 }
 
+const refetchContract = (nftId: string) => ({
+  ...baseContract,
+  functionName: 'tokenURI',
+  scopeKey: nftId,
+  args: [Number(nftId)],
+  cacheOnBlock: true,
+  watch: true,
+})
+
+const fetchNFTListData = async (url: string) => {
+  const result: NftProps = await fetch(url)
+    .then(response => response.json())
+    .then(data => data)
+  return result
+}
+
 const SingleNft = ({ nftId }: { nftId: string }) => {
   const [data, setData] = useState<NFTPayload>()
-  const { data: nft } = useContractRead<any, any, any>({
-    ...baseContract,
-    functionName: 'tokenURI',
-    args: [+nftId],
+
+  const {
+    data: nft,
+    status,
+    refetch,
+  } = useContractRead<any, any, any>({
+    ...refetchContract(nftId),
+    onSuccess(data) {
+      fetchNFTListData(data)
+        .then(result => {
+          setData(result)
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    },
   })
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (nft) {
       fetchNFTListData(nft)
         .then(result => {
@@ -53,15 +72,18 @@ const SingleNft = ({ nftId }: { nftId: string }) => {
         })
         .catch(error => {
           console.error(error)
+          refetch({
+            ...refetchContract(nftId),
+          })
         })
     }
-  }, [nft])
+  }, [nft, status, refetch, nftId])
 
   return data ? (
     <li key={data.id}>
       <Image
         className="aspect-[1/1] w-full rounded-2xl object-cover shadow-2xl"
-        src={`https://megafans.mypinata.cloud/ipfs${data.image.replace('ipfs:/', '')}`}
+        src={`https://megafans.mypinata.cloud/ipfs${data.image?.replace('ipfs:/', '')}`}
         alt={data.name}
         width={640}
         height={640}

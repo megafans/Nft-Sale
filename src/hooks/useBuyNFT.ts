@@ -8,6 +8,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { ensRegistryABI } from '@/utils/abi'
 import { nftSmartContractAddress } from '@/helpers/constants'
 import { nftPaymentAtom, nftPaymentETHAtom } from '@/state/atoms'
+import { capitalize } from '@/utils/helpers'
 
 export const useBuyNFT = () => {
   const router = useRouter()
@@ -25,7 +26,7 @@ export const useBuyNFT = () => {
     chainId: 5,
   }
 
-  const { writeAsync: mint, error: mintError } = useContractWrite({
+  const { writeAsync: mint } = useContractWrite({
     ...baseContract,
     functionName: 'mint',
     args: [nftQuantity],
@@ -41,7 +42,8 @@ export const useBuyNFT = () => {
     isLoading,
   } = useContractRead<any, any, BigNumber[]>({
     ...baseContract,
-    enabled: address && address !== '0x',
+    address: nftSmartContractAddress,
+    enabled: !!address,
     functionName: 'listMyNFTs',
     args: [address],
   })
@@ -57,10 +59,8 @@ export const useBuyNFT = () => {
         setMintedTokenId(mintedTokenIdHex)
         mintedTokenId && router.push('/nft/confirmation')
       }
-    } catch (error) {
-      error && mintError?.message.includes('insufficient funds')
-        ? addToast('Transaction failed because of insufficient funds', {})
-        : addToast('Transaction failed', {})
+    } catch (error: any) {
+      addToast(capitalize(error?.reason), {})
     } finally {
       setMintLoading(false)
     }
