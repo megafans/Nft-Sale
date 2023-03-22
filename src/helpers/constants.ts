@@ -181,7 +181,6 @@ export const animationVariants = {
   },
 }
 
-export const nftSmartContractAddress = '0x3dE2B62381F3Ed847Ae212859EF08e3Dd370153d'
 export const smartContractInputData = {
   inputs: [
     { internalType: 'address', name: '_to', type: 'address' },
@@ -192,7 +191,11 @@ export const smartContractInputData = {
   stateMutability: 'payable',
   type: 'function',
 }
-export const wertPrivateKey = '0x57466afb5491ee372b3b30d82ef7e7a0583c9e36aef0f02435bd164fe172b1d3'
-export const wertPartnerID = '01GKW611J71EF5B8H9MS00G6M4'
+
+export const nftSmartContractAddress = process.env.NEXT_PUBLIC_SMART_CONTRACT_ADDRESS
+export const wertPrivateKey = process.env.NEXT_PUBLIC_WERT_PRIVATE_KEY
+export const wertPartnerID = process.env.NEXT_PUBLIC_WERT_PARTNER_ID
+export const imageCID = process.env.NEXT_PUBLIC_IMAGE_CID
+
 export const blurDataUrl =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOMVtz2FAAEKgIZAnKvygAAAABJRU5ErkJggg=='

@@ -9,8 +9,7 @@ import { ButtonLink, NftRewardsList, Spinner } from '@/components'
 import { useBrowser, useBuyNFT, useMounted } from '@/hooks'
 import { fetcher } from '@/utils/fetcher'
 import { api } from '@/helpers/api'
-
-const CID = process.env.NEXT_PUBLIC_IMAGE_CID
+import { imageCID } from '@/helpers/constants'
 
 export const NftDetailsEntity = ({ nftId }: { nftId: any }) => {
   const isBrowser = useBrowser()
@@ -38,7 +37,7 @@ export const NftDetailsEntity = ({ nftId }: { nftId: any }) => {
         <div className="w-1/2">
           <img
             className="aspect-[1/1] w-full rounded-2xl object-cover md:-rotate-6"
-            src={`https://megafans.mypinata.cloud/ipfs/${CID}/${nftId}.png`}
+            src={`https://megafans.mypinata.cloud/ipfs/${imageCID}/${nftId}.png`}
             alt={nftId}
           />
         </div>

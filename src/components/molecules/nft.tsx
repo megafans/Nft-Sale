@@ -3,15 +3,14 @@ import { memo } from 'react'
 import { ArrowLongRightIcon } from '@heroicons/react/24/outline'
 
 import { ButtonLink, Skeleton } from '@/components'
-
-const CID = process.env.NEXT_PUBLIC_IMAGE_CID
+import { imageCID } from '@/helpers/constants'
 
 const SingleNft = ({ nftId }: { nftId: string }) => {
   return nftId ? (
     <li key={nftId}>
       <img
         className="aspect-[1/1] w-full rounded-2xl object-cover shadow-2xl"
-        src={`https://megafans.mypinata.cloud/ipfs/${CID}/${nftId}.png`}
+        src={`https://megafans.mypinata.cloud/ipfs/${imageCID}/${nftId}.png`}
         alt={nftId}
       />
       <div className="flex">

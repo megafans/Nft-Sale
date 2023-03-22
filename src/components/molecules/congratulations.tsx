@@ -5,8 +5,7 @@ import { useWindowSize } from 'react-use'
 
 import { ButtonLink } from '@/components'
 import { useBuyNFT, useMounted } from '@/hooks'
-
-const CID = process.env.NEXT_PUBLIC_IMAGE_CID
+import { imageCID } from '@/helpers/constants'
 
 export const Congratulations = () => {
   const { nftIds } = useBuyNFT()
@@ -36,7 +35,7 @@ export const Congratulations = () => {
       <div className="flex justify-center pt-20">
         <img
           className="aspect-[1/1] w-80 rounded-2xl object-cover"
-          src={`https://megafans.mypinata.cloud/ipfs/${CID}/${nftId.toString()}.png`}
+          src={`https://megafans.mypinata.cloud/ipfs/${imageCID}/${nftId.toString()}.png`}
           alt="NFT"
         />
       </div>
