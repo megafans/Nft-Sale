@@ -1,23 +1,18 @@
-import Image from 'next/image'
+/* eslint-disable @next/next/no-img-element */
 import { memo } from 'react'
 import { ArrowLongRightIcon } from '@heroicons/react/24/outline'
 
 import { ButtonLink, Skeleton } from '@/components'
-import { blurDataUrl } from '@/helpers/constants'
 
 const CID = 'QmP5ehuisBJFomF5ZBrML2CeJiGZADFtvb2iGtXe5NqVbd'
 
 const SingleNft = ({ nftId }: { nftId: string }) => {
   return nftId ? (
     <li key={nftId}>
-      <Image
+      <img
         className="aspect-[1/1] w-full rounded-2xl object-cover shadow-2xl"
-        src={`https://megafans.mypinata.cloud/ipfs/${CID}/${nftId}.png `}
+        src={`https://megafans.mypinata.cloud/ipfs/${CID}/${nftId}.png`}
         alt={nftId}
-        width={640}
-        height={640}
-        blurDataURL={blurDataUrl}
-        priority
       />
       <div className="flex">
         <div className="flex-1">
