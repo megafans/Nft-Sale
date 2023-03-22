@@ -6,7 +6,7 @@ import { useWindowSize } from 'react-use'
 import { ButtonLink } from '@/components'
 import { useBuyNFT, useMounted } from '@/hooks'
 
-const CID = 'QmP5ehuisBJFomF5ZBrML2CeJiGZADFtvb2iGtXe5NqVbd'
+const CID = process.env.NEXT_PUBLIC_IMAGE_CID
 
 export const Congratulations = () => {
   const { nftIds } = useBuyNFT()

@@ -4,7 +4,7 @@ import { ArrowLongRightIcon } from '@heroicons/react/24/outline'
 
 import { ButtonLink, Skeleton } from '@/components'
 
-const CID = 'QmP5ehuisBJFomF5ZBrML2CeJiGZADFtvb2iGtXe5NqVbd'
+const CID = process.env.NEXT_PUBLIC_IMAGE_CID
 
 const SingleNft = ({ nftId }: { nftId: string }) => {
   return nftId ? (

@@ -10,6 +10,8 @@ import { useBrowser, useBuyNFT, useMounted } from '@/hooks'
 import { fetcher } from '@/utils/fetcher'
 import { api } from '@/helpers/api'
 
+const CID = process.env.NEXT_PUBLIC_IMAGE_CID
+
 export const NftDetailsEntity = ({ nftId }: { nftId: any }) => {
   const isBrowser = useBrowser()
   const token = isBrowser ? localStorage.getItem('token') : null
@@ -20,8 +22,6 @@ export const NftDetailsEntity = ({ nftId }: { nftId: any }) => {
     token ? [`${api.URL}api/NFT/ListTotalNFTRewards?nftId=${query.id}`, token] : null,
     ([url, token]) => fetcher(url, token)
   )
-
-  const CID = 'QmP5ehuisBJFomF5ZBrML2CeJiGZADFtvb2iGtXe5NqVbd'
 
   if (error) {
     return <p className="text-center text-white">Failed to load</p>
