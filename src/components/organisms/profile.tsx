@@ -17,7 +17,7 @@ export const Profile = () => {
 
   const mounted = useMounted()
   const { user } = useUser()
-  const { nftIds, connected, isLoading } = useBuyNFT()
+  const { nftIds, connected, isLoading, totalNfts } = useBuyNFT()
 
   const { isConnected, address } = useAccount({
     onConnect({ address, isReconnected }) {
@@ -51,10 +51,16 @@ export const Profile = () => {
   return (
     <>
       {getProfileBannerView()}
-      <NftBuyButtons
-        onETHPaymentClick={connected ? () => setPaymentModal(!paymentModal) : openConnectModal}
-        onCCPaymentClick={connected && address ? () => handleWertWidget() : openConnectModal}
-      />
+      {totalNfts < 5001 ? (
+        <NftBuyButtons
+          onETHPaymentClick={connected ? () => setPaymentModal(!paymentModal) : openConnectModal}
+          onCCPaymentClick={connected && address ? () => handleWertWidget() : openConnectModal}
+        />
+      ) : (
+        <div className="flex items-center justify-center bg-purple/20 backdrop-blur-md rounded-lg mt-10 p-8">
+          <p className="text-2xl font-bold text-white text-center uppercase">Sorry all the NFTs have been sold</p>
+        </div>
+      )}
       <div>
         {isConnected && mounted ? (
           <>

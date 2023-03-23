@@ -48,6 +48,12 @@ export const useBuyNFT = () => {
     args: [address],
   })
 
+  const { data } = useContractRead<any, any, BigNumber[]>({
+    ...baseContract,
+    address: nftSmartContractAddress,
+    functionName: 'totalSupply',
+  })
+
   const buyNFT = async () => {
     try {
       if (mint) {
@@ -74,5 +80,6 @@ export const useBuyNFT = () => {
     connected: activeConnector?.ready && isConnected,
     buyWith: chain?.nativeCurrency?.name,
     isNftListError,
+    totalNfts: Number(data?.toLocaleString()),
   }
 }
