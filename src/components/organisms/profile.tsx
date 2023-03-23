@@ -51,7 +51,7 @@ export const Profile = () => {
   return (
     <>
       {getProfileBannerView()}
-      {totalNfts < 5001 ? (
+      {mounted && totalNfts < 5001 ? (
         <NftBuyButtons
           onETHPaymentClick={connected ? () => setPaymentModal(!paymentModal) : openConnectModal}
           onCCPaymentClick={connected && address ? () => handleWertWidget() : openConnectModal}
