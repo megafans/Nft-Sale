@@ -1,4 +1,6 @@
 import Head from 'next/head'
+import { ToastProvider } from 'react-toast-notifications'
+import { RecoilRoot } from 'recoil'
 
 import {
   LandingDiscordSection,
@@ -25,18 +27,22 @@ const Page: NextPageWithLayout = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="relative decoration-solid decoration-auto decoration-neon no-underline font-['Space Grotesk'] overflow-x-hidden">
-        <LandingHeader />
-        <LandingHeroSection />
-        <LandingNftMintSection />
-        <LandingTeamSection />
-        <LandingRoadmapSection />
-        <LandingNftsSection />
-        <LandingTournamentSection />
-        <LandingStatsSection />
-        <LandingDiscordSection />
-        <LandingFooter />
-      </main>
+      <RecoilRoot>
+        <ToastProvider>
+          <main className="relative decoration-solid decoration-auto decoration-neon no-underline font-['Space Grotesk'] overflow-x-hidden">
+            <LandingHeader />
+            <LandingHeroSection />
+            <LandingNftMintSection />
+            <LandingTeamSection />
+            <LandingRoadmapSection />
+            <LandingNftsSection />
+            <LandingTournamentSection />
+            <LandingStatsSection />
+            <LandingDiscordSection />
+            <LandingFooter />
+          </main>
+        </ToastProvider>
+      </RecoilRoot>
     </>
   )
 }

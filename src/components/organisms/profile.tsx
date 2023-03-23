@@ -3,7 +3,16 @@ import { useAccount } from 'wagmi'
 import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit'
 import { useRecoilState } from 'recoil'
 
-import { Modal, NftList, MemoizedProfileBanner, ProfileEdit, Spinner, NftBuyButtons, PaymentModals } from '@/components'
+import {
+  Modal,
+  NftList,
+  MemoizedProfileBanner,
+  ProfileEdit,
+  Spinner,
+  NftBuyButtons,
+  PaymentModals,
+  NftListHeader,
+} from '@/components'
 import { useBuyNFT, useMounted, useUser } from '@/hooks'
 import { sendUserWallet } from '@/utils/repository'
 import { nftPaymentAtom } from '@/state/atoms'
@@ -12,12 +21,13 @@ export const Profile = () => {
   const [isEditMode, setEditMode] = useState(false)
   const [wertOpen, setWertModalOpen] = useState(false)
   const [paymentModal, setPaymentModal] = useState(false)
+  const [compact, setCompact] = useState(false)
   const [nftQuantity, setNftQuantity] = useRecoilState(nftPaymentAtom)
   const { openConnectModal } = useConnectModal()
 
   const mounted = useMounted()
   const { user } = useUser()
-  const { nftIds, connected, isLoading, totalNfts } = useBuyNFT()
+  const { nftIds, connected, totalNfts } = useBuyNFT()
 
   const { isConnected, address } = useAccount({
     onConnect({ address, isReconnected }) {
@@ -44,37 +54,30 @@ export const Profile = () => {
     }
   }
 
-  const handleWertWidget = () => {
-    setWertModalOpen(!wertOpen)
-  }
-
   return (
     <>
       {getProfileBannerView()}
-      {mounted && totalNfts < 5001 ? (
-        <NftBuyButtons
-          onETHPaymentClick={connected ? () => setPaymentModal(!paymentModal) : openConnectModal}
-          onCCPaymentClick={connected && address ? () => handleWertWidget() : openConnectModal}
-        />
-      ) : (
-        <div className="flex items-center justify-center bg-purple/20 backdrop-blur-md rounded-lg mt-10 p-8">
-          <p className="text-2xl font-bold text-white text-center uppercase">Sorry all the NFTs have been sold</p>
-        </div>
+      {mounted && (
+        <>
+          {totalNfts < 5501 ? (
+            <NftBuyButtons
+              onETHPaymentClick={connected ? () => setPaymentModal(!paymentModal) : openConnectModal}
+              onCCPaymentClick={connected && address ? () => setWertModalOpen(!wertOpen) : openConnectModal}
+            />
+          ) : (
+            <div className="flex items-center justify-center bg-purple/20 backdrop-blur-md rounded-lg mt-10 p-8">
+              <p className="text-2xl font-bold text-white text-center uppercase">Sorry all the NFTs have been sold</p>
+            </div>
+          )}
+        </>
       )}
+
       <div>
         {isConnected && mounted ? (
-          <>
-            {isLoading ? (
-              <Spinner />
-            ) : (
-              <Suspense fallback={<Spinner />}>
-                <h1 className="text-3xl font-black mt-20 text-white underline decoration-current underline-offset-8 inline-flex">
-                  My NFTs - You own {nftIds?.length} NFTs
-                </h1>
-                <NftList />
-              </Suspense>
-            )}
-          </>
+          <Suspense fallback={<Spinner />}>
+            <NftListHeader compact={compact} setCompact={setCompact} listLenght={nftIds?.length} />
+            <NftList compact={compact} />
+          </Suspense>
         ) : (
           <div className="flex flex-col items-center space-y-5">
             <p className="text-2xl font-bold mt-20 text-white text-center">
