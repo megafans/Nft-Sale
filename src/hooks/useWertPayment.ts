@@ -39,11 +39,11 @@ export const useWertPayment = ({ address }: any) => {
           commodity: 'ETH',
           commodity_amount: Number(nftQuantity) * 0.005,
           pk_id: 'key1',
-          sc_address: nftSmartContractAddress,
+          sc_address: nftSmartContractAddress!,
           sc_id: uuid(),
           sc_input_data: input_data,
         },
-        wertPrivateKey
+        wertPrivateKey!
       ),
     [address, input_data, nftQuantity]
   )
