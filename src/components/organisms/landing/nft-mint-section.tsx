@@ -119,7 +119,7 @@ export const LandingNftMintSection = () => (
             lineHeight: 0,
           }}
         >
-          LAUNCH March 15
+          Launch Coming Soon
         </a>
         <Image src={headerButton} className="-z-10" fill alt="header logo" />
       </div>
