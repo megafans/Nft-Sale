@@ -13,6 +13,7 @@ import {
   LandingTeamSection,
   LandingTournamentSection,
   LandingStatsSection,
+  LandingBuySection,
 } from '@/components'
 
 import { NextPageWithLayout } from './_app'
@@ -32,6 +33,7 @@ const Page: NextPageWithLayout = () => {
           <main className="relative decoration-solid decoration-auto decoration-neon no-underline font-['Space Grotesk'] overflow-x-hidden">
             <LandingHeader />
             <LandingHeroSection />
+            <LandingBuySection />
             <LandingNftMintSection />
             <LandingTeamSection />
             <LandingRoadmapSection />

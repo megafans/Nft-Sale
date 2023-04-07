@@ -23,7 +23,6 @@ export const LandingNftMintSection = () => (
             fontSize: '48px',
             fontWeight: 600,
             lineHeight: '48px',
-            fontFamily: '"Space Grotesk", sans-serif;',
           }}
         >
           NFT MINT
@@ -37,24 +36,9 @@ export const LandingNftMintSection = () => (
             fontSize: '32px',
             fontWeight: 600,
             lineHeight: '32px',
-            fontFamily: '"Space Grotesk", sans-serif;',
           }}
         >
           ETHEREUM
-        </p>
-      </div>
-      <div>
-        <p
-          className="text-center"
-          style={{
-            color: '#C7FFFD',
-            fontSize: '18px',
-            fontWeight: 600,
-            lineHeight: '33px',
-            fontFamily: '"Space Grotesk", sans-serif;',
-          }}
-        >
-          Available To Open Sea
         </p>
       </div>
     </div>
@@ -92,7 +76,7 @@ export const LandingNftMintSection = () => (
     >
       <div className="flex max-sm:basis-full relative z-0 basis-1/2" style={{ maxWidth: 400 }}>
         <a
-          href="https://megafans.io/wp-content/uploads/2022/06/MS-MegaFans-White-Paper-May-24-2022.pdf"
+          href="https://www.megafans.io/MS-MegaFans-White-Paper-May-24-2022.pdf"
           target={'_blank'}
           className="w-full px-14 py-8"
           style={{
