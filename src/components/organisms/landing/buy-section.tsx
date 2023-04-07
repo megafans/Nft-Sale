@@ -14,21 +14,15 @@ export const LandingBuySection = () => (
       <div className="flex items-center justify-center gap-20">
         <div className="flex px-5 items-center">
           <h2
-            className="text-center text-2xl leading-10 font-semibold max-w-2xl uppercase"
+            className="text-center text-3xl leading-10 font-semibold max-w-2xl uppercase"
             style={{
               minWidth: 240,
               color: '#B7FFFD',
               textShadow: '0px 0px 9px rgba(199, 255, 253, 0.5)',
             }}
           >
-            <span className="text-4xl">Play-to-Win!</span>
-            <br />
-            Megafans Esports Tournaments offers token and cash rewards!
-            <br />
-            <br />
-            <span className="text-4xl">Hold-to Earn!</span>
-            <br />
-            Megafans NFTs earn revenue from the Esports Tournaments entries! The more that play, the more you earn!
+            Hold Megafans NFTs to unlock in-game tokens (MFANS) that can be traded for cryptocurrencies, cash, and
+            real-world rewards!
           </h2>
         </div>
         <motion.div
