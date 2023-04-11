@@ -63,6 +63,7 @@ export const Profile = () => {
             <NftBuyButtons
               onETHPaymentClick={connected ? () => setPaymentModal(!paymentModal) : openConnectModal}
               onCCPaymentClick={connected && address ? () => setWertModalOpen(!wertOpen) : openConnectModal}
+              address={address}
             />
           ) : (
             <div className="flex items-center justify-center bg-purple/20 backdrop-blur-md rounded-lg mt-10 p-8">
