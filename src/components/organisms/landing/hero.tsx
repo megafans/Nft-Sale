@@ -86,7 +86,7 @@ export const LandingHeroSection = () => (
                 padding: 24,
               }}
             >
-              STAKE TO EARN
+              HOLD TO EARN
             </p>
             <Image
               fill
