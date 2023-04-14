@@ -12,10 +12,10 @@ export const User = ({ user }: UserType) => {
   const avatar = user?.image || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
 
   return (
-    <Popover className="relative">
+    <Popover className="relative w-auto flex justify-end">
       {({ close }) => (
         <>
-          <Popover.Button className="flex items-center bg-white/10 py-3 px-5 rounded-lg outline-none focus:ring-0">
+          <Popover.Button className="flex items-center bg-white/10 py-3 px-5 rounded-lg outline-none focus:ring-0 w-60">
             <Image
               className="inline-block h-10 w-10 rounded-full object-cover"
               src={avatar}
