@@ -3,13 +3,15 @@ import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid
 import Confetti from 'react-confetti'
 import { useWindowSize } from 'react-use'
 
+import { useAccount } from 'wagmi'
 import { ButtonLink } from '@/components'
-import { useBuyNFT, useMounted } from '@/hooks'
+import { useMounted, useNFTImages } from '@/hooks'
 import { imageCID } from '@/helpers/constants'
 
 export const Congratulations = () => {
-  const { nftIds } = useBuyNFT()
-  const nftId = nftIds?.slice(-1)
+  const { address } = useAccount()
+  const nftList = useNFTImages({ address })
+  const nftId = nftList.nftList?.slice(-1)
 
   const mounted = useMounted()
   const { width, height } = useWindowSize()

@@ -1,14 +1,16 @@
 import cslx from 'clsx'
 
+import { useAccount } from 'wagmi'
 import { Nft } from '@/components'
-import { useBuyNFT } from '@/hooks'
+import { useNFTImages } from '@/hooks'
 
 type NftListProps = {
   compact?: boolean
 }
 
 export const NftList = ({ compact }: NftListProps) => {
-  const { nftIds } = useBuyNFT()
+  const { address } = useAccount()
+  const nftList = useNFTImages({ address })
 
   return (
     <ul
@@ -18,8 +20,8 @@ export const NftList = ({ compact }: NftListProps) => {
         compact && 'sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'
       )}
     >
-      {nftIds?.map(nft => {
-        return nft ? <Nft nftId={nft.toString()} key={nft.toNumber()} /> : null
+      {nftList.nftList?.map((nft: { id: any }): any => {
+        return nft ? <Nft nft={nft} key={nft.id} /> : null
       })}
     </ul>
   )

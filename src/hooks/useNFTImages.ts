@@ -4,7 +4,7 @@ import { api } from '@/helpers/api'
 import { fetcher } from '@/utils/fetcher'
 
 type Props = {
-  address: string
+  address?: `0x${string}`
 }
 
 export const useNFTImages = ({ address }: Props) => {
@@ -14,9 +14,9 @@ export const useNFTImages = ({ address }: Props) => {
     dedupingInterval: 5000,
   })
 
-  console.log('useNFTImages', data, error, isLoading)
-
   return {
-    data,
+    nftList: data?.data,
+    isLoading,
+    isError: error,
   }
 }
