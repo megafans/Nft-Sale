@@ -1,7 +1,7 @@
 export interface ABI {
   inputs: Put[]
   stateMutability?: 'nonpayable' | 'payable' | 'view'
-  type: 'constructor' | 'event' | 'function'
+  type: 'constructor' | 'event' | 'function' | 'error'
   anonymous?: boolean
   name?: string
   outputs?: Put[]
@@ -15,15 +15,20 @@ export interface Put {
 }
 
 export const ensRegistryABI: ABI[] = [
-  {
-    inputs: [
-      { internalType: 'string', name: '_name', type: 'string' },
-      { internalType: 'string', name: '_symbol', type: 'string' },
-      { internalType: 'address', name: 'controller_', type: 'address' },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'constructor',
-  },
+  { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
+  { inputs: [], name: 'ApprovalCallerNotOwnerNorApproved', type: 'error' },
+  { inputs: [], name: 'ApprovalQueryForNonexistentToken', type: 'error' },
+  { inputs: [], name: 'BalanceQueryForZeroAddress', type: 'error' },
+  { inputs: [], name: 'MintERC2309QuantityExceedsLimit', type: 'error' },
+  { inputs: [], name: 'MintToZeroAddress', type: 'error' },
+  { inputs: [], name: 'MintZeroQuantity', type: 'error' },
+  { inputs: [], name: 'OwnerQueryForNonexistentToken', type: 'error' },
+  { inputs: [], name: 'OwnershipNotInitializedForExtraData', type: 'error' },
+  { inputs: [], name: 'TransferCallerNotOwnerNorApproved', type: 'error' },
+  { inputs: [], name: 'TransferFromIncorrectOwner', type: 'error' },
+  { inputs: [], name: 'TransferToNonERC721ReceiverImplementer', type: 'error' },
+  { inputs: [], name: 'TransferToZeroAddress', type: 'error' },
+  { inputs: [], name: 'URIQueryForNonexistentToken', type: 'error' },
   {
     anonymous: false,
     inputs: [
@@ -42,6 +47,17 @@ export const ensRegistryABI: ABI[] = [
       { indexed: false, internalType: 'bool', name: 'approved', type: 'bool' },
     ],
     name: 'ApprovalForAll',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'uint256', name: 'fromTokenId', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'toTokenId', type: 'uint256' },
+      { indexed: true, internalType: 'address', name: 'from', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'to', type: 'address' },
+    ],
+    name: 'ConsecutiveTransfer',
     type: 'event',
   },
   {
@@ -79,7 +95,7 @@ export const ensRegistryABI: ABI[] = [
     ],
     name: 'approve',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -87,6 +103,20 @@ export const ensRegistryABI: ABI[] = [
     name: 'balanceOf',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'baseTokenURI',
+    outputs: [{ internalType: 'string', name: '', type: 'string' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: '_maxSupply', type: 'uint256' }],
+    name: 'changeMaxSupply',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -132,18 +162,8 @@ export const ensRegistryABI: ABI[] = [
   },
   {
     inputs: [],
-    name: 'listAllNFTAndOwner',
-    outputs: [
-      { internalType: 'address[]', name: '', type: 'address[]' },
-      { internalType: 'uint256[]', name: '', type: 'uint256[]' },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [{ internalType: 'address', name: '_owner', type: 'address' }],
-    name: 'listMyNFTs',
-    outputs: [{ internalType: 'uint256[]', name: '', type: 'uint256[]' }],
+    name: 'maxSupply',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
@@ -202,7 +222,7 @@ export const ensRegistryABI: ABI[] = [
     ],
     name: 'safeTransferFrom',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -210,11 +230,11 @@ export const ensRegistryABI: ABI[] = [
       { internalType: 'address', name: 'from', type: 'address' },
       { internalType: 'address', name: 'to', type: 'address' },
       { internalType: 'uint256', name: 'tokenId', type: 'uint256' },
-      { internalType: 'bytes', name: 'data', type: 'bytes' },
+      { internalType: 'bytes', name: '_data', type: 'bytes' },
     ],
     name: 'safeTransferFrom',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -223,6 +243,13 @@ export const ensRegistryABI: ABI[] = [
       { internalType: 'bool', name: 'approved', type: 'bool' },
     ],
     name: 'setApprovalForAll',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'string', name: '_baseTokenURI', type: 'string' }],
+    name: 'setBaseURI',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -238,23 +265,6 @@ export const ensRegistryABI: ABI[] = [
     inputs: [],
     name: 'symbol',
     outputs: [{ internalType: 'string', name: '', type: 'string' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [{ internalType: 'uint256', name: 'index', type: 'uint256' }],
-    name: 'tokenByIndex',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      { internalType: 'address', name: 'owner', type: 'address' },
-      { internalType: 'uint256', name: 'index', type: 'uint256' },
-    ],
-    name: 'tokenOfOwnerByIndex',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
@@ -280,7 +290,7 @@ export const ensRegistryABI: ABI[] = [
     ],
     name: 'transferFrom',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -291,5 +301,5 @@ export const ensRegistryABI: ABI[] = [
     type: 'function',
   },
   { inputs: [], name: 'unpauseContract', outputs: [], stateMutability: 'nonpayable', type: 'function' },
-  { inputs: [], name: 'withdraw', outputs: [], stateMutability: 'payable', type: 'function' },
+  { inputs: [], name: 'withdraw', outputs: [], stateMutability: 'nonpayable', type: 'function' },
 ]

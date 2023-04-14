@@ -1,6 +1,7 @@
 import Image from 'next/image'
+import { ArrowLongRightIcon } from '@heroicons/react/24/outline'
 
-import { User } from '@/components'
+import { ButtonLink, User } from '@/components'
 import headerBackground from '@/landing/celebration.webp'
 import headerButton from '@/landing/button.webp'
 import logo from '@/landing/megafans-header.webp'
@@ -11,7 +12,7 @@ export const LandingHeader = () => {
 
   return (
     <div
-      className="w-100 py-2.5 px-5 flex max-md:px-2.5 items-center relative z-0 overflow-hidden max-md:flex-col flex-row gap-6"
+      className="w-100 py-2.5 px-5 flex max-md:px-2.5 items-center relative z-50 max-md:flex-col flex-row gap-6"
       style={{
         backgroundColor: '#16131F',
       }}
@@ -29,7 +30,7 @@ export const LandingHeader = () => {
       </div>
 
       <div
-        className="flex w-full h-full gap-4 "
+        className="flex w-full h-full gap-4"
         style={{
           height: 'clamp(80px, 10vw, 120px)',
         }}
@@ -69,7 +70,14 @@ export const LandingHeader = () => {
         </a>
         <Image src={headerButton} className="-z-10" fill alt="header logo" />
       </div>
-      {/* <User user={user} /> */}
+      {user?.username ? (
+        <User user={user} />
+      ) : (
+        <ButtonLink href="/sign-in" variant="primary" size="lg" ribbon>
+          <span>Login</span>
+          <ArrowLongRightIcon className="w-6 h-6 ml-10" />
+        </ButtonLink>
+      )}
     </div>
   )
 }
