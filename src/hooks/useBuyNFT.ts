@@ -9,8 +9,10 @@ import { ensRegistryABI } from '@/utils/abi'
 import { nftSmartContractAddress } from '@/helpers/constants'
 import { nftPaymentAtom, nftPaymentETHAtom } from '@/state/atoms'
 import { capitalize } from '@/utils/helpers'
+import { useBrowser } from '@/hooks'
 
 export const useBuyNFT = () => {
+  const isBrowser = useBrowser()
   const router = useRouter()
   const [, setMintedTokenId] = useState<string>()
   const [mintLoading, setMintLoading] = useRecoilState(nftPaymentETHAtom)
@@ -35,6 +37,12 @@ export const useBuyNFT = () => {
     onSuccess: () => {
       addToast('Transaction successful', {})
     },
+  })
+
+  const { data: isPaused } = useContractRead<any, any, boolean>({
+    ...baseContract,
+    address: nftSmartContractAddress,
+    functionName: 'contractPaused',
   })
 
   const {
@@ -65,6 +73,7 @@ export const useBuyNFT = () => {
         const mintedTokenId = parseInt(mintedTokenIdHex)
         setMintedTokenId(mintedTokenIdHex)
         mintedTokenId && router.push('/nft/confirmation')
+        isBrowser ? localStorage.setItem('nftsBought', nftQuantity) : null
       }
     } catch (error: any) {
       addToast(capitalize(error?.reason), {})
@@ -86,5 +95,6 @@ export const useBuyNFT = () => {
     buyWith: chain?.nativeCurrency?.name,
     isNftListError,
     totalNfts,
+    isPaused,
   }
 }

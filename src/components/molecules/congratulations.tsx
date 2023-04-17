@@ -4,14 +4,15 @@ import Confetti from 'react-confetti'
 import { useWindowSize } from 'react-use'
 
 import { useAccount } from 'wagmi'
-import { ButtonLink } from '@/components'
-import { useMounted, useNFTImages } from '@/hooks'
-import { imageCID } from '@/helpers/constants'
+import { ButtonLink, Nft } from '@/components'
+import { useMounted, useNFTImages, useBrowser } from '@/hooks'
 
 export const Congratulations = () => {
+  const isBrowser = useBrowser()
+  const nftsBought = isBrowser ? Number(localStorage.getItem('nftsBought')) : 0
   const { address } = useAccount()
   const nftList = useNFTImages({ address })
-  const nftId = nftList.nftList?.slice(-1)
+  const nftId = nftList.nftList?.slice(-nftsBought)
 
   const mounted = useMounted()
   const { width, height } = useWindowSize()
@@ -24,7 +25,7 @@ export const Congratulations = () => {
         <span className="font-bold">Back to profile</span>
       </ButtonLink>
       <h1 className="text-white text-center font-bold text-4xl uppercase mt-20">
-        Congratulations you have just bought NFT, please check details below
+        Congratulations you have just bought {nftsBought} NFT, please check details below
       </h1>
       <div className="flex justify-center items-center">
         <p className="text-white text-center font-bold text-xl">
@@ -34,15 +35,11 @@ export const Congratulations = () => {
           <ArrowLongRightIcon className="w-6 h-6" />
         </ButtonLink>
       </div>
-      <div className="flex justify-center pt-20">
-        <img
-          className="aspect-[1/1] w-80 rounded-2xl object-cover"
-          src={`https://megafans.mypinata.cloud/ipfs/${imageCID}/${nftId.toString()}.png`}
-          alt="NFT"
-        />
+      <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 xl:grid-cols-4">
+        {nftId?.map((nft: { id: any }): any => {
+          return nft ? <Nft nft={nft} key={nft.id} /> : null
+        })}
       </div>
-      <h3 className="mt-6 text-lg font-semibold leading-8 tracking-tight text-white text-center">{nftId.toString()}</h3>
-      <p className="text-base leading-7 text-white text-center">Megafans Gamer Girlz</p>
     </>
   ) : null
 }
