@@ -57,21 +57,19 @@ export const Profile = () => {
   return (
     <>
       {getProfileBannerView()}
-      {mounted && (
-        <>
-          {totalNfts < 5501 ? (
-            <NftBuyButtons
-              onETHPaymentClick={connected ? () => setPaymentModal(!paymentModal) : openConnectModal}
-              onCCPaymentClick={connected && address ? () => setWertModalOpen(!wertOpen) : openConnectModal}
-              address={address}
-            />
-          ) : (
-            <div className="flex items-center justify-center bg-purple/20 backdrop-blur-md rounded-lg mt-10 p-8">
-              <p className="text-2xl font-bold text-white text-center uppercase">Sorry all the NFTs have been sold</p>
-            </div>
-          )}
-        </>
-      )}
+      <>
+        {totalNfts < 5501 ? (
+          <NftBuyButtons
+            onETHPaymentClick={connected ? () => setPaymentModal(!paymentModal) : openConnectModal}
+            onCCPaymentClick={connected && address ? () => setWertModalOpen(!wertOpen) : openConnectModal}
+            address={address}
+          />
+        ) : (
+          <div className="flex items-center justify-center bg-purple/20 backdrop-blur-md rounded-lg mt-10 p-8">
+            <p className="text-2xl font-bold text-white text-center uppercase">Sorry all the NFTs have been sold</p>
+          </div>
+        )}
+      </>
 
       <div>
         {isConnected && mounted ? (

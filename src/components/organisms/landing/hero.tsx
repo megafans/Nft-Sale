@@ -37,7 +37,8 @@ export const LandingHeroSection = () => (
             paddingBottom: 'clamp(50px, 8vw, 170px)',
             lineHeight: 1,
             width: 'max-content',
-            zIndex: 0,
+            zIndex: 999,
+            cursor: 'pointer',
           }}
         >
           <motion.div
@@ -79,11 +80,13 @@ export const LandingHeroSection = () => (
               textAlign: 'center',
               display: 'block',
               position: 'relative',
+              zIndex: 30,
             }}
           >
             <p
               style={{
                 padding: 24,
+                zIndex: 30,
               }}
             >
               HOLD TO EARN

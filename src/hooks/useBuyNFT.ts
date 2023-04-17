@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BigNumber, ethers } from 'ethers'
 import { useToasts } from 'react-toast-notifications'
 import { useAccount, useContractRead, useContractWrite, useNetwork } from 'wagmi'
@@ -15,6 +15,7 @@ export const useBuyNFT = () => {
   const [, setMintedTokenId] = useState<string>()
   const [mintLoading, setMintLoading] = useRecoilState(nftPaymentETHAtom)
   const { addToast } = useToasts()
+  const [totalNfts, setTotalNfts] = useState<number>(0)
   const nftQuantity = useRecoilValue(nftPaymentAtom)
 
   const { chain } = useNetwork()
@@ -72,6 +73,10 @@ export const useBuyNFT = () => {
     }
   }
 
+  useEffect(() => {
+    setTotalNfts(Number(data?.toLocaleString()))
+  }, [data])
+
   return {
     mintLoading,
     buyNFT,
@@ -80,6 +85,6 @@ export const useBuyNFT = () => {
     connected: activeConnector?.ready && isConnected,
     buyWith: chain?.nativeCurrency?.name,
     isNftListError,
-    totalNfts: Number(data?.toLocaleString()),
+    totalNfts,
   }
 }
