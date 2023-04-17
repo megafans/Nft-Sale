@@ -10,8 +10,10 @@ type Props = {
 export const useNFTImages = ({ address }: Props) => {
   const { data, error, isLoading } = useSWR(`${api.URL}api/NFT/ListMyNFTs?walletAddress=${address}`, fetcher, {
     revalidateOnMount: true,
-    shouldRetryOnError: false,
+    shouldRetryOnError: true,
     dedupingInterval: 10000,
+    refreshInterval: 3000,
+    refreshWhenHidden: true,
   })
 
   return {

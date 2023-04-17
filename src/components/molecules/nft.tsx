@@ -11,7 +11,7 @@ const SingleNft = ({ nft }: any) => {
       <div className="flex">
         <div className="flex-1">
           <h3 className="mt-6 text-lg font-semibold leading-8 tracking-tight text-white">{nft.id}</h3>
-          <p className="text-base leading-7 text-white">Megafans Gamer Girlz</p>
+          <p className="text-base leading-7 text-white">{nft.name}</p>
         </div>
         <ButtonLink href={`/nft/${nft.id}`} variant="transparent" size="sm" ribbon={false}>
           <ArrowLongRightIcon className="w-6 h-6 ml-4" />

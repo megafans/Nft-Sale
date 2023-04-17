@@ -12,7 +12,7 @@ export const Congratulations = () => {
   const nftsBought = isBrowser ? Number(localStorage.getItem('nftsBought')) : 0
   const { address } = useAccount()
   const nftList = useNFTImages({ address })
-  const nftId = nftList.nftList?.slice(-nftsBought)
+  const nftId = nftList.nftList?.slice(0, nftsBought)
 
   const mounted = useMounted()
   const { width, height } = useWindowSize()
