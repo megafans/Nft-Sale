@@ -96,9 +96,9 @@ export const useAuth = () => {
 
   const reset = async (password: string, confirm_password: string, token: TokenProps) => {
     setLoading(true)
-    const response = await fetch(`${api?.URL}Authorization/new_password?token=${token}`, {
+    const response = await fetch(`${api?.URL}Authorization/new_password`, {
       method: 'POST',
-      body: JSON.stringify({ password, confirm_password }),
+      body: JSON.stringify({ password, code: token }),
       headers: {
         'Content-Type': 'application/json',
       },
