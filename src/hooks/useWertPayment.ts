@@ -19,10 +19,10 @@ export const useWertPayment = ({ address }: any) => {
     ? web3EthAbi.encodeFunctionCall(
         {
           inputs: [
-            { internalType: 'address', name: '_to', type: 'address' },
+            { internalType: 'address', name: 'To', type: 'address' },
             { internalType: 'uint256', name: 'num', type: 'uint256' },
           ],
-          name: 'mint_to',
+          name: 'mintTo',
           outputs: [],
           stateMutability: 'payable',
           type: 'function',

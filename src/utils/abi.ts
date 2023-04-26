@@ -83,7 +83,7 @@ export const ensRegistryABI: ABI[] = [
     anonymous: false,
     inputs: [
       { indexed: false, internalType: 'uint256', name: 'amount', type: 'uint256' },
-      { indexed: false, internalType: 'address', name: 'addr', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'addr', type: 'address' },
     ],
     name: 'Withdraw',
     type: 'event',
@@ -143,7 +143,7 @@ export const ensRegistryABI: ABI[] = [
   {
     inputs: [
       { internalType: 'address', name: '_to', type: 'address' },
-      { internalType: 'uint256', name: 'num', type: 'uint256' },
+      { internalType: 'uint256', name: '_num', type: 'uint256' },
     ],
     name: 'internalMint',
     outputs: [],
@@ -168,7 +168,7 @@ export const ensRegistryABI: ABI[] = [
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'uint256', name: 'num', type: 'uint256' }],
+    inputs: [{ internalType: 'uint256', name: '_num', type: 'uint256' }],
     name: 'mint',
     outputs: [],
     stateMutability: 'payable',
@@ -177,9 +177,9 @@ export const ensRegistryABI: ABI[] = [
   {
     inputs: [
       { internalType: 'address', name: '_to', type: 'address' },
-      { internalType: 'uint256', name: 'num', type: 'uint256' },
+      { internalType: 'uint256', name: '_num', type: 'uint256' },
     ],
-    name: 'mint_to',
+    name: 'mintTo',
     outputs: [],
     stateMutability: 'payable',
     type: 'function',
@@ -269,7 +269,7 @@ export const ensRegistryABI: ABI[] = [
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }],
+    inputs: [{ internalType: 'uint256', name: '_tokenId', type: 'uint256' }],
     name: 'tokenURI',
     outputs: [{ internalType: 'string', name: '', type: 'string' }],
     stateMutability: 'view',
@@ -301,5 +301,5 @@ export const ensRegistryABI: ABI[] = [
     type: 'function',
   },
   { inputs: [], name: 'unpauseContract', outputs: [], stateMutability: 'nonpayable', type: 'function' },
-  { inputs: [], name: 'withdraw', outputs: [], stateMutability: 'nonpayable', type: 'function' },
+  { inputs: [], name: 'withdraw', outputs: [], stateMutability: 'payable', type: 'function' },
 ]
