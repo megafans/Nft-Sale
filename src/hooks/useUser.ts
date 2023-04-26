@@ -20,7 +20,7 @@ export const useUser = () => {
   const token = isBrowser ? localStorage.getItem('token') : null
 
   const { data, error, isLoading } = useSWR(
-    token ? [`${api.URL}/api/Users/view_profile`, token] : null,
+    token ? [`${api.URL}api/Users/view_profile`, token] : null,
     ([url, token]) => fetcher(url, token)
   )
 
