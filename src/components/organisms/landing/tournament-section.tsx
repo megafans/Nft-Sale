@@ -4,19 +4,21 @@ import Image from 'next/image'
 import tournament from '@/landing/tournament.webp'
 
 export const LandingTournamentSection = () => (
-  <AnimatePresence>
-    <motion.div
-      initial={{ y: -300, opacity: 0 }}
-      whileInView={{ y: 0, opacity: 1 }}
-      exit={{ y: 300, opacity: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: 0.6 }}
-      className="py-24"
-      style={{
-        background: 'linear-gradient(180deg, #232B50 0%, #19132A 100%)',
-      }}
-    >
-      <div className="flex flex-col gap-20 px-5">
+  <div
+    className="py-24"
+    style={{
+      background: 'linear-gradient(180deg, #232B50 0%, #19132A 100%)',
+    }}
+  >
+    <AnimatePresence>
+      <motion.div
+        initial={{ y: 300, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        exit={{ y: -300, opacity: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.6 }}
+        className="flex flex-col gap-20 px-5"
+      >
         <h2
           className="text-center text-5xl leading-none font-semibold"
           style={{
@@ -35,7 +37,7 @@ export const LandingTournamentSection = () => (
         >
           <Image src={tournament} width={tournament.width} alt="tournament-graph" />
         </div>
-      </div>
-    </motion.div>
-  </AnimatePresence>
+      </motion.div>
+    </AnimatePresence>
+  </div>
 )
