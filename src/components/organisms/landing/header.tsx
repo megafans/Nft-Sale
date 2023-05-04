@@ -2,10 +2,10 @@ import Image from 'next/image'
 import { ArrowLongRightIcon } from '@heroicons/react/24/outline'
 
 import { ButtonLink, User } from '@/components'
+import { useUser } from '@/hooks'
 import headerBackground from '@/landing/celebration.webp'
 import headerButton from '@/landing/button.webp'
 import logo from '@/landing/megafans-header.webp'
-import { useUser } from '@/hooks'
 
 export const LandingHeader = () => {
   const { user } = useUser()

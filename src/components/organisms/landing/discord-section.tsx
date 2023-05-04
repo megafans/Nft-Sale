@@ -7,12 +7,7 @@ import discordBackground from '@/landing/discord-background.webp'
 
 export const LandingDiscordSection = () => (
   <AnimatePresence>
-    <motion.div
-      initial={{ y: 300, opacity: 0 }}
-      whileInView={{ y: 0, opacity: 1 }}
-      exit={{ y: -300, opacity: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: 0.6 }}
+    <div
       className="p-24 z-0 max-lg:p-6"
       style={{
         background: 'linear-gradient(180deg, #19132A 0%, #242E56 100%)',
@@ -20,7 +15,14 @@ export const LandingDiscordSection = () => (
         fontFamily: '"Space Grotesk", sans-serif;',
       }}
     >
-      <div className="relative z-0">
+      <motion.div
+        initial={{ y: 300, opacity: 0.2 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        exit={{ y: -300, opacity: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.6 }}
+        className="relative z-0"
+      >
         <div
           className="flex flex-col items-center z-10"
           style={{
@@ -51,7 +53,7 @@ export const LandingDiscordSection = () => (
           </div>
         </div>
         <Image src={discordBackground} fill alt="discord-section-background" className="object-contain -z-10" />
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   </AnimatePresence>
 )
