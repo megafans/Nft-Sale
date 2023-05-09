@@ -43,7 +43,7 @@ export const LandingDiscordSection = () => (
 
           <div className="relative z-0 cursor-pointer" style={{ color: 'black' }}>
             <a
-              href="https://discord.gg/y8f4Man8a7"
+              href="https://discord.com/invite/megfansnfts"
               target="_blank"
               className="px-20 block py-16 font-semibold text-xl leading-loose max-md:px-10 max-md:py-6"
             >

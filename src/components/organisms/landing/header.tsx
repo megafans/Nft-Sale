@@ -40,7 +40,7 @@ export const LandingHeader = () => {
         </div>
         {/* </div> */}
         <div className="flex h-full items-center gap-8">
-          <a href="https://discord.gg/y8f4Man8a7" target="_blank">
+          <a href="https://discord.com/invite/megfansnfts" target="_blank">
             <Image src={'/landing/discord-logo.webp'} width={50} height={50} alt="header logo" />
           </a>
 
@@ -48,7 +48,7 @@ export const LandingHeader = () => {
             <Image src={'/landing/telegram-logo.webp'} width={50} height={50} alt="header logo" />
           </a>
 
-          <a href="https://twitter.com/MegafansEsports" target="_blank">
+          <a href="https://twitter.com/MegafansNFTs" target="_blank">
             <Image src={'/landing/twitter-logo.webp'} width={50} height={50} alt="header logo" />
           </a>
         </div>
