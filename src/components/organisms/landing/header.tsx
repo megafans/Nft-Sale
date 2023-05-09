@@ -55,11 +55,28 @@ export const LandingHeader = () => {
       </div>
       <div className="flex relative z-0">
         <a
+          href="https://linktr.ee/MegaFans_esports"
+          target={'_blank'}
+          className="px-12 py-7"
+          style={{
+            minWidth: 160,
+            textAlign: 'center',
+            fontSize: '1.3111111111111rem',
+            lineHeight: 0,
+            color: '#B7FFFD',
+          }}
+        >
+          LINKTREE
+        </a>
+        <Image src={headerButton} className="-z-10" fill alt="header logo" />
+      </div>
+      <div className="flex relative z-0">
+        <a
           href="MS-MegaFans-White-Paper-May-24-2022.pdf"
           target={'_blank'}
           className="px-12 py-7"
           style={{
-            minWidth: 280,
+            minWidth: 250,
             textAlign: 'center',
             fontSize: '1.3111111111111rem',
             lineHeight: 0,
