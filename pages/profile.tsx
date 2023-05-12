@@ -2,10 +2,13 @@ import { ReactElement } from 'react'
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
 
+import { useMounted } from '@/hooks'
 import { Layout, Profile } from '@/components'
 import { NextPageWithLayout } from './_app'
 
 const Page: NextPageWithLayout = () => {
+  const mounted = useMounted()
+
   return (
     <>
       <Head>
@@ -14,7 +17,7 @@ const Page: NextPageWithLayout = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Profile />
+      {mounted && <Profile />}
     </>
   )
 }

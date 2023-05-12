@@ -80,7 +80,7 @@ export const Profile = () => {
       <div>
         {isConnected && mounted ? (
           <Suspense fallback={<Spinner />}>
-            {!chain?.unsupported && (
+            {!chain?.unsupported && mounted && (
               <>
                 <NftListHeader compact={compact} setCompact={setCompact} listLenght={nftIds?.length} />
                 <NftList compact={compact} />
