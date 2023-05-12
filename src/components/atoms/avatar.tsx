@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, useEffect } from 'react'
 import Image from 'next/image'
 import { PlusIcon } from '@heroicons/react/24/solid'
+import { useToasts } from 'react-toast-notifications'
 
 import { useUser, useMounted } from '@/hooks'
 import { imageUpload } from '@/utils/repository'
@@ -9,8 +10,10 @@ export const Avatar = () => {
   const mounted = useMounted()
   const [file, setFile] = useState<File | null>(null)
   const { user, address } = useUser()
+  const { addToast } = useToasts()
+
   const avatar =
-    (file ? URL.createObjectURL(file) : user?.image) ||
+    (file && file?.type.includes('image') ? URL.createObjectURL(file) : user?.image) ||
     'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -19,11 +22,11 @@ export const Avatar = () => {
     }
   }
 
-  console.log(file)
-
   useEffect(() => {
-    file && imageUpload(file)
-  }, [file])
+    if (file) {
+      file?.type.includes('image') ? imageUpload(file) : addToast('Please upload an image', {})
+    }
+  }, [file, addToast])
 
   return (
     <div className="text-white z-10 relative">

@@ -36,8 +36,6 @@ export const Profile = () => {
     },
   })
 
-  console.log(chain)
-
   const getProfileBannerView = () => {
     switch (isEditMode) {
       case true:

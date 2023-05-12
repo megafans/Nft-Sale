@@ -25,7 +25,7 @@ export const listNFTRewards = async (id: string) => {
   return response
 }
 
-const getUser = async () => {
+export const getUser = async () => {
   const response = await fetch(`${api.URL}api/Users/view_profile`, {
     method: 'GET',
     headers: {
