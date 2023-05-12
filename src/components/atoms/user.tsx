@@ -1,3 +1,4 @@
+import { useRecoilValue } from 'recoil'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Fragment } from 'react'
@@ -6,10 +7,14 @@ import { ArrowLeftOnRectangleIcon, UserIcon } from '@heroicons/react/24/solid'
 
 import { User as UserType } from '@/types/user'
 import { useAuth } from '@/hooks'
+import { avatarAtom } from '@/state/atoms'
 
 export const User = ({ user }: UserType) => {
+  const file = useRecoilValue(avatarAtom)
   const { logout } = useAuth()
-  const avatar = user?.image || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
+  const avatar =
+    (file && file?.type.includes('image') ? URL.createObjectURL(file) : user?.image) ||
+    'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
 
   return (
     <Popover className="relative w-auto flex justify-end">

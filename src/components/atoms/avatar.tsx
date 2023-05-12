@@ -1,14 +1,16 @@
-import { useState, ChangeEvent, useEffect } from 'react'
+import { useRecoilState } from 'recoil'
+import { ChangeEvent, useEffect } from 'react'
 import Image from 'next/image'
 import { PlusIcon } from '@heroicons/react/24/solid'
 import { useToasts } from 'react-toast-notifications'
 
 import { useUser, useMounted } from '@/hooks'
 import { imageUpload } from '@/utils/repository'
+import { avatarAtom } from '@/state/atoms'
 
 export const Avatar = () => {
   const mounted = useMounted()
-  const [file, setFile] = useState<File | null>(null)
+  const [file, setFile] = useRecoilState(avatarAtom)
   const { user, address } = useUser()
   const { addToast } = useToasts()
 

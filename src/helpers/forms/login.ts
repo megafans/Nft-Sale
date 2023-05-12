@@ -6,11 +6,11 @@ export enum LoginFormInputs {
 }
 
 export enum LoginFormLabels {
-  EMAIL = 'Email',
+  EMAIL = 'Email or Username',
   PASSWORD = 'Password',
 }
 
 export const loginValidationSchema = object({
-  [LoginFormInputs.EMAIL]: string().email('Please provide a valid mail').required('Email is required'),
+  [LoginFormInputs.EMAIL]: string().required('Email or Username is required'),
   [LoginFormInputs.PASSWORD]: string().required('Password is required'),
 })

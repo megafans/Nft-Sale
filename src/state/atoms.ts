@@ -16,3 +16,8 @@ export const nftPaymentETHAtom = atom({
   key: 'nftPaymentETHState',
   default: false,
 })
+
+export const avatarAtom = atom({
+  key: 'avatarState',
+  default: null as any,
+})
