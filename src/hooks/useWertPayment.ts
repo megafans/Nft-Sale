@@ -19,8 +19,8 @@ export const useWertPayment = ({ address }: any) => {
     ? web3EthAbi.encodeFunctionCall(
         {
           inputs: [
-            { internalType: 'address', name: 'To', type: 'address' },
-            { internalType: 'uint256', name: 'num', type: 'uint256' },
+            { internalType: 'address', name: '_to', type: 'address' },
+            { internalType: 'uint256', name: '_num', type: 'uint256' },
           ],
           name: 'mintTo',
           outputs: [],
