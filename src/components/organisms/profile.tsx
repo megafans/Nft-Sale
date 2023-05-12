@@ -36,6 +36,8 @@ export const Profile = () => {
     },
   })
 
+  console.log(chain)
+
   const getProfileBannerView = () => {
     switch (isEditMode) {
       case true:
@@ -59,32 +61,30 @@ export const Profile = () => {
     <>
       {getProfileBannerView()}
       <>
-        {mounted && totalNfts < 5501 && !chain?.unsupported ? (
+        {mounted && totalNfts < 5501 && chain && !chain?.unsupported && (
           <NftBuyButtons
             onETHPaymentClick={connected ? () => setPaymentModal(!paymentModal) : openConnectModal}
             onCCPaymentClick={connected && address ? () => setWertModalOpen(!wertOpen) : openConnectModal}
             address={address}
           />
-        ) : (
-          <div>
-            <div className="flex flex-col items-center space-y-5">
-              <p className="text-2xl font-bold mt-20 text-white text-center max-w-3xl">
-                It looks like you switched into unsupported network. Please switch back to Ethereum.
-              </p>
-              <ConnectButton />
-            </div>
-          </div>
         )}
       </>
 
       <div>
         {isConnected && mounted ? (
           <Suspense fallback={<Spinner />}>
-            {!chain?.unsupported && mounted && (
+            {!chain?.unsupported ? (
               <>
                 <NftListHeader compact={compact} setCompact={setCompact} listLenght={nftIds?.length} />
                 <NftList compact={compact} />
               </>
+            ) : (
+              <div className="flex flex-col items-center space-y-5">
+                <p className="text-2xl font-bold mt-20 text-white text-center max-w-3xl">
+                  It looks like you switched into unsupported network. Please switch back to Ethereum.
+                </p>
+                <ConnectButton />
+              </div>
             )}
           </Suspense>
         ) : (
