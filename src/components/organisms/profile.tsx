@@ -1,5 +1,5 @@
 import { Suspense, useState } from 'react'
-import { useAccount } from 'wagmi'
+import { useAccount, useNetwork } from 'wagmi'
 import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit'
 import { useRecoilState } from 'recoil'
 
@@ -24,6 +24,7 @@ export const Profile = () => {
   const [compact, setCompact] = useState(false)
   const [nftQuantity, setNftQuantity] = useRecoilState(nftPaymentAtom)
   const { openConnectModal } = useConnectModal()
+  const { chain } = useNetwork()
 
   const mounted = useMounted()
   const { user } = useUser()
@@ -34,6 +35,8 @@ export const Profile = () => {
       !isReconnected && sendUserWallet(address)
     },
   })
+
+  console.log(chain)
 
   const getProfileBannerView = () => {
     switch (isEditMode) {
@@ -58,20 +61,33 @@ export const Profile = () => {
     <>
       {getProfileBannerView()}
       <>
-        {mounted && totalNfts < 5501 && (
+        {mounted && totalNfts < 5501 && !chain?.unsupported ? (
           <NftBuyButtons
             onETHPaymentClick={connected ? () => setPaymentModal(!paymentModal) : openConnectModal}
             onCCPaymentClick={connected && address ? () => setWertModalOpen(!wertOpen) : openConnectModal}
             address={address}
           />
+        ) : (
+          <div>
+            <div className="flex flex-col items-center space-y-5">
+              <p className="text-2xl font-bold mt-20 text-white text-center max-w-3xl">
+                It looks like you switched into unsupported network. Please switch back to Ethereum.
+              </p>
+              <ConnectButton />
+            </div>
+          </div>
         )}
       </>
 
       <div>
         {isConnected && mounted ? (
           <Suspense fallback={<Spinner />}>
-            <NftListHeader compact={compact} setCompact={setCompact} listLenght={nftIds?.length} />
-            <NftList compact={compact} />
+            {!chain?.unsupported && (
+              <>
+                <NftListHeader compact={compact} setCompact={setCompact} listLenght={nftIds?.length} />
+                <NftList compact={compact} />
+              </>
+            )}
           </Suspense>
         ) : (
           <div className="flex flex-col items-center space-y-5">
