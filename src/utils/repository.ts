@@ -24,3 +24,47 @@ export const listNFTRewards = async (id: string) => {
   })
   return response
 }
+
+const getUser = async () => {
+  const response = await fetch(`${api.URL}api/Users/view_profile`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  })
+  const data = await response.json()
+  return data.data
+}
+
+export const imageUpload = async (file: any) => {
+  const user = await getUser()
+  const formData = new FormData()
+  formData.append('file', file)
+  const response = await fetch(`${api.URL}api/Image/ImageUpload?typeId=2`, {
+    method: 'POST',
+    body: formData,
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  })
+
+  if (response?.status === 200) {
+    const data = await response.json()
+    const res = await fetch(`${api.URL}api/Users/edit_profile`, {
+      method: 'POST',
+      body: JSON.stringify({
+        email: user.email,
+        username: user.username,
+        countries: user.countries,
+        imageUri: data?.imageURI,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+
+    return res
+  }
+}
