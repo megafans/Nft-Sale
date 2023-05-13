@@ -37,7 +37,7 @@ export const useWertPayment = ({ address }: any) => {
         {
           address: address!,
           commodity: 'ETH',
-          commodity_amount: Number(nftQuantity) * 0.005,
+          commodity_amount: Number(nftQuantity) * 0.025,
           pk_id: 'key1',
           sc_address: nftSmartContractAddress!,
           sc_id: uuid(),
@@ -56,9 +56,9 @@ export const useWertPayment = ({ address }: any) => {
     partner_id: wertPartnerID,
     container_id: 'wert-widget',
     click_id: uuid(),
-    commodities: 'ETH:Ethereum-Goerli,MATIC:Polygon',
+    commodities: ['commodity:"ETH:Ethereum"'],
     lang: 'en',
-    origin: 'https://sandbox.wert.io',
+    origin: 'https://widget.wert.io',
     theme: 'dark',
     autosize: true,
     extra: {
