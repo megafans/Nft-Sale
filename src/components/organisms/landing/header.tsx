@@ -12,7 +12,7 @@ export const LandingHeader = () => {
 
   return (
     <div
-      className="w-100 py-2.5 px-5 flex max-md:px-2.5 items-center relative z-50 max-md:flex-col flex-row gap-6"
+      className="w-100 py-2.5 px-5 flex max-md:px-2.5 items-center relative z-2 max-md:flex-col flex-row gap-6"
       style={{
         backgroundColor: '#16131F',
       }}
