@@ -25,6 +25,8 @@ export const ButtonLink = ({
     <>
       {mounted && (
         <Link
+          rel="noopener noreferrer"
+          target="_blank"
           href={href}
           className={cslx(
             'relative inline-flex items-center rounded-full text-md font-medium focus:outline-none ',
