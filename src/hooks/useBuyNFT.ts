@@ -44,18 +44,6 @@ export const useBuyNFT = () => {
     functionName: 'contractPaused',
   })
 
-  const {
-    data: nftIds,
-    isError: isNftListError,
-    isLoading,
-  } = useContractRead<any, any, BigNumber[]>({
-    ...baseContract,
-    address: nftSmartContractAddress,
-    enabled: !!address,
-    functionName: 'listMyNFTs',
-    args: [address],
-  })
-
   const { data } = useContractRead<any, any, BigNumber[]>({
     ...baseContract,
     address: nftSmartContractAddress,
@@ -88,11 +76,8 @@ export const useBuyNFT = () => {
   return {
     mintLoading,
     buyNFT,
-    nftIds,
-    isLoading,
     connected: activeConnector?.ready && isConnected,
     buyWith: chain?.nativeCurrency?.name,
-    isNftListError,
     totalNfts,
     isPaused,
   }

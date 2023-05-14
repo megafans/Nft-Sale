@@ -28,7 +28,7 @@ export const Profile = () => {
 
   const mounted = useMounted()
   const { user } = useUser()
-  const { nftIds, connected, totalNfts } = useBuyNFT()
+  const { connected, totalNfts } = useBuyNFT()
 
   const { isConnected, address } = useAccount({
     onConnect({ address, isReconnected }) {
@@ -73,7 +73,7 @@ export const Profile = () => {
           <Suspense fallback={<Spinner />}>
             {!chain?.unsupported ? (
               <>
-                <NftListHeader compact={compact} setCompact={setCompact} listLenght={nftIds?.length} />
+                <NftListHeader compact={compact} setCompact={setCompact} />
                 <NftList compact={compact} />
               </>
             ) : (
