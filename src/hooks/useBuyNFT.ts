@@ -26,7 +26,6 @@ export const useBuyNFT = () => {
   const baseContract: any = {
     address: nftSmartContractAddress,
     abi: ensRegistryABI,
-    chainId: 5,
   }
 
   const { writeAsync: mint } = useContractWrite({
