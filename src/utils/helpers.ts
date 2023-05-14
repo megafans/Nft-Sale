@@ -1,6 +1,6 @@
 export const isBrowser = () => typeof window !== 'undefined'
 
-export const capitalize = (str: string): string => `${str.charAt(0).toUpperCase()}${str.slice(1)}`
+export const capitalize = (str: string): string => `${str?.charAt(0).toUpperCase()}${str?.slice(1)}`
 
 export const calculatePercent = (value: number, total: number): number => Math.round((value / total) * 100)
 
