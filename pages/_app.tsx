@@ -44,7 +44,7 @@ export const App = ({ Component, pageProps, router }: AppPropsWithLayout) => {
       }}
     >
       <StrictMode>
-        <WagmiConfig client={wagmiClient}>
+        <WagmiConfig config={wagmiClient}>
           <RainbowKitProvider
             showRecentTransactions
             coolMode

@@ -2,7 +2,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 
 import lightLightingButton from '@/landing/light-lightning-button.webp'
-
 import discordBackground from '@/landing/discord-background.webp'
 
 export const LandingDiscordSection = () => (
@@ -12,7 +11,7 @@ export const LandingDiscordSection = () => (
       style={{
         background: 'linear-gradient(180deg, #19132A 0%, #242E56 100%)',
         color: '#C7FFFD',
-        fontFamily: '"Space Grotesk", sans-serif;',
+        fontFamily: '"Space Grotesk", sans-serif',
       }}
     >
       <motion.div
@@ -49,10 +48,22 @@ export const LandingDiscordSection = () => (
             >
               DISCORD
             </a>
-            <Image src={lightLightingButton} fill alt="light-button-background" className="object-contain -z-10" />
+            <Image
+              src={lightLightingButton}
+              fill
+              alt="light-button-background"
+              className="object-contain -z-10"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
           </div>
         </div>
-        <Image src={discordBackground} fill alt="discord-section-background" className="object-contain -z-10" />
+        <Image
+          src={discordBackground}
+          fill
+          alt="discord-section-background"
+          className="object-contain -z-10"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
       </motion.div>
     </div>
   </AnimatePresence>

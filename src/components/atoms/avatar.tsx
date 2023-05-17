@@ -47,7 +47,7 @@ export const Avatar = () => {
             <PlusIcon className="h-6 w-6" />
           </span>
         </label>
-        <div className="ml-3 bg-purple/60 p-3 rounded-lg">
+        <div className="ml-3 bg-purple/80 p-3 rounded-lg">
           <p className="uppercase font-bold text-3xl text-white">{user?.username}</p>
           <p className="text-xl font-medium text-white">{user?.email}</p>
           {mounted ? address && <p className="text-sm font-medium text-white">{address}</p> : null}

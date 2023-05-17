@@ -1,16 +1,8 @@
-import { mainnet } from 'wagmi/chains'
-import { alchemyProvider } from '@wagmi/core/providers/alchemy'
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
+import { createConfig, configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
-import { configureChains, createClient } from 'wagmi'
 import { connectorsForWallets } from '@rainbow-me/rainbowkit'
-import {
-  injectedWallet,
-  rainbowWallet,
-  walletConnectWallet,
-  metaMaskWallet,
-  coinbaseWallet,
-} from '@rainbow-me/rainbowkit/wallets'
+import { createPublicClient, http } from 'viem'
+import { metaMaskWallet, coinbaseWallet } from '@rainbow-me/rainbowkit/wallets'
 
 export type AccountProps = {
   account: {
@@ -26,44 +18,26 @@ export type AccountProps = {
   }
 }
 
-const apiKey = '1ycYKWwImku2UgUNYpQ3QPoMS-Rvzjp5'
-
-const { chains, provider, webSocketProvider } = configureChains(
-  [mainnet],
-  [
-    alchemyProvider({ apiKey, priority: 0, weight: 1 }),
-    publicProvider({ weight: 2 }),
-    jsonRpcProvider({
-      priority: 0,
-      rpc: () => ({
-        http: 'https://eth-mainnet.g.alchemy.com/v2/1ycYKWwImku2UgUNYpQ3QPoMS-Rvzjp5',
-        webSocket: 'wss://eth-mainnet.g.alchemy.com/v2/1ycYKWwImku2UgUNYpQ3QPoMS-Rvzjp5',
-      }),
-    }),
-  ]
-)
+const { chains, webSocketPublicClient } = configureChains([mainnet], [publicProvider()])
 
 const connectors = connectorsForWallets([
   {
-    groupName: 'Recommended',
-    wallets: [
-      metaMaskWallet({ chains, shimDisconnect: true }),
-      coinbaseWallet({ appName: 'MegaFans', chains }),
-      injectedWallet({ chains }),
-      rainbowWallet({ chains }),
-      walletConnectWallet({ chains }),
-    ],
+    groupName: 'Popular Wallets',
+    wallets: [metaMaskWallet({ chains, shimDisconnect: true }), coinbaseWallet({ appName: 'MegaFans', chains })],
   },
 ])
 
-const wagmiClient = createClient({
+const wagmiClient = createConfig({
   logger: {
     warn: console.warn,
   },
   autoConnect: true,
   connectors,
-  provider,
-  webSocketProvider,
+  webSocketPublicClient,
+  publicClient: createPublicClient({
+    chain: mainnet,
+    transport: http(),
+  }),
 })
 
 export { chains, wagmiClient }

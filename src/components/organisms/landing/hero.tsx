@@ -64,7 +64,7 @@ export const LandingHeroSection = () => {
                     color: '#C7FFFD',
                     fontSize: 'clamp(24px, 3.6vw, 40px)',
                     fontWeight: 600,
-                    fontFamily: '"Space Grotesk", sans-serif;',
+                    fontFamily: '"Space Grotesk", sans-serif',
                     lineHeight: 1,
                     padding: '36px 144px',
                     textShadow: '0px 0px 9px rgba(199, 255, 253, 0.5)',

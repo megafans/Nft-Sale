@@ -44,7 +44,7 @@ const ProfileBanner = ({ isEditMode, setEditMode }: ProfileBannerProps) => {
             </div>
             <div className="flex items-start justify-center md:justify-end w-full md:h-40 z-10 order-2">
               <div
-                className="inline-flex cursor-pointer py-2 px-4 bg-purple/60 rounded-lg"
+                className="inline-flex cursor-pointer py-2 px-4 bg-purple/80 rounded-lg"
                 onClick={() => setEditMode(!isEditMode)}
               >
                 <p className="text-base text-white font-medium">Edit profile:</p>

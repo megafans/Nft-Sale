@@ -36,7 +36,7 @@ export const LandingBuySection = () => (
             background: 'radial-gradient(at center center, #0015FF 0%, #FFFFFF00 74%)',
           }}
         >
-          <Image src={girl} width={girl.width} alt="girl-graph" />
+          <Image src={girl} width={girl.width} height={girl.height} alt="girl-graph" />
         </motion.div>
       </div>
     </AnimatePresence>

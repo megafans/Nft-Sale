@@ -68,7 +68,13 @@ export const LandingHeader = () => {
         >
           LINKTREE
         </a>
-        <Image src={headerButton} className="-z-10" fill alt="header logo" />
+        <Image
+          src={headerButton}
+          className="-z-10"
+          fill
+          alt="header logo"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
       </div>
       <div className="flex relative z-0">
         <a
@@ -85,7 +91,13 @@ export const LandingHeader = () => {
         >
           LIGHT PAPER
         </a>
-        <Image src={headerButton} className="-z-10" fill alt="header logo" />
+        <Image
+          src={headerButton}
+          className="-z-10"
+          fill
+          alt="header logo"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
       </div>
       {user?.username ? (
         <User user={user} />
