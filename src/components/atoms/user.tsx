@@ -44,12 +44,12 @@ export const User = ({ user }: UserType) => {
           >
             <Popover.Panel className="absolute top-16 right-1/2 md:right-0 translate-x-1/2 md:translate-x-0 z-20 mt-3 w-screen md:w-64 max-w-md px-2 sm:px-0">
               <div className="overflow-hidden rounded-xl shadow-2xl ring-1 ring-black ring-opacity-5">
-                <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-4 sm:p-4" onClick={() => close()}>
+                <div className="relative grid gap-6 bg-purple/80 px-5 py-6 sm:gap-4 sm:p-4" onClick={() => close()}>
                   <Link href="/profile">
                     <div className="cursor-pointer -m-3 flex items-start rounded-lg p-3 transition duration-150 ease-in-out">
-                      <UserIcon className="h-6 w-6 flex-shrink-0 text-purple" aria-hidden="true" />
+                      <UserIcon className="h-6 w-6 flex-shrink-0 text-white/80" aria-hidden="true" />
                       <div className="ml-4">
-                        <p className="text-base font-bold text-gray-800">Profile</p>
+                        <p className="text-base font-bold text-gray-300">Profile</p>
                       </div>
                     </div>
                   </Link>
@@ -58,9 +58,9 @@ export const User = ({ user }: UserType) => {
                     onClick={logout}
                     className="cursor-pointer -m-3 flex items-start rounded-lg p-3 transition duration-150 ease-in-out"
                   >
-                    <ArrowLeftOnRectangleIcon className="h-6 w-6 flex-shrink-0 text-purple" aria-hidden="true" />
+                    <ArrowLeftOnRectangleIcon className="h-6 w-6 flex-shrink-0 text-white/80" aria-hidden="true" />
                     <div className="ml-4">
-                      <p className="text-base font-bold text-gray-800">Logout</p>
+                      <p className="text-base font-bold text-gray-300">Logout</p>
                     </div>
                   </div>
                 </div>

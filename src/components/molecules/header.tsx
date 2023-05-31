@@ -17,7 +17,7 @@ export const Header = () => {
               <User user={user} />
             ) : (
               <ButtonLink href="/sign-in" variant="primary" size="lg" ribbon>
-                <span>Login</span>
+                <span>Connect to megafans account</span>
                 <ArrowLongRightIcon className="w-6 h-6 ml-10" />
               </ButtonLink>
             )}
