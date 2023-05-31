@@ -29,7 +29,7 @@ Page.getLayout = function getLayout(page: ReactElement) {
 export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
-      protected: true,
+      protected: false,
     },
   }
 }
