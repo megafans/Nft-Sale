@@ -1,4 +1,5 @@
 import { createConfig, configureChains, mainnet } from 'wagmi'
+import { goerli } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 import { connectorsForWallets } from '@rainbow-me/rainbowkit'
 import { createPublicClient, http } from 'viem'
@@ -18,7 +19,7 @@ export type AccountProps = {
   }
 }
 
-const { chains, webSocketPublicClient } = configureChains([mainnet], [publicProvider()])
+const { chains, webSocketPublicClient } = configureChains([mainnet, goerli], [publicProvider()])
 
 const connectors = connectorsForWallets([
   {
