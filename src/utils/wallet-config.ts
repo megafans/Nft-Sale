@@ -1,9 +1,9 @@
 import { createConfig, configureChains, mainnet } from 'wagmi'
 import { goerli } from 'wagmi/chains'
-import { publicProvider } from 'wagmi/providers/public'
 import { connectorsForWallets } from '@rainbow-me/rainbowkit'
 import { createPublicClient, http } from 'viem'
 import { metaMaskWallet, coinbaseWallet } from '@rainbow-me/rainbowkit/wallets'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 export type AccountProps = {
   account: {
@@ -19,7 +19,9 @@ export type AccountProps = {
   }
 }
 
-const { chains, webSocketPublicClient } = configureChains([mainnet, goerli], [publicProvider()])
+const apiKey = '1ycYKWwImku2UgUNYpQ3QPoMS-Rvzjp5'
+
+const { chains, webSocketPublicClient } = configureChains([mainnet, goerli], [alchemyProvider({ apiKey })])
 
 const connectors = connectorsForWallets([
   {
