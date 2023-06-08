@@ -28,7 +28,7 @@ export const Profile = () => {
 
   const mounted = useMounted()
   const { user } = useUser()
-  const { connected, totalNfts } = useBuyNFT()
+  const { connected } = useBuyNFT()
 
   const { isConnected, address } = useAccount({
     onConnect({ address, isReconnected }) {
