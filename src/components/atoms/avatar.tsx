@@ -1,13 +1,12 @@
 import { useRecoilState } from 'recoil'
 import { ChangeEvent, useEffect } from 'react'
 import Image from 'next/image'
-import { ArrowLongRightIcon, PlusIcon } from '@heroicons/react/24/outline'
+import { PlusIcon } from '@heroicons/react/24/outline'
 import { useToasts } from 'react-toast-notifications'
 
 import { useUser, useMounted } from '@/hooks'
 import { imageUpload } from '@/utils/repository'
 import { avatarAtom } from '@/state/atoms'
-import { ButtonLink } from '@/components'
 
 export const Avatar = () => {
   const mounted = useMounted()

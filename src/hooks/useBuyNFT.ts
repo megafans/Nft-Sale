@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
+import { BigNumber, ethers } from 'ethers'
 import { useToasts } from 'react-toast-notifications'
 import { useAccount, useContractRead, useContractWrite, useNetwork } from 'wagmi'
-import { waitForTransaction } from 'wagmi/actions'
 import { useRouter } from 'next/router'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { parseEther } from 'viem'
 
 import { ensRegistryABI } from '@/utils/abi'
 import { nftSmartContractAddress } from '@/helpers/constants'
@@ -22,18 +21,18 @@ export const useBuyNFT = () => {
   const nftQuantity = useRecoilValue(nftPaymentAtom)
 
   const { chain } = useNetwork()
-  const { connector: activeConnector, isConnected } = useAccount()
+  const { address, connector: activeConnector, isConnected } = useAccount()
 
   const baseContract: any = {
     address: nftSmartContractAddress,
     abi: ensRegistryABI,
   }
 
-  const { data: mint, isSuccess } = useContractWrite({
+  const { writeAsync: mint } = useContractWrite({
     ...baseContract,
     functionName: 'mint',
     args: [nftQuantity],
-    value: parseEther('0.025'),
+    overrides: { value: ethers.utils.parseEther('0.025') },
     onSuccess: () => {
       addToast('Transaction successful', {})
     },
@@ -45,7 +44,7 @@ export const useBuyNFT = () => {
     functionName: 'contractPaused',
   })
 
-  const { data } = useContractRead<any, any, BigInt[]>({
+  const { data } = useContractRead<any, any, BigNumber[]>({
     ...baseContract,
     address: nftSmartContractAddress,
     functionName: 'totalSupply',
@@ -53,11 +52,12 @@ export const useBuyNFT = () => {
 
   const buyNFT = async () => {
     try {
-      if (isSuccess && mint) {
+      if (mint) {
         setMintLoading(true)
-        const receipt = await waitForTransaction({ hash: mint.hash })
-        const mintedTokenIdHex = receipt.logs[0].topics[3]
-        const mintedTokenId = parseInt(mintedTokenIdHex as string)
+        const tx = await mint({})
+        const receipt = await tx.wait()
+        const mintedTokenIdHex: string = receipt?.logs[0].topics[3]
+        const mintedTokenId = parseInt(mintedTokenIdHex)
         setMintedTokenId(mintedTokenIdHex)
         mintedTokenId && router.push('/nft/confirmation')
         isBrowser ? localStorage.setItem('nftsBought', nftQuantity) : null

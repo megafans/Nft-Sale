@@ -27,7 +27,7 @@ const ProfileBanner = ({ isEditMode, setEditMode }: ProfileBannerProps) => {
   return (
     <div className="relative">
       <div className="mx-auto max-w-auto">
-        <div className="relative shadow-2xl sm:overflow-hidden sm:rounded-2xl">
+        <div className="relative shadow-2xl shadow-purple/80 sm:overflow-hidden sm:rounded-2xl">
           <div className="absolute inset-0">
             <Image
               className="h-full w-full object-fill md:object-cover"
