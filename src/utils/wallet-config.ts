@@ -1,9 +1,16 @@
-import { createConfig, configureChains, mainnet } from 'wagmi'
-import { goerli } from 'wagmi/chains'
+import { mainnet } from 'wagmi/chains'
+import { alchemyProvider } from '@wagmi/core/providers/alchemy'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
+import { publicProvider } from 'wagmi/providers/public'
+import { configureChains, createClient } from 'wagmi'
 import { connectorsForWallets } from '@rainbow-me/rainbowkit'
-import { createPublicClient, http } from 'viem'
-import { metaMaskWallet, coinbaseWallet } from '@rainbow-me/rainbowkit/wallets'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
+import {
+  injectedWallet,
+  rainbowWallet,
+  walletConnectWallet,
+  metaMaskWallet,
+  coinbaseWallet,
+} from '@rainbow-me/rainbowkit/wallets'
 
 export type AccountProps = {
   account: {
@@ -21,26 +28,42 @@ export type AccountProps = {
 
 const apiKey = '1ycYKWwImku2UgUNYpQ3QPoMS-Rvzjp5'
 
-const { chains, webSocketPublicClient } = configureChains([mainnet, goerli], [alchemyProvider({ apiKey })])
+const { chains, provider, webSocketProvider } = configureChains(
+  [mainnet],
+  [
+    alchemyProvider({ apiKey, priority: 0, weight: 1 }),
+    publicProvider({ weight: 2 }),
+    jsonRpcProvider({
+      priority: 0,
+      rpc: () => ({
+        http: 'https://eth-mainnet.g.alchemy.com/v2/1ycYKWwImku2UgUNYpQ3QPoMS-Rvzjp5',
+        webSocket: 'wss://eth-mainnet.g.alchemy.com/v2/1ycYKWwImku2UgUNYpQ3QPoMS-Rvzjp5',
+      }),
+    }),
+  ]
+)
 
 const connectors = connectorsForWallets([
   {
-    groupName: 'Popular Wallets',
-    wallets: [metaMaskWallet({ chains, shimDisconnect: true }), coinbaseWallet({ appName: 'MegaFans', chains })],
+    groupName: 'Recommended',
+    wallets: [
+      metaMaskWallet({ chains, shimDisconnect: true }),
+      coinbaseWallet({ appName: 'MegaFans', chains }),
+      injectedWallet({ chains }),
+      rainbowWallet({ chains }),
+      walletConnectWallet({ chains }),
+    ],
   },
 ])
 
-const wagmiClient = createConfig({
+const wagmiClient = createClient({
   logger: {
     warn: console.warn,
   },
   autoConnect: true,
   connectors,
-  webSocketPublicClient,
-  publicClient: createPublicClient({
-    chain: mainnet,
-    transport: http(),
-  }),
+  provider,
+  webSocketProvider,
 })
 
 export { chains, wagmiClient }

@@ -59,7 +59,7 @@ export const Profile = () => {
     <>
       {getProfileBannerView()}
       <>
-        {mounted && totalNfts < 5501 && chain && !chain?.unsupported && (
+        {mounted && chain && !chain?.unsupported && (
           <NftBuyButtons
             onETHPaymentClick={connected ? () => setPaymentModal(!paymentModal) : openConnectModal}
             onCCPaymentClick={connected && address ? () => setWertModalOpen(!wertOpen) : openConnectModal}
