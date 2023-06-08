@@ -1,10 +1,11 @@
 import { api } from '@/helpers/api'
 
-export const sendUserWallet = async (walletAddress?: string) => {
+export const sendUserWallet = async (walletAddress?: string, connected?: boolean) => {
   const response = await fetch(`${api.URL}api/NFT/wallet`, {
     method: 'POST',
     body: JSON.stringify({
       walletAddress,
+      connected,
     }),
     headers: {
       'Content-Type': 'application/json',

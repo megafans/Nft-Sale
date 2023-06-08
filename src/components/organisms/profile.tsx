@@ -32,7 +32,10 @@ export const Profile = () => {
 
   const { isConnected, address } = useAccount({
     onConnect({ address, isReconnected }) {
-      !isReconnected && sendUserWallet(address)
+      !isReconnected && sendUserWallet(address, true)
+    },
+    onDisconnect() {
+      sendUserWallet(address, false)
     },
   })
 

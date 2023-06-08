@@ -21,7 +21,7 @@ export const useBuyNFT = () => {
   const nftQuantity = useRecoilValue(nftPaymentAtom)
 
   const { chain } = useNetwork()
-  const { address, connector: activeConnector, isConnected } = useAccount()
+  const { connector: activeConnector, isConnected } = useAccount()
 
   const baseContract: any = {
     address: nftSmartContractAddress,
@@ -42,6 +42,12 @@ export const useBuyNFT = () => {
     ...baseContract,
     address: nftSmartContractAddress,
     functionName: 'contractPaused',
+  })
+
+  const { data: price } = useContractRead<any, any, BigNumber>({
+    ...baseContract,
+    address: nftSmartContractAddress,
+    functionName: 'price',
   })
 
   const { data } = useContractRead<any, any, BigNumber[]>({
@@ -80,5 +86,6 @@ export const useBuyNFT = () => {
     buyWith: chain?.nativeCurrency?.name,
     totalNfts,
     isPaused,
+    price: price && price?.toNumber(),
   }
 }
