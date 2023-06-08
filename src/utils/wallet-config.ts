@@ -2,7 +2,7 @@ import { mainnet } from 'wagmi/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { publicProvider } from 'wagmi/providers/public'
-import { configureChains, createClient } from 'wagmi'
+import { configureChains, createClient, goerli } from 'wagmi'
 import { connectorsForWallets } from '@rainbow-me/rainbowkit'
 import {
   injectedWallet,
@@ -29,7 +29,7 @@ export type AccountProps = {
 const apiKey = '1ycYKWwImku2UgUNYpQ3QPoMS-Rvzjp5'
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [mainnet],
+  [mainnet, goerli],
   [
     alchemyProvider({ apiKey, priority: 0, weight: 1 }),
     publicProvider({ weight: 2 }),
