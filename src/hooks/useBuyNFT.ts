@@ -28,11 +28,19 @@ export const useBuyNFT = () => {
     abi: ensRegistryABI,
   }
 
+  const { data: price } = useContractRead<any, any, BigNumber>({
+    ...baseContract,
+    address: nftSmartContractAddress,
+    functionName: 'price',
+  })
+
+  const formatedPrice = price && (price?.toNumber() / 10 ** 18).toFixed(16)
+
   const { writeAsync: mint } = useContractWrite({
     ...baseContract,
     functionName: 'mint',
     args: [nftQuantity],
-    overrides: { value: ethers.utils.parseEther('0.025') },
+    overrides: { value: ethers.utils.parseEther(formatedPrice!.toString()) },
     onSuccess: () => {
       addToast('Transaction successful', {})
     },
@@ -42,12 +50,6 @@ export const useBuyNFT = () => {
     ...baseContract,
     address: nftSmartContractAddress,
     functionName: 'contractPaused',
-  })
-
-  const { data: price } = useContractRead<any, any, BigNumber>({
-    ...baseContract,
-    address: nftSmartContractAddress,
-    functionName: 'price',
   })
 
   const { data } = useContractRead<any, any, BigNumber[]>({
@@ -86,6 +88,6 @@ export const useBuyNFT = () => {
     buyWith: chain?.nativeCurrency?.name,
     totalNfts,
     isPaused,
-    price: price && (price?.toNumber() / 10 ** 18).toFixed(2),
+    price: formatedPrice,
   }
 }
