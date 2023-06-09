@@ -2,10 +2,11 @@
 import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid'
 import Confetti from 'react-confetti'
 import { useWindowSize } from 'react-use'
+import clsx from 'clsx'
 
 import { useAccount } from 'wagmi'
 import { ButtonLink, Nft } from '@/components'
-import { useMounted, useNFTImages, useBrowser } from '@/hooks'
+import { useMounted, useNFTImages, useBrowser, useUser } from '@/hooks'
 
 export const Congratulations = () => {
   const isBrowser = useBrowser()
@@ -16,6 +17,7 @@ export const Congratulations = () => {
 
   const mounted = useMounted()
   const { width, height } = useWindowSize()
+  const { user } = useUser()
 
   return nftId && mounted ? (
     <>
@@ -27,15 +29,32 @@ export const Congratulations = () => {
       <h1 className="text-white text-center font-bold text-4xl uppercase mt-20">
         Congratulations you have just bought {nftsBought} NFT, please check details below
       </h1>
-      <div className="flex justify-center items-center">
-        <p className="text-white text-center font-bold text-xl">
-          Details of all NFT&apos;s you can check on profile page
-        </p>
-        <ButtonLink href="/profile" variant="transparent" size="lg" ribbon>
-          <ArrowLongRightIcon className="w-6 h-6" />
-        </ButtonLink>
+      <div className="flex flex-col justify-center items-center">
+        {!user ? (
+          <div className="mt-4">
+            <ButtonLink href="/sign-in" variant="primary" size="lg" ribbon>
+              <span>Connect to megafans account</span>
+              <ArrowLongRightIcon className="w-6 h-6 ml-10" />
+            </ButtonLink>
+          </div>
+        ) : (
+          <>
+            <p className="text-white text-center font-bold text-xl">
+              Details of all NFT&apos;s you can check on profile page
+            </p>
+            <ButtonLink href="/profile" variant="transparent" size="lg" ribbon>
+              <ArrowLongRightIcon className="w-6 h-6" />
+            </ButtonLink>
+          </>
+        )}
       </div>
-      <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 xl:grid-cols-4">
+      <div
+        className={clsx(
+          nftsBought === 1 && 'flex justify-center items-center mx-auto max-w-sm',
+          nftsBought === 2 && 'grid grid-cols-1 md:grid-cols-2 gap-8 auto-cols-max px-8',
+          nftsBought > 2 && 'grid grid-cols-1 md:grid-cols-3 gap-8 auto-cols-max'
+        )}
+      >
         {nftId?.map((nft: { id: any }): any => {
           return nft ? <Nft nft={nft} key={nft.id} /> : null
         })}

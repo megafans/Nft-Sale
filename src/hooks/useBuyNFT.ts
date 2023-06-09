@@ -86,6 +86,6 @@ export const useBuyNFT = () => {
     buyWith: chain?.nativeCurrency?.name,
     totalNfts,
     isPaused,
-    price: price && price?.toNumber(),
+    price: price && (price?.toNumber() / 10 ** 18).toFixed(2),
   }
 }

@@ -97,9 +97,6 @@ export const resetFormTitle = {
     main: 'Enter new',
     sub: 'password.',
   },
-  subtitle: {
-    main: 'Enter your email address and we will send you an email with a link to change your password.',
-  },
 }
 
 export const pricing = {
