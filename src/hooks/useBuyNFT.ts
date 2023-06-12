@@ -40,9 +40,12 @@ export const useBuyNFT = () => {
     ...baseContract,
     functionName: 'mint',
     args: [nftQuantity],
-    overrides: { value: ethers.utils.parseEther(formatedPrice!.toString()) },
+    overrides: { value: ethers.utils.parseEther(price ? formatedPrice!.toString() : '0.025') },
     onSuccess: () => {
       addToast('Transaction successful', {})
+    },
+    onError(error) {
+      addToast(capitalize(error.message.split('[')[0]), {})
     },
   })
 
