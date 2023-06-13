@@ -8,7 +8,7 @@ export const Login = () => {
     <div className="flex">
       <div className="hidden md:flex w-1/2 items-center">
         <Image
-          src="/login-img.png"
+          src="/login.png"
           alt="Login"
           className="rounded-lg"
           width={560}
