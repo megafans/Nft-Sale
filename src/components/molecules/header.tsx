@@ -9,9 +9,9 @@ export const Header = () => {
   return (
     <div className="z-50 sticky top-0 bg-violet/70 backdrop-blur-md">
       <Container>
-        <div className="flex flex-col md:flex-row items-center justify-center md:justify-between">
+        <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between">
           <Logo />
-          <div className="flex items-center flex-wrap flex-col-reverse md:flex-row mt-3 md:mt-0">
+          <div className="flex items-center flex-wrap flex-col-reverse md:flex-row mt-3 lg:mt-0">
             <SocialButtons />
             {user?.username ? (
               <User user={user} />
