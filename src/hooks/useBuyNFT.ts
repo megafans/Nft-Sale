@@ -20,6 +20,8 @@ export const useBuyNFT = () => {
   const [totalNfts, setTotalNfts] = useState<number>(0)
   const nftQuantity = useRecoilValue(nftPaymentAtom)
 
+  const MULTIPLICATOR = 10 ** 18
+
   const { chain } = useNetwork()
   const { connector: activeConnector, isConnected } = useAccount()
 
@@ -34,13 +36,13 @@ export const useBuyNFT = () => {
     functionName: 'price',
   })
 
-  const formatedPrice = price && (price?.toNumber() / 10 ** 18).toFixed(16)
+  const formatedPrice = price && price?.toNumber() / MULTIPLICATOR
 
   const { writeAsync: mint } = useContractWrite({
     ...baseContract,
     functionName: 'mint',
     args: [nftQuantity],
-    overrides: { value: ethers.utils.parseEther(price ? formatedPrice!.toString() : '0.025') },
+    overrides: { value: ethers.utils.parseEther(price ? formatedPrice!.toFixed(16).toString() : '0.025') },
     onSuccess: () => {
       addToast('Transaction successful', {})
     },
