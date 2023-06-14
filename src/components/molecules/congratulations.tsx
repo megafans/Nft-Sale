@@ -50,7 +50,7 @@ export const Congratulations = () => {
       </div>
       <div
         className={clsx(
-          nftsBought === 1 && 'flex justify-center items-center mx-auto max-w-sm',
+          nftsBought === 1 && 'flex flex-col md:flex-row justify-center items-center mx-auto max-w-2xl',
           nftsBought === 2 && 'grid grid-cols-1 md:grid-cols-2 gap-8 auto-cols-max px-8',
           nftsBought > 2 && 'grid grid-cols-1 md:grid-cols-3 gap-8 auto-cols-max'
         )}
@@ -58,6 +58,17 @@ export const Congratulations = () => {
         {nftId?.map((nft: { id: any }): any => {
           return nft ? <Nft nft={nft} key={nft.id} /> : null
         })}
+        {nftsBought === 1 && (
+          <div className="flex flex-col ml-4 md:max-w-xs justify-center items-center mx-auto">
+            <p className="text-white text-center font-bold text-lg mb-3">
+              Lets put your NFTs to use but connecting them to your Megafans account
+            </p>
+            <ButtonLink href="/sign-up" variant="transparent" size="lg" ribbon>
+              <span className="font-bold">Sign Up</span>
+              <ArrowLongRightIcon className="w-6 h-6 ml-10" />
+            </ButtonLink>
+          </div>
+        )}
       </div>
     </>
   ) : null
