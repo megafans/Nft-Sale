@@ -53,7 +53,7 @@ export const Congratulations = () => {
       </div>
       <div
         className={clsx(
-          nftsBought === 1 && 'flex flex-col md:flex-row justify-center items-center mx-auto max-w-2xl md:rotate-1',
+          nftsBought === 1 && 'flex flex-col md:flex-row justify-center items-center mx-auto max-w-2xl',
           nftsBought === 2 && 'grid grid-cols-1 md:grid-cols-2 gap-8 auto-cols-max px-8',
           nftsBought > 2 && 'grid grid-cols-1 md:grid-cols-3 gap-8 auto-cols-max'
         )}
