@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
-import { ArrowLongLeftIcon } from '@heroicons/react/24/solid'
+import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import { useMemo } from 'react'
 
 import { useAccount } from 'wagmi'
 import { ButtonLink, NftRewardsList, Spinner } from '@/components'
-import { useBrowser, useMounted, useNFTImages } from '@/hooks'
+import { useBrowser, useMounted, useNFTImages, useUser } from '@/hooks'
 import { fetcher } from '@/utils/fetcher'
 import { api } from '@/helpers/api'
 
@@ -25,7 +25,7 @@ export const NftDetailsEntity = ({ nftId }: { nftId: any }) => {
     return <p className="text-center text-white">Failed to load</p>
   }
 
-  return data && nftId ? (
+  return nftId ? (
     <>
       <ButtonLink href="/profile" variant="transparent" size="lg" ribbon>
         <ArrowLongLeftIcon className="w-6 h-6 mr-10" />
@@ -40,8 +40,12 @@ export const NftDetailsEntity = ({ nftId }: { nftId: any }) => {
           <div className="w-1/2 flex flex-col text-center items-end justify-start space-y-5">
             <h3 className="text-lg font-semibold tracking-tight text-white">{nftId.id}</h3>
             <p className="text-base leading-7 text-white">{nftId.name}</p>
-            <p className="text-base leading-7 text-white">value: {data?.dollarValue}</p>
-            <p className="text-base leading-7 text-white">MFAN tokens won: {data?.totalRewards}</p>
+            {data && (
+              <>
+                <p className="text-base leading-7 text-white">value: {data?.dollarValue}</p>
+                <p className="text-base leading-7 text-white">MFAN tokens won: {data?.totalRewards}</p>
+              </>
+            )}
           </div>
         )}
       </div>
@@ -55,11 +59,21 @@ export const NFTDetails = () => {
   const { query } = useRouter()
   const { address } = useAccount()
   const nftList = useNFTImages({ address })
+  const { user } = useUser()
   const nftId: any = useMemo(() => nftList.nftList?.find((nft: any) => nft.id === query.id), [nftList, query.id])
   return nftId ? (
     <>
       <NftDetailsEntity nftId={nftId} />
-      <NftRewardsList nftId={query.id} />
+      {user ? (
+        <NftRewardsList nftId={query.id} />
+      ) : (
+        <div className="mt-8 flex justify-center">
+          <ButtonLink href="/sign-in" variant="primary" size="lg" ribbon>
+            <span>Connect to megafans account</span>
+            <ArrowLongRightIcon className="w-6 h-6 ml-10" />
+          </ButtonLink>
+        </div>
+      )}
     </>
   ) : null
 }
