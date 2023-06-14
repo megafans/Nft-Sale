@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&family=Rubik:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    font-family: 'Rubik', sans-serif;
+    @apply bg-violet;
+  }
+}
+
+.link::after {
+  @apply absolute block w-full bg-gray-200 opacity-0 left-0 -bottom-2;
+  height: 2px;
+  content: '';
+  transition: opacity 0.3s, transform 0.3s;
+  transform: translateX(-10px);
+}
+
+.link:hover::after {
+  @apply opacity-100;
+  transform: translateX(0px);
+}
