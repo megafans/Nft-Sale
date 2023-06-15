@@ -30,7 +30,7 @@ export const Congratulations = () => {
         Congratulations you have just bought {nftsBought} NFT, please check details below
       </h1>
       <div className="flex flex-col justify-center items-center">
-        {!user.username ? (
+        {!user?.username ? (
           <div className="flex flex-col mt-4 justify-center items-center mx-auto">
             <p className="text-white text-center font-bold text-lg mb-3">
               Lets put your NFTs to use but connecting them to your Megafans account
