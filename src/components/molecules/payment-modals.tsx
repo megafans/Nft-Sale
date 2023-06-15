@@ -23,7 +23,7 @@ export const PaymentModals = ({
   nftQuantity,
   setNftQuantity,
 }: PaymentModalsProps) => {
-  const { buyNFT, maxNfts } = useBuyNFT()
+  const { buyNFT, maxNfts, totalNfts } = useBuyNFT()
   const { usd } = useCurrency()
   const [wertWidgetStep, setWertWidgetStep] = useState(1)
   const { address } = useAccount()
@@ -67,16 +67,18 @@ export const PaymentModals = ({
                 value={nftQuantity}
                 type="number"
                 min="1"
-                max={maxNfts}
+                max={maxNfts - totalNfts}
               />
               <Button
                 onClick={handleWertWidgetStepTwo}
                 variant="primary"
                 type="button"
                 size="lg"
-                disabled={Number(nftQuantity) >= maxNfts || Number(nftQuantity) < 1}
+                disabled={Number(nftQuantity) > maxNfts - totalNfts || Number(nftQuantity) < 1}
               >
-                {Number(nftQuantity) >= maxNfts ? `You can buy up to ${maxNfts} NFTs` : 'Procceed to payment'}
+                {Number(nftQuantity) > maxNfts - totalNfts
+                  ? `You can buy up to ${maxNfts - totalNfts} NFTs`
+                  : 'Procceed to payment'}
                 <ArrowLongRightIcon className="w-6 h-6 ml-6" />
               </Button>
             </div>
@@ -107,7 +109,7 @@ export const PaymentModals = ({
               value={nftQuantity}
               type="number"
               min="1"
-              max={maxNfts}
+              max={maxNfts - totalNfts}
             />
           </div>
 
@@ -116,9 +118,9 @@ export const PaymentModals = ({
             variant="primary"
             type="button"
             size="lg"
-            disabled={Number(nftQuantity) >= maxNfts || Number(nftQuantity) < 1}
+            disabled={Number(nftQuantity) > maxNfts - totalNfts || Number(nftQuantity) < 1}
           >
-            {Number(nftQuantity) >= maxNfts ? `You can buy up to ${maxNfts} NFTs` : 'Buy NFT'}
+            {Number(nftQuantity) > maxNfts - totalNfts ? `You can buy up to ${maxNfts - totalNfts} NFTs` : 'Buy NFT'}
             <ArrowLongRightIcon className="w-6 h-6 ml-6" />
           </Button>
         </div>

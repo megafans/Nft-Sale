@@ -6,7 +6,7 @@ type NFTQuantityProps = {
 }
 
 export const NFTQuantity = ({ nftQuantity, setNftQuantity }: NFTQuantityProps) => {
-  const { maxNfts } = useBuyNFT()
+  const { maxNfts, totalNfts } = useBuyNFT()
   return (
     <div className="flex">
       <div className="flex flex-col mt-4 w-full justify-between">
@@ -17,7 +17,7 @@ export const NFTQuantity = ({ nftQuantity, setNftQuantity }: NFTQuantityProps) =
           value={nftQuantity}
           type="number"
           min="1"
-          max={maxNfts}
+          max={maxNfts - totalNfts}
         />
       </div>
     </div>
