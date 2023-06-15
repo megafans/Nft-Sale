@@ -1,4 +1,4 @@
-import { useBuyNFT } from '@/hooks'
+import { useNFTPrice } from '@/hooks'
 
 type NFTQuantityProps = {
   nftQuantity: string
@@ -6,7 +6,8 @@ type NFTQuantityProps = {
 }
 
 export const NFTQuantity = ({ nftQuantity, setNftQuantity }: NFTQuantityProps) => {
-  const { maxNfts, totalNfts } = useBuyNFT()
+  const { maxNfts, totalNfts } = useNFTPrice()
+
   return (
     <div className="flex">
       <div className="flex flex-col mt-4 w-full justify-between">

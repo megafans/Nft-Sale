@@ -10,14 +10,14 @@ import { useRouter } from 'next/router'
 
 import { nftSmartContractAddress, wertPrivateKey, wertPartnerID } from '@/helpers/constants'
 import { nftPaymentAtom } from '@/state/atoms'
-import { useBuyNFT } from '@/hooks'
+import { useNFTPrice } from '@/hooks'
 
 export const useWertPayment = ({ address }: any) => {
   const nftQuantity = useRecoilValue(nftPaymentAtom)
   const router = useRouter()
   const { addToast } = useToasts()
 
-  const { price } = useBuyNFT()
+  const { price } = useNFTPrice()
   const formatedPrice = numbro(Number(price) * Number(nftQuantity)).format({ mantissa: 16 })
 
   const input_data = address

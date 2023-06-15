@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { BigNumber, ethers } from 'ethers'
+import { useState } from 'react'
+import { ethers } from 'ethers'
 import { useToasts } from 'react-toast-notifications'
 import { useAccount, useContractRead, useContractWrite, useNetwork } from 'wagmi'
 import { useRouter } from 'next/router'
@@ -9,7 +9,7 @@ import { ensRegistryABI } from '@/utils/abi'
 import { nftSmartContractAddress } from '@/helpers/constants'
 import { nftPaymentAtom, nftPaymentETHAtom } from '@/state/atoms'
 import { capitalize } from '@/utils/helpers'
-import { useBrowser } from '@/hooks'
+import { useBrowser, useNFTPrice } from '@/hooks'
 
 export const useBuyNFT = () => {
   const isBrowser = useBrowser()
@@ -17,33 +17,21 @@ export const useBuyNFT = () => {
   const [, setMintedTokenId] = useState<string>()
   const [mintLoading, setMintLoading] = useRecoilState(nftPaymentETHAtom)
   const { addToast } = useToasts()
-  const [totalNfts, setTotalNfts] = useState<number>(0)
-  const [maxNfts, setMaxNfts] = useState<number>(0)
   const nftQuantity = useRecoilValue(nftPaymentAtom)
-
-  const MULTIPLICATOR = 10 ** 18
-
   const { chain } = useNetwork()
   const { connector: activeConnector, isConnected } = useAccount()
+  const { price } = useNFTPrice()
 
   const baseContract: any = {
     address: nftSmartContractAddress,
     abi: ensRegistryABI,
   }
 
-  const { data: price } = useContractRead<any, any, BigNumber>({
-    ...baseContract,
-    address: nftSmartContractAddress,
-    functionName: 'price',
-  })
-
-  const formatedPrice = price && Number(BigNumber.from(price)) / MULTIPLICATOR
-
   const { writeAsync: mint } = useContractWrite({
     ...baseContract,
     functionName: 'mint',
     args: [nftQuantity],
-    overrides: { value: ethers.utils.parseEther(price ? formatedPrice!.toFixed(16).toString() : '0.025') },
+    overrides: { value: ethers.utils.parseEther(price ? price!.toFixed(16).toString() : '0.025') },
     onSuccess: () => {
       addToast('Transaction successful', {})
     },
@@ -56,18 +44,6 @@ export const useBuyNFT = () => {
     ...baseContract,
     address: nftSmartContractAddress,
     functionName: 'contractPaused',
-  })
-
-  const { data: totalSupply } = useContractRead<any, any, BigNumber[]>({
-    ...baseContract,
-    address: nftSmartContractAddress,
-    functionName: 'totalSupply',
-  })
-
-  const { data: maxSupply } = useContractRead<any, any, BigNumber[]>({
-    ...baseContract,
-    address: nftSmartContractAddress,
-    functionName: 'maxSupply',
   })
 
   const buyNFT = async () => {
@@ -89,23 +65,11 @@ export const useBuyNFT = () => {
     }
   }
 
-  useEffect(() => {
-    setTotalNfts(Number(totalSupply?.toLocaleString()))
-  }, [totalSupply])
-
-  useEffect(() => {
-    setMaxNfts(Number(maxSupply?.toLocaleString()))
-  }, [maxSupply])
-
   return {
     mintLoading,
     buyNFT,
     connected: activeConnector?.ready && isConnected,
     buyWith: chain?.nativeCurrency?.name,
-    totalNfts,
-    maxNfts,
     isPaused,
-    price: formatedPrice,
-    nftSold: totalNfts >= maxNfts,
   }
 }

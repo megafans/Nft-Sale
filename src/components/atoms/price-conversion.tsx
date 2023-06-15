@@ -1,6 +1,6 @@
 import numbro from 'numbro'
 
-import { useBuyNFT } from '@/hooks'
+import { useNFTPrice } from '@/hooks'
 
 type PriceConnversionProps = {
   currency: number
@@ -8,7 +8,7 @@ type PriceConnversionProps = {
 }
 
 export const PriceConversion = ({ currency, nftQuantity }: PriceConnversionProps) => {
-  const { price } = useBuyNFT()
+  const { price } = useNFTPrice()
   const formatedPrice = numbro(Number(price) * Number(nftQuantity)).format({ mantissa: 16 })
 
   return (

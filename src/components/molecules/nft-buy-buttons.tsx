@@ -1,7 +1,7 @@
 import { ArrowLongRightIcon } from '@heroicons/react/24/outline'
 
 import { Button } from '@/components'
-import { useBuyNFT } from '@/hooks'
+import { useBuyNFT, useNFTPrice } from '@/hooks'
 
 type NftBuyButtonsProps = {
   onETHPaymentClick?: () => void
@@ -10,7 +10,8 @@ type NftBuyButtonsProps = {
 }
 
 export const NftBuyButtons = ({ onETHPaymentClick, onCCPaymentClick }: NftBuyButtonsProps) => {
-  const { isPaused, nftSold } = useBuyNFT()
+  const { isPaused } = useBuyNFT()
+  const { nftSold } = useNFTPrice()
 
   return (
     <>

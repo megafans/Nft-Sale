@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
 
 import { Button, Modal, PriceConversion } from '@/components'
-import { useBuyNFT, useCurrency, useWertPayment } from '@/hooks'
+import { useBuyNFT, useCurrency, useNFTPrice, useWertPayment } from '@/hooks'
 
 type PaymentModalsProps = {
   wertModalVisibility: boolean
@@ -23,10 +23,11 @@ export const PaymentModals = ({
   nftQuantity,
   setNftQuantity,
 }: PaymentModalsProps) => {
-  const { buyNFT, maxNfts, totalNfts } = useBuyNFT()
+  const { buyNFT } = useBuyNFT()
   const { usd } = useCurrency()
   const [wertWidgetStep, setWertWidgetStep] = useState(1)
   const { address } = useAccount()
+  const { maxNfts, totalNfts } = useNFTPrice()
 
   const wertWidget = useWertPayment({ address })
 
