@@ -37,7 +37,7 @@ export const useBuyNFT = () => {
     functionName: 'price',
   })
 
-  const formatedPrice = price && price?.toNumber() / MULTIPLICATOR
+  const formatedPrice = price && Number(BigNumber.from(price)) / MULTIPLICATOR
 
   const { writeAsync: mint } = useContractWrite({
     ...baseContract,
