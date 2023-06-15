@@ -10,32 +10,40 @@ type NftBuyButtonsProps = {
 }
 
 export const NftBuyButtons = ({ onETHPaymentClick, onCCPaymentClick }: NftBuyButtonsProps) => {
-  const { isPaused } = useBuyNFT()
+  const { isPaused, nftSold } = useBuyNFT()
 
   return (
     <>
-      {isPaused ? (
+      {nftSold ? (
         <div className="flex flex-col md:flex-row items-start md:justify-evenly mt-4 space-y-8 md:space-y-0">
-          <p className="text-2xl font-bold mt-20 text-white text-center max-w-3xl">
-            The NFT sale is not currently open
-          </p>
+          <p className="text-2xl font-bold mt-20 text-white text-center max-w-3xl">The NFT sale has sold out</p>
         </div>
       ) : (
-        <div className="flex flex-col md:flex-row items-start md:justify-evenly mt-20 space-y-8 md:space-y-0">
-          <div>
-            <Button type="button" size="lg" variant="primary" onClick={onETHPaymentClick} disabled={isPaused}>
-              Buy NFT with ETH
-              <ArrowLongRightIcon className="w-6 h-6 ml-10" />
-            </Button>
-          </div>
+        <>
+          {isPaused ? (
+            <div className="flex flex-col md:flex-row items-start md:justify-evenly mt-4 space-y-8 md:space-y-0">
+              <p className="text-2xl font-bold mt-20 text-white text-center max-w-3xl">
+                The NFT sale is not currently open
+              </p>
+            </div>
+          ) : (
+            <div className="flex flex-col md:flex-row items-start md:justify-evenly mt-20 space-y-8 md:space-y-0">
+              <div>
+                <Button type="button" size="lg" variant="primary" onClick={onETHPaymentClick} disabled={isPaused}>
+                  Buy NFT with ETH
+                  <ArrowLongRightIcon className="w-6 h-6 ml-10" />
+                </Button>
+              </div>
 
-          <div className="-mt-10">
-            <Button type="button" size="lg" variant="primary" onClick={onCCPaymentClick} disabled={isPaused}>
-              Buy NFT with CC
-              <ArrowLongRightIcon className="w-6 h-6 ml-10" />
-            </Button>
-          </div>
-        </div>
+              <div className="-mt-10">
+                <Button type="button" size="lg" variant="primary" onClick={onCCPaymentClick} disabled={isPaused}>
+                  Buy NFT with CC
+                  <ArrowLongRightIcon className="w-6 h-6 ml-10" />
+                </Button>
+              </div>
+            </div>
+          )}
+        </>
       )}
     </>
   )

@@ -18,6 +18,7 @@ export const useBuyNFT = () => {
   const [mintLoading, setMintLoading] = useRecoilState(nftPaymentETHAtom)
   const { addToast } = useToasts()
   const [totalNfts, setTotalNfts] = useState<number>(0)
+  const [maxNfts, setMaxNfts] = useState<number>(0)
   const nftQuantity = useRecoilValue(nftPaymentAtom)
 
   const MULTIPLICATOR = 10 ** 18
@@ -57,10 +58,16 @@ export const useBuyNFT = () => {
     functionName: 'contractPaused',
   })
 
-  const { data } = useContractRead<any, any, BigNumber[]>({
+  const { data: totalSupply } = useContractRead<any, any, BigNumber[]>({
     ...baseContract,
     address: nftSmartContractAddress,
     functionName: 'totalSupply',
+  })
+
+  const { data: maxSupply } = useContractRead<any, any, BigNumber[]>({
+    ...baseContract,
+    address: nftSmartContractAddress,
+    functionName: 'maxSupply',
   })
 
   const buyNFT = async () => {
@@ -83,8 +90,12 @@ export const useBuyNFT = () => {
   }
 
   useEffect(() => {
-    setTotalNfts(Number(data?.toLocaleString()))
-  }, [data])
+    setTotalNfts(Number(totalSupply?.toLocaleString()))
+  }, [totalSupply])
+
+  useEffect(() => {
+    setMaxNfts(Number(maxSupply?.toLocaleString()))
+  }, [maxSupply])
 
   return {
     mintLoading,
@@ -92,7 +103,9 @@ export const useBuyNFT = () => {
     connected: activeConnector?.ready && isConnected,
     buyWith: chain?.nativeCurrency?.name,
     totalNfts,
+    maxNfts,
     isPaused,
     price: formatedPrice,
+    nftSold: totalNfts >= maxNfts,
   }
 }

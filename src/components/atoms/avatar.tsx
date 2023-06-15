@@ -33,7 +33,7 @@ export const Avatar = () => {
   return (
     <div className="text-white z-10 relative bg-purple/80 p-3 rounded-lg">
       <div className="flex items-center">
-        {user && (
+        {user?.username && (
           <>
             <Image
               className="inline-block h-32 w-32 rounded-full border-transparent object-cover flex-shrink-0 shadow-2xl"
@@ -52,7 +52,7 @@ export const Avatar = () => {
           </>
         )}
         <div className="ml-3 self-center w-full">
-          {user && (
+          {user?.username && (
             <>
               <p className="uppercase font-bold text-3xl text-white hyphens-manual break-all">{user?.username}</p>
               <p className="text-xl font-medium text-white hyphens-manual break-all">{user?.email}</p>

@@ -10,6 +10,10 @@ import { useBrowser, useMounted, useNFTImages, useUser } from '@/hooks'
 import { fetcher } from '@/utils/fetcher'
 import { api } from '@/helpers/api'
 
+type NftType = {
+  id: string
+}
+
 export const NftDetailsEntity = ({ nftId }: { nftId: any }) => {
   const isBrowser = useBrowser()
   const token = isBrowser ? localStorage.getItem('token') : null
@@ -60,11 +64,12 @@ export const NFTDetails = () => {
   const { address } = useAccount()
   const nftList = useNFTImages({ address })
   const { user } = useUser()
-  const nftId: any = useMemo(() => nftList.nftList?.find((nft: any) => nft.id === query.id), [nftList, query.id])
+  const nftId = useMemo(() => nftList.nftList?.find((nft: NftType) => nft.id === query.id), [nftList, query.id])
+
   return nftId ? (
     <>
       <NftDetailsEntity nftId={nftId} />
-      {user ? (
+      {user?.username ? (
         <NftRewardsList nftId={query.id} />
       ) : (
         <div className="mt-8 flex justify-center">
