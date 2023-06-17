@@ -41,9 +41,9 @@ export const NftDetailsEntity = ({ nftId }: { nftId: any }) => {
           <img className="aspect-[1/1] w-full rounded-2xl object-cover md:-rotate-6" src={nftId.uri} alt={nftId.name} />
         </div>
         {!isLoading && mounted && (
-          <div className="w-1/2 flex flex-col text-center items-end justify-start space-y-5">
-            <h3 className="text-lg font-semibold tracking-tight text-white">{nftId.id}</h3>
-            <p className="text-base leading-7 text-white">{nftId.name}</p>
+          <div className="w-1/2 flex flex-col text-center items-center justify-start space-y-5">
+            <h3 className="text-7xl font-bold text-white">{nftId.id}</h3>
+            <p className="text-2xl leading-7 text-white">{nftId.name}</p>
             {data && (
               <>
                 <p className="text-base leading-7 text-white">value: {data?.dollarValue}</p>

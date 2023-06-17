@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react'
 import { BigNumber } from 'ethers'
+import numbro from 'numbro'
 import { useContractRead } from 'wagmi'
 
 import { ensRegistryABI } from '@/utils/abi'
@@ -43,6 +44,7 @@ export const useNFTPrice = () => {
   }, [maxSupply])
 
   const formatedPrice = useMemo(() => price && Number(BigNumber.from(price)) / MULTIPLICATOR, [price])
+  const numberPrice = useMemo(() => numbro(Number(formatedPrice)).format({ mantissa: 18 }), [formatedPrice])
 
   const nftSold = useMemo(() => totalNfts >= maxNfts, [totalNfts, maxNfts])
 
@@ -51,5 +53,6 @@ export const useNFTPrice = () => {
     totalNfts,
     nftSold,
     price: formatedPrice,
+    numberPrice,
   }
 }

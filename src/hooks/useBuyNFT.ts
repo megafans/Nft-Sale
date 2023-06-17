@@ -20,7 +20,7 @@ export const useBuyNFT = () => {
   const nftQuantity = useRecoilValue(nftPaymentAtom)
   const { chain } = useNetwork()
   const { connector: activeConnector, isConnected } = useAccount()
-  const { price } = useNFTPrice()
+  const { price, numberPrice } = useNFTPrice()
 
   const baseContract: any = {
     address: nftSmartContractAddress,
@@ -31,7 +31,9 @@ export const useBuyNFT = () => {
     ...baseContract,
     functionName: 'mint',
     args: [nftQuantity],
-    overrides: { value: ethers.utils.parseEther(price ? price!.toFixed(16).toString() : '0.025') },
+    overrides: {
+      value: price ? ethers.utils.parseEther(numberPrice) : ethers.utils.parseEther('0.025'),
+    },
     onSuccess: () => {
       addToast('Transaction successful', {})
     },

@@ -8,7 +8,7 @@ const SingleNft = ({ nft }: any) => {
   return nft ? (
     <li key={nft.id}>
       <img
-        className="aspect-[1/1] w-full rounded-2xl object-cover shadow-2xl md:rotate-1"
+        className={`aspect-[1/1] w-full rounded-2xl object-cover shadow-2xl rotate-${nft?.rotate} skew-y-${nft?.rotate}`}
         src={nft.uri}
         alt={nft.name}
       />

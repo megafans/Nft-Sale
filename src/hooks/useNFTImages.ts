@@ -16,8 +16,17 @@ export const useNFTImages = ({ address }: Props) => {
     refreshWhenHidden: true,
   })
 
+  const nftList = data?.data.map((item: any) => {
+    const rotate = Math.floor(Math.random() * 3) + 1
+
+    return {
+      ...item,
+      rotate,
+    }
+  })
+
   return {
-    nftList: data?.data,
+    nftList: nftList,
     isLoading,
     isError: error,
   }
