@@ -33,6 +33,7 @@ export const useBuyNFT = () => {
     args: [nftQuantity],
     overrides: {
       value: numberPrice ? ethers.utils.parseEther(numberPrice.toString()) : ethers.utils.parseEther('0.025'),
+      gasLimit: 300000,
     },
     onSuccess: () => {
       addToast('Transaction successful', {})
