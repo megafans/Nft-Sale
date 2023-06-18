@@ -18,7 +18,7 @@ export const PriceConversion = ({ currency, nftQuantity }: PriceConnversionProps
       ETH (
       {Number(currency * Number(price) * Number(nftQuantity)) < 1
         ? 'below 1 USD'
-        : `${currency * Number(price) * Number(nftQuantity)} USD`}
+        : `around ${currency * Number(formatedPrice) * Number(nftQuantity)} USD`}
       )
     </p>
   )

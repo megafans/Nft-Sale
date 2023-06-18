@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ethers } from 'ethers'
+import { ethers, BigNumber } from 'ethers'
 import { useToasts } from 'react-toast-notifications'
 import { useAccount, useContractRead, useContractWrite, useNetwork } from 'wagmi'
 import { useRouter } from 'next/router'
@@ -33,7 +33,7 @@ export const useBuyNFT = () => {
     args: [nftQuantity],
     overrides: {
       value: numberPrice ? ethers.utils.parseEther(numberPrice.toString()) : ethers.utils.parseEther('0.025'),
-      gasLimit: 300000,
+      gasLimit: BigNumber.from('30000'),
     },
     onSuccess: () => {
       addToast('Transaction successful', {})
