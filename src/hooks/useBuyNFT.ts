@@ -32,7 +32,7 @@ export const useBuyNFT = () => {
     functionName: 'mint',
     args: [nftQuantity],
     overrides: {
-      value: numberPrice ? ethers.utils.parseEther(numberPrice.toString()) : ethers.utils.parseEther('0.025'),
+      value: numberPrice ? ethers.utils.parseEther('0.025') : ethers.utils.parseEther('0.025'),
       gasLimit: BigNumber.from('30000'),
     },
     onSuccess: () => {
