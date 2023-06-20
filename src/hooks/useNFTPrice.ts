@@ -53,6 +53,7 @@ export const useNFTPrice = () => {
     totalNfts,
     nftSold,
     price: formatedPrice,
+    nftPrice: price,
     numberPrice,
   }
 }
