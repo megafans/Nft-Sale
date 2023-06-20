@@ -3,7 +3,7 @@ import { useAccount } from 'wagmi'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
 
-import { Button, Modal, PriceConversion } from '@/components'
+import { Button, Modal, PriceConversion, Spinner } from '@/components'
 import { useBuyNFT, useCurrency, useNFTPrice, useWertPayment } from '@/hooks'
 
 type PaymentModalsProps = {
@@ -23,7 +23,7 @@ export const PaymentModals = ({
   nftQuantity,
   setNftQuantity,
 }: PaymentModalsProps) => {
-  const { buyNFT } = useBuyNFT()
+  const { buyNFT, mintLoading } = useBuyNFT()
   const { usd } = useCurrency()
   const [wertWidgetStep, setWertWidgetStep] = useState(1)
   const { address } = useAccount()
@@ -99,31 +99,43 @@ export const PaymentModals = ({
           )}
         </>
       </Modal>
-      <Modal open={paymentModalVisibility} onClose={() => onModalClose(paymentModalClose)} title="Buy NFT">
+      <Modal
+        open={paymentModalVisibility}
+        onClose={() => onModalClose(paymentModalClose)}
+        title={mintLoading ? 'We are finalizing your payment' : 'Buy NFT'}
+      >
         <div className="flex flex-col items-center justify-center space-y-6 mt-10">
-          <PriceConversion currency={usd} nftQuantity={nftQuantity} />
-          <div className="flex items-center space-x-3">
-            <span className="text-white">Choose NFT quantity:</span>
-            <input
-              className="h-20 w-32 bg-white/10 text-center mt-2 text-3xl font-bold text-white"
-              onChange={e => setNftQuantity(e.target.value)}
-              value={nftQuantity}
-              type="number"
-              min="1"
-              max={maxNfts - totalNfts}
-            />
-          </div>
+          {mintLoading ? (
+            <Spinner />
+          ) : (
+            <>
+              <PriceConversion currency={usd} nftQuantity={nftQuantity} />
+              <div className="flex items-center space-x-3">
+                <span className="text-white">Choose NFT quantity:</span>
+                <input
+                  className="h-20 w-32 bg-white/10 text-center mt-2 text-3xl font-bold text-white"
+                  onChange={e => setNftQuantity(e.target.value)}
+                  value={nftQuantity}
+                  type="number"
+                  min="1"
+                  max={maxNfts - totalNfts}
+                />
+              </div>
 
-          <Button
-            onClick={() => buyNFT()}
-            variant="primary"
-            type="button"
-            size="lg"
-            disabled={Number(nftQuantity) > maxNfts - totalNfts || Number(nftQuantity) < 1}
-          >
-            {Number(nftQuantity) > maxNfts - totalNfts ? `You can buy up to ${maxNfts - totalNfts} NFTs` : 'Buy NFT'}
-            <ArrowLongRightIcon className="w-6 h-6 ml-6" />
-          </Button>
+              <Button
+                onClick={() => buyNFT()}
+                variant="primary"
+                type="button"
+                size="lg"
+                disabled={Number(nftQuantity) > maxNfts - totalNfts || Number(nftQuantity) < 1}
+              >
+                {Number(nftQuantity) > maxNfts - totalNfts
+                  ? `You can buy up to ${maxNfts - totalNfts} NFTs`
+                  : 'Buy NFT'}
+                <ArrowLongRightIcon className="w-6 h-6 ml-6" />
+              </Button>
+            </>
+          )}
         </div>
       </Modal>
     </>

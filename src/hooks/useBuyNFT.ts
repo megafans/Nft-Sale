@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ethers, BigNumber } from 'ethers'
+import { ethers } from 'ethers'
 import { useToasts } from 'react-toast-notifications'
 import { useAccount, useContractRead, useContractWrite, useNetwork } from 'wagmi'
 import { useRouter } from 'next/router'
@@ -48,6 +48,7 @@ export const useBuyNFT = () => {
   })
 
   const buyNFT = async () => {
+    isBrowser && localStorage.clear()
     try {
       if (mint) {
         setMintLoading(true)
