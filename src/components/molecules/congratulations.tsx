@@ -3,9 +3,9 @@ import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid
 import Confetti from 'react-confetti'
 import { useWindowSize } from 'react-use'
 import clsx from 'clsx'
-
 import { useAccount } from 'wagmi'
-import { ButtonLink, Nft } from '@/components'
+
+import { ButtonLink, Nft, Spinner } from '@/components'
 import { useMounted, useNFTImages, useBrowser, useUser } from '@/hooks'
 
 export const Congratulations = () => {
@@ -18,6 +18,16 @@ export const Congratulations = () => {
   const mounted = useMounted()
   const { width, height } = useWindowSize()
   const { user } = useUser()
+
+  const nftsListLenght = isBrowser && Number(localStorage.getItem('nftsListLenght'))
+
+  if (nftList.nftList?.length === nftsListLenght) {
+    return (
+      <div className="flex flex-col justify-center items-center">
+        <Spinner />
+      </div>
+    )
+  }
 
   return nftId && mounted ? (
     <>

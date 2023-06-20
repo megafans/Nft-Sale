@@ -48,20 +48,20 @@ export const useBuyNFT = () => {
   })
 
   const buyNFT = async () => {
-    isBrowser && localStorage.clear()
     try {
       if (mint) {
-        setMintLoading(true)
         const tx = await mint({})
         const receipt = await tx.wait()
         const mintedTokenIdHex: string = receipt?.logs[0].topics[3]
         const mintedTokenId = parseInt(mintedTokenIdHex)
+        setMintLoading(true)
         setMintedTokenId(mintedTokenIdHex)
         mintedTokenId && router.push('/nft/confirmation')
         isBrowser ? localStorage.setItem('nftsBought', nftQuantity) : null
       }
     } catch (error: any) {
       addToast(capitalize(error?.reason), {})
+      isBrowser && localStorage.removeItem('nftsBought')
     } finally {
       setMintLoading(false)
     }

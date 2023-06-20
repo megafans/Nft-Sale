@@ -99,14 +99,13 @@ export const PaymentModals = ({
           )}
         </>
       </Modal>
-      <Modal
-        open={paymentModalVisibility}
-        onClose={() => onModalClose(paymentModalClose)}
-        title={mintLoading ? 'We are finalizing your payment' : 'Buy NFT'}
-      >
+      <Modal open={paymentModalVisibility} onClose={() => onModalClose(paymentModalClose)} title="Buy NFT">
         <div className="flex flex-col items-center justify-center space-y-6 mt-10">
           {mintLoading ? (
-            <Spinner />
+            <>
+              <Spinner />
+              <p className="text-white text-center font-bold text-xl">Please wait while we are minting your NFT</p>
+            </>
           ) : (
             <>
               <PriceConversion currency={usd} nftQuantity={nftQuantity} />
