@@ -16,9 +16,9 @@ export const PriceConversion = ({ currency, nftQuantity }: PriceConnversionProps
       You are going to pay
       <span className="bg-purple p-4 h-4 w-4 rounded-full mx-2">{formatedPrice}</span>
       ETH (
-      {Number(currency * Number(formatedPrice) * Number(nftQuantity)) < 1
+      {Number(currency * Number(formatedPrice)) < 1
         ? 'below 1 USD'
-        : `around ${numbro(currency * Number(formatedPrice) * Number(nftQuantity)).format({ mantissa: 3 })} USD`}
+        : `around ${numbro(currency * Number(formatedPrice)).format({ mantissa: 3 })} USD`}
       )
     </p>
   )
