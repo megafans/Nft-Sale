@@ -50,11 +50,11 @@ export const useBuyNFT = () => {
   const buyNFT = async () => {
     try {
       if (mint) {
+        setMintLoading(true)
         const tx = await mint({})
         const receipt = await tx.wait()
         const mintedTokenIdHex: string = receipt?.logs[0].topics[3]
         const mintedTokenId = parseInt(mintedTokenIdHex)
-        setMintLoading(true)
         setMintedTokenId(mintedTokenIdHex)
         mintedTokenId && router.push('/nft/confirmation')
         isBrowser ? localStorage.setItem('nftsBought', nftQuantity) : null
