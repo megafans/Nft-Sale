@@ -9,9 +9,10 @@ type ModalProps = {
   onClose: () => void
   children: ReactNode
   theme?: 'light' | 'dark'
+  close?: boolean
 }
 
-export const Modal = ({ title, open, onClose, children, theme = 'dark' }: ModalProps) => {
+export const Modal = ({ title, open, onClose, children, theme = 'dark', close = true }: ModalProps) => {
   const completeButtonRef = useRef(null)
 
   return (
@@ -38,10 +39,12 @@ export const Modal = ({ title, open, onClose, children, theme = 'dark' }: ModalP
                 <Dialog.Title ref={completeButtonRef} className="text-gray-200 uppercase font-bold text-3xl">
                   {title}
                 </Dialog.Title>
-                <XCircleIcon
-                  className=" absolute top-8 right-8 w-8 h-8 text-gray-200 cursor-pointer z-50"
-                  onClick={onClose}
-                />
+                {close && (
+                  <XCircleIcon
+                    className=" absolute top-8 right-8 w-8 h-8 text-gray-200 cursor-pointer z-50"
+                    onClick={onClose}
+                  />
+                )}
                 {children}
               </Dialog.Panel>
             </Transition.Child>

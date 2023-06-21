@@ -99,7 +99,12 @@ export const PaymentModals = ({
           )}
         </>
       </Modal>
-      <Modal open={paymentModalVisibility} onClose={() => onModalClose(paymentModalClose)} title="Buy NFT">
+      <Modal
+        open={paymentModalVisibility}
+        onClose={() => onModalClose(paymentModalClose)}
+        title="Buy NFT"
+        close={!mintLoading}
+      >
         <div className="flex flex-col items-center justify-center space-y-6 mt-10">
           {mintLoading ? (
             <>
