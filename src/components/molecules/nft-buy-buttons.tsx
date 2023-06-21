@@ -28,7 +28,7 @@ export const NftBuyButtons = ({ onETHPaymentClick, onCCPaymentClick }: NftBuyBut
               </p>
             </div>
           ) : (
-            <div className="flex flex-col md:flex-row items-start md:justify-evenly mt-20 space-y-8 md:space-y-0">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-evenly mt-20 space-y-8 sm:space-y-0">
               <div>
                 <Button type="button" size="lg" variant="primary" onClick={onETHPaymentClick} disabled={isPaused}>
                   Buy NFT with ETH

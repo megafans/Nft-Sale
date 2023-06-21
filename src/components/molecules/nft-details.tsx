@@ -36,12 +36,12 @@ export const NftDetailsEntity = ({ nftId }: { nftId: any }) => {
         <span className="font-bold">Back to profile</span>
       </ButtonLink>
       <h1 className="text-white text-center font-bold text-4xl uppercase my-20">Your NFT details</h1>
-      <div className="flex flex-col md:flex-row mt-14">
+      <div className="flex flex-col md:flex-row mt-14 items-center md:items-start">
         <div className="w-1/2">
           <img className="aspect-[1/1] w-full rounded-2xl object-cover md:-rotate-6" src={nftId.uri} alt={nftId.name} />
         </div>
         {!isLoading && mounted && (
-          <div className="w-1/2 flex flex-col text-center items-center justify-start space-y-5">
+          <div className="w-1/2 flex flex-col text-center items-center justify-start space-y-5 pt-4 md:pt-8">
             <h3 className="text-7xl font-bold text-white">{nftId.id}</h3>
             <p className="text-2xl leading-7 text-white">{nftId.name}</p>
             {data && (
@@ -72,7 +72,7 @@ export const NFTDetails = () => {
       {user?.username ? (
         <NftRewardsList nftId={query.id} />
       ) : (
-        <div className="mt-8 flex justify-center">
+        <div className="mt-8 md:mt-16 flex justify-center">
           <ButtonLink href="/sign-in" variant="primary" size="lg" ribbon>
             <span>Connect to megafans account</span>
             <ArrowLongRightIcon className="w-6 h-6 ml-10" />
