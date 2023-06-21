@@ -46,7 +46,7 @@ export const useNFTPrice = () => {
   const formatedPrice = useMemo(() => price && Number(BigNumber.from(price)) / MULTIPLICATOR, [price])
   const numberPrice = useMemo(() => numbro(Number(formatedPrice)).format({ mantissa: 3 }), [formatedPrice])
 
-  const nftSold = useMemo(() => totalNfts >= maxNfts, [totalNfts, maxNfts])
+  const nftSold = totalNfts >= maxNfts
 
   return {
     maxNfts,

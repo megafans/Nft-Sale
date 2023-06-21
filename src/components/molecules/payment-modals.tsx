@@ -27,7 +27,7 @@ export const PaymentModals = ({
   const { usd } = useCurrency()
   const [wertWidgetStep, setWertWidgetStep] = useState(1)
   const { address } = useAccount()
-  const { maxNfts, totalNfts } = useNFTPrice()
+  const { maxNfts, totalNfts, nftSold } = useNFTPrice()
 
   const wertWidget = useWertPayment({ address })
 
@@ -44,6 +44,21 @@ export const PaymentModals = ({
     setTimeout(() => {
       wertWidget.mount()
     }, 500)
+  }
+
+  if (nftSold) {
+    return (
+      <Modal
+        open={paymentModalVisibility}
+        onClose={() => onModalClose(paymentModalClose)}
+        title="Buy NFT"
+        close={!mintLoading}
+      >
+        <div className="flex flex-col items-center justify-center space-y-6 mt-10">
+          <p className="text-white text-center font-bold text-xl">All NFTs are sold out</p>
+        </div>
+      </Modal>
+    )
   }
 
   return (
@@ -75,7 +90,7 @@ export const PaymentModals = ({
                 variant="primary"
                 type="button"
                 size="lg"
-                disabled={Number(nftQuantity) > maxNfts - totalNfts || Number(nftQuantity) < 1}
+                disabled={Number(nftQuantity) > maxNfts - totalNfts || Number(nftQuantity) < 1 || nftSold}
               >
                 {Number(nftQuantity) > maxNfts - totalNfts
                   ? `You can buy up to ${maxNfts - totalNfts} NFTs`
@@ -131,7 +146,9 @@ export const PaymentModals = ({
                 variant="primary"
                 type="button"
                 size="lg"
-                disabled={Number(nftQuantity) > maxNfts - totalNfts || Number(nftQuantity) < 1}
+                disabled={
+                  Number(nftQuantity) > maxNfts - totalNfts || Number(nftQuantity) < 1 || mintLoading || nftSold
+                }
               >
                 {Number(nftQuantity) > maxNfts - totalNfts
                   ? `You can buy up to ${maxNfts - totalNfts} NFTs`
