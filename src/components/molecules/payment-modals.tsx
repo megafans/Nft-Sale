@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useAccount } from 'wagmi'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
 
 import { Button, Modal, PriceConversion, Spinner } from '@/components'
-import { useBrowser, useBuyNFT, useCurrency, useNFTImages, useNFTPrice, useWertPayment } from '@/hooks'
+import { useBuyNFT, useCurrency, useNFTPrice, useWertPayment } from '@/hooks'
 
 type PaymentModalsProps = {
   wertModalVisibility: boolean
@@ -45,17 +45,6 @@ export const PaymentModals = ({
       wertWidget.mount()
     }, 500)
   }
-  const isBrowser = useBrowser()
-  const nftList = useNFTImages({ address })
-  const getNftList = useCallback(
-    () => isBrowser && localStorage.setItem('nftsListLenght', nftList?.nftList?.length),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
-
-  useEffect(() => {
-    getNftList()
-  }, [getNftList])
 
   if (nftSold) {
     return (

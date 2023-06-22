@@ -1,27 +1,26 @@
-/* eslint-disable @next/next/no-img-element */
 import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid'
 import Confetti from 'react-confetti'
 import { useWindowSize } from 'react-use'
 import clsx from 'clsx'
 import { useAccount } from 'wagmi'
+import Image from 'next/image'
 
-import { ButtonLink, Nft, Spinner } from '@/components'
+import { ButtonLink, Skeleton, Spinner } from '@/components'
 import { useMounted, useNFTImages, useBrowser, useUser } from '@/hooks'
+import { blurDataUrl } from '@/helpers/constants'
 
 export const Congratulations = () => {
   const isBrowser = useBrowser()
   const nftsBought = isBrowser ? Number(localStorage.getItem('nftsBought')) : 0
   const { address } = useAccount()
-  const nftList = useNFTImages({ address })
-  const nftId = nftList.nftList?.slice(0, nftsBought)
+  const { nftFullList, isLoadingFullList } = useNFTImages({ address })
+  const nftId = nftFullList?.ownedNfts?.slice(-nftsBought)
 
   const mounted = useMounted()
   const { width, height } = useWindowSize()
   const { user } = useUser()
 
-  const nftsListLenght = isBrowser && Number(localStorage.getItem('nftsListLenght'))
-
-  if (nftList.nftList?.length === nftsListLenght) {
+  if (isLoadingFullList) {
     return (
       <div className="flex flex-col justify-center items-center">
         <Spinner />
@@ -68,8 +67,31 @@ export const Congratulations = () => {
           nftsBought > 2 && 'grid grid-cols-1 md:grid-cols-3 gap-8 auto-cols-max'
         )}
       >
-        {nftId?.map((nft: { id: any }): any => {
-          return nft ? <Nft nft={nft} key={nft.id} /> : null
+        {nftId?.map((nft: { rawMetadata: any; descrption: string; title: string; tokenId: any }): any => {
+          return nft ? (
+            <li key={nft.tokenId}>
+              <Image
+                className="aspect-[1/1] w-full rounded-2xl object-cover shadow-2xl rotate-1"
+                src={`https://megafans.mypinata.cloud/ipfs/${nft.rawMetadata.image.replace('ipfs://', '')}`}
+                alt={nft.descrption}
+                width={500}
+                height={500}
+                loading="lazy"
+                placeholder="blur"
+                blurDataURL={blurDataUrl}
+              />
+              <div className="flex">
+                <div className="flex-1">
+                  <h3 className="mt-6 text-4xl font-semibold leading-8 tracking-tight text-white">
+                    {nft.rawMetadata.id}
+                  </h3>
+                  <p className="text-4x leading-7 text-white font-semibold">{nft.title}</p>
+                </div>
+              </div>
+            </li>
+          ) : (
+            <Skeleton />
+          )
         })}
       </div>
     </>

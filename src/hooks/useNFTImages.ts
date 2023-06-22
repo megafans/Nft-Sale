@@ -25,7 +25,20 @@ export const useNFTImages = ({ address }: Props) => {
     }
   })
 
+  const {
+    data: nftFullList,
+    error: errorFullList,
+    isLoading: isLoadingFullList,
+  } = useSWR(`/api/nfts/${address}`, async () => {
+    const response = await fetch(`/api/nfts/${address}`)
+    const data = await response.json()
+    return data
+  })
+
   return {
+    nftFullList,
+    errorFullList,
+    isLoadingFullList,
     nftList: nftList,
     isLoading,
     isError: error,
