@@ -23,6 +23,7 @@
     "@wert-io/module-react-component": "^0.2.0",
     "@wert-io/widget-initializer": "^2.0.3",
     "@wert-io/widget-sc-signer": "^1.0.0",
+    "alchemy-sdk": "^2.9.0",
     "axios": "^1.2.2",
     "clsx": "^1.2.1",
     "date-fns": "^2.29.3",

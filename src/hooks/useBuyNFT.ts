@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 import { useToasts } from 'react-toast-notifications'
 import { useAccount, useContractRead, useContractWrite, useNetwork } from 'wagmi'
@@ -10,6 +10,7 @@ import { nftSmartContractAddress } from '@/helpers/constants'
 import { nftPaymentAtom, nftPaymentETHAtom } from '@/state/atoms'
 import { capitalize } from '@/utils/helpers'
 import { useBrowser, useNFTPrice } from '@/hooks'
+import { fetcher } from '@/utils/fetcher'
 
 export const useBuyNFT = () => {
   const isBrowser = useBrowser()
@@ -19,7 +20,7 @@ export const useBuyNFT = () => {
   const { addToast } = useToasts()
   const nftQuantity = useRecoilValue(nftPaymentAtom)
   const { chain } = useNetwork()
-  const { connector: activeConnector, isConnected } = useAccount()
+  const { address, connector: activeConnector, isConnected } = useAccount()
   const { nftPrice } = useNFTPrice()
 
   const baseContract: any = {
@@ -61,6 +62,8 @@ export const useBuyNFT = () => {
             router.push('/nft/confirmation')
           }, 3500)
         isBrowser ? localStorage.setItem('nftsBought', nftQuantity) : null
+        const nfts = fetch(`/api/nfts/${address}`)
+        console.log('nfts', nfts)
       }
     } catch (error: any) {
       addToast(capitalize(error?.reason), {})
