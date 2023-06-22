@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useAccount, useNetwork } from 'wagmi'
 import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit'
 import { useRecoilState } from 'recoil'
@@ -13,7 +13,7 @@ import {
   PaymentModals,
   NftListHeader,
 } from '@/components'
-import { useBuyNFT, useMounted, useUser, useBrowser, useNFTImages } from '@/hooks'
+import { useBuyNFT, useMounted, useUser } from '@/hooks'
 import { sendUserWallet } from '@/utils/repository'
 import { nftPaymentAtom } from '@/state/atoms'
 
@@ -25,7 +25,6 @@ export const Profile = () => {
   const [nftQuantity, setNftQuantity] = useRecoilState(nftPaymentAtom)
   const { openConnectModal } = useConnectModal()
   const { chain } = useNetwork()
-  const isBrowser = useBrowser()
 
   const mounted = useMounted()
   const { user } = useUser()
@@ -33,22 +32,12 @@ export const Profile = () => {
 
   const { isConnected, address } = useAccount({
     onConnect({ address, isReconnected }) {
-      !isReconnected && sendUserWallet(address, true),
-        isBrowser && localStorage.setItem('nftsListLenght', nftList.nftList.length)
+      !isReconnected && sendUserWallet(address, true)
     },
     onDisconnect() {
       sendUserWallet(address, false)
     },
   })
-
-  const nftList = useNFTImages({ address })
-
-  useEffect(() => {
-    if (nftList.nftList?.length) {
-      isBrowser && localStorage.setItem('nftsListLenght', nftList.nftList.length)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isBrowser, isConnected])
 
   const getProfileBannerView = () => {
     switch (isEditMode) {
