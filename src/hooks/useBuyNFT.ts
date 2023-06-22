@@ -59,7 +59,7 @@ export const useBuyNFT = () => {
         mintedTokenId &&
           setTimeout(() => {
             router.push('/nft/confirmation')
-          }, 3500)
+          }, 2000)
         isBrowser ? localStorage.setItem('nftsBought', nftQuantity) : null
       }
     } catch (error: any) {
