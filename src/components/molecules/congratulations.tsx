@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import { useAccount } from 'wagmi'
 import Image from 'next/image'
 
-import { ButtonLink, Skeleton, Spinner } from '@/components'
+import { ButtonLink, Spinner } from '@/components'
 import { useMounted, useNFTImages, useBrowser, useUser } from '@/hooks'
 import { blurDataUrl } from '@/helpers/constants'
 
@@ -20,7 +20,9 @@ export const Congratulations = () => {
   const { width, height } = useWindowSize()
   const { user } = useUser()
 
-  if (isLoadingFullList) {
+  const nftsListLenght = isBrowser && Number(localStorage.getItem('nftsListLenght'))
+
+  if (isLoadingFullList || nftsListLenght === nftFullList?.ownedNfts?.length) {
     return (
       <div className="flex flex-col justify-center items-center">
         <Spinner />
@@ -68,7 +70,7 @@ export const Congratulations = () => {
         )}
       >
         {nftId?.map((nft: { rawMetadata: any; descrption: string; title: string; tokenId: any }): any => {
-          return nft ? (
+          return !nft ? null : (
             <li key={nft.tokenId}>
               <Image
                 className="aspect-[1/1] w-full rounded-2xl object-cover shadow-2xl rotate-1"
@@ -89,8 +91,6 @@ export const Congratulations = () => {
                 </div>
               </div>
             </li>
-          ) : (
-            <Skeleton />
           )
         })}
       </div>

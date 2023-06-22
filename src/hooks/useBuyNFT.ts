@@ -56,17 +56,18 @@ export const useBuyNFT = () => {
         const mintedTokenIdHex: string = receipt?.logs[0].topics[3]
         const mintedTokenId = parseInt(mintedTokenIdHex)
         setMintedTokenId(mintedTokenIdHex)
-        mintedTokenId &&
-          setTimeout(() => {
-            router.push('/nft/confirmation')
-          }, 2000)
+        setTimeout(() => {
+          mintedTokenId && router.push('/nft/confirmation')
+        }, 3000)
         isBrowser ? localStorage.setItem('nftsBought', nftQuantity) : null
       }
     } catch (error: any) {
       addToast(capitalize(error?.reason), {})
       isBrowser && localStorage.removeItem('nftsBought')
     } finally {
-      setMintLoading(false)
+      setTimeout(() => {
+        setMintLoading(false)
+      }, 3100)
     }
   }
 
