@@ -29,7 +29,7 @@ export type AccountProps = {
 const apiKey = '1ycYKWwImku2UgUNYpQ3QPoMS-Rvzjp5'
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [mainnet, goerli],
+  [mainnet],
   [
     alchemyProvider({ apiKey, priority: 0, weight: 1 }),
     publicProvider({ weight: 2 }),
