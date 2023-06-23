@@ -42,7 +42,9 @@ export const NftDetailsEntity = ({ nftId }: { nftId: any }) => {
         </div>
         {!isLoading && mounted && (
           <div className="w-1/2 flex flex-col text-center items-center justify-start space-y-5 pt-4 md:pt-8">
-            <h3 className="text-7xl font-bold text-white">{nftId.id}</h3>
+            <h3 className="text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-current">
+              {nftId.id}
+            </h3>
             <p className="text-2xl leading-7 text-white">{nftId.name}</p>
             {data && (
               <>

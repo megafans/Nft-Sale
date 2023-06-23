@@ -18,7 +18,7 @@ export const useWertPayment = ({ address }: any) => {
   const { addToast } = useToasts()
 
   const { price } = useNFTPrice()
-  const formatedPrice = numbro(Number(price) * Number(nftQuantity)).format({ mantissa: 16 })
+  const formatedPrice = numbro(Number(price) * Number(nftQuantity)).format({ mantissa: 3 })
 
   const input_data = address
     ? web3EthAbi.encodeFunctionCall(
