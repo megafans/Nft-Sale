@@ -7,6 +7,7 @@ import { useToasts } from 'react-toast-notifications'
 import { useUser, useMounted } from '@/hooks'
 import { imageUpload } from '@/utils/repository'
 import { avatarAtom } from '@/state/atoms'
+import { capitalize } from '@/utils/helpers'
 
 export const Avatar = () => {
   const mounted = useMounted()
@@ -20,13 +21,17 @@ export const Avatar = () => {
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setFile(e.target.files[0])
+      e.target.files[0].size > 5000000 ? addToast('Max file size is 5MB') : setFile(e.target.files[0])
     }
   }
 
   useEffect(() => {
     if (file) {
-      file?.type.includes('image') ? imageUpload(file) : addToast('Please upload an image', {})
+      file?.type.includes('image')
+        ? imageUpload(file)
+            .then(() => addToast('Image has been updated'))
+            .catch(error => addToast(capitalize(error), {}))
+        : addToast('Please upload an image', {})
     }
   }, [file, addToast])
 
@@ -44,7 +49,13 @@ export const Avatar = () => {
               blurDataURL={avatar}
             />
             <label htmlFor="change-avatar" className="cursor-pointer ml-3">
-              <input id="change-avatar" type="file" onChange={handleFileChange} className="sr-only" />
+              <input
+                id="change-avatar"
+                type="file"
+                onChange={handleFileChange}
+                className="sr-only"
+                accept="image/png, image/jpeg, image/jpg, image/gif"
+              />
               <span className="bg-current rounded-full p-1 absolute top-3 left-28">
                 <PlusIcon className="h-6 w-6" />
               </span>
