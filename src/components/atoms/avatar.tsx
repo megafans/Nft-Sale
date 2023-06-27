@@ -21,7 +21,22 @@ export const Avatar = () => {
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      e.target.files[0].size > 5000000 ? addToast('Max file size is 5MB') : setFile(e.target.files[0])
+      switch (e.target.files[0]?.type) {
+        case 'image/png':
+          e.target.files[0].size > 5000000 ? addToast('Max file size is 5MB') : setFile(e.target.files[0])
+          break
+        case 'image/jpeg':
+          e.target.files[0].size > 5000000 ? addToast('Max file size is 5MB') : setFile(e.target.files[0])
+          break
+        case 'image/jpg':
+          e.target.files[0].size > 5000000 ? addToast('Max file size is 5MB') : setFile(e.target.files[0])
+          break
+        case 'image/gif':
+          e.target.files[0].size > 5000000 ? addToast('Max file size is 5MB') : setFile(e.target.files[0])
+          break
+        default:
+          addToast('Only jpg, gif and png files are allowed', {})
+      }
     }
   }
 
