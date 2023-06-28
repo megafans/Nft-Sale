@@ -1,8 +1,9 @@
 import cslx from 'clsx'
-
 import { useAccount } from 'wagmi'
+import { useEffectOnce } from 'react-use'
+
 import { Nft } from '@/components'
-import { useNFTImages } from '@/hooks'
+import { useBrowser, useNFTImages } from '@/hooks'
 
 type NftListProps = {
   compact?: boolean
@@ -11,6 +12,13 @@ type NftListProps = {
 export const NftList = ({ compact }: NftListProps) => {
   const { address } = useAccount()
   const nftList = useNFTImages({ address })
+  const isBrowser = useBrowser()
+
+  useEffectOnce(() => {
+    if (nftList.nftList?.length) {
+      isBrowser && localStorage.setItem('nftsListLenght', nftList.nftList.length)
+    }
+  })
 
   return (
     <ul

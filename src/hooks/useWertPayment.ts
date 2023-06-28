@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import numbro from 'numbro'
 import WertWidget from '@wert-io/widget-initializer'
 import web3EthAbi from 'web3-eth-abi'
 import { useRecoilValue } from 'recoil'
@@ -9,11 +10,15 @@ import { useRouter } from 'next/router'
 
 import { nftSmartContractAddress, wertPrivateKey, wertPartnerID } from '@/helpers/constants'
 import { nftPaymentAtom } from '@/state/atoms'
+import { useNFTPrice } from '@/hooks'
 
 export const useWertPayment = ({ address }: any) => {
   const nftQuantity = useRecoilValue(nftPaymentAtom)
   const router = useRouter()
   const { addToast } = useToasts()
+
+  const { price } = useNFTPrice()
+  const formatedPrice = numbro(Number(price) * Number(nftQuantity)).format({ mantissa: 3 })
 
   const input_data = address
     ? web3EthAbi.encodeFunctionCall(
@@ -27,7 +32,7 @@ export const useWertPayment = ({ address }: any) => {
           stateMutability: 'payable',
           type: 'function',
         },
-        [address!, nftQuantity]
+        [address!, nftQuantity ? nftQuantity : '1']
       )
     : ''
 
@@ -37,7 +42,7 @@ export const useWertPayment = ({ address }: any) => {
         {
           address: address!,
           commodity: 'ETH',
-          commodity_amount: Number(nftQuantity) * 0.025,
+          commodity_amount: Number(nftQuantity) * Number(formatedPrice),
           pk_id: 'key1',
           sc_address: nftSmartContractAddress!,
           sc_id: uuid(),
@@ -45,7 +50,7 @@ export const useWertPayment = ({ address }: any) => {
         },
         wertPrivateKey!
       ),
-    [address, input_data, nftQuantity]
+    [address, input_data, nftQuantity, formatedPrice]
   )
 
   const wertWidget = new WertWidget({

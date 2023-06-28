@@ -11,7 +11,7 @@ export const LandingNftMintSection = () => (
       backgroundImage: 'radial-gradient(at center right, rgba(80, 40, 101, 0.5) 0%, #16131E 68%)',
       backgroundColor: '#16131E',
       opacity: 1,
-      transition: 'background 0.3s, border-radius 0.3s, opacity 0.3s;',
+      transition: 'background 0.3s, border-radius 0.3s, opacity 0.3s',
     }}
   >
     <div className="flex flex-col pt-24">

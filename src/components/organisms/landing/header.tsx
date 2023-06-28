@@ -48,7 +48,7 @@ export const LandingHeader = () => {
             <Image src={'/landing/telegram-logo.webp'} width={50} height={50} alt="header logo" />
           </a>
 
-          <a href="https://twitter.com/MegafansNFTs" target="_blank">
+          <a href="https://twitter.com/MegafansGaming" target="_blank">
             <Image src={'/landing/twitter-logo.webp'} width={50} height={50} alt="header logo" />
           </a>
         </div>

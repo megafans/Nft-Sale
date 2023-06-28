@@ -16,8 +16,30 @@ export const useNFTImages = ({ address }: Props) => {
     refreshWhenHidden: true,
   })
 
+  const nftList = data?.data.map((item: any) => {
+    const rotate = Math.floor(Math.random() * 3) + 1
+
+    return {
+      ...item,
+      rotate,
+    }
+  })
+
+  const {
+    data: nftFullList,
+    error: errorFullList,
+    isLoading: isLoadingFullList,
+  } = useSWR(`/api/nfts/${address}`, async () => {
+    const response = await fetch(`/api/nfts/${address}`)
+    const data = await response.json()
+    return data
+  })
+
   return {
-    nftList: data?.data,
+    nftFullList,
+    errorFullList,
+    isLoadingFullList,
+    nftList: nftList,
     isLoading,
     isError: error,
   }
